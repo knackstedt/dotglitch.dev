@@ -1,6 +1,6 @@
 {
   "name": "dotglitch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --port 4100 --ssl --proxy-config ./proxy.config.json",
