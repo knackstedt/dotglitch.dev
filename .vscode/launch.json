@@ -1,0 +1,41 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "client",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "https://localhost:4200/"
+    },
+    {
+      "name": "Server",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "main.ts",
+        "--project"      
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}/server",
+    },
+    {
+      "name": "XPRA",
+      "preLaunchTask": "xpra",
+      "type": "msedge",
+      "request": "attach"
+    },
+    {
+      "name": "Broadway",
+      "preLaunchTask": "broadway",
+      "type": "msedge",
+      "request": "attach"
+    }
+  ]
+}

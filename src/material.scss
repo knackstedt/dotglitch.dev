@@ -1,0 +1,62 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$app-typography: mat.define-typography-config(
+    $font-family: 'Fira Sans',
+);
+
+$app-theme: mat.define-dark-theme((
+    color: (
+        primary: mat.define-palette(mat.$green-palette, A200),
+        accent: mat.define-palette(mat.$green-palette, A400),
+        warn: mat.define-palette(mat.$amber-palette, 900),
+    ),
+    typography: $app-typography
+));
+
+@include mat.all-component-themes($app-theme);
+
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: white;
+}
+
+.mat-toolbar {
+    background: #8080809c;
+}
+
+.mat-button {
+    font-size: 15px;
+}
+
+.mat-tab-group,
+.mat-tab-body-wrapper {
+    height: 100%;
+}
+
+.mat-drawer {
+    background-color: #8080809c;
+    .mat-button,
+    .mat-button a {
+        color: #fff;
+    }
+}
+
+.mat-dialog-container {
+    max-height: 80vh!important;
+    border-radius: 9px;
+}
+
+mat-drawer-content.mat-drawer-content {
+    display: flex;
+    flex-direction: column;
+}
+
