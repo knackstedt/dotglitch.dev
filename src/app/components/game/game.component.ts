@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -19,6 +19,7 @@ export class GameComponent {
 
     @ViewChild("canvas") canvasRef: ElementRef;
     get canvas() { return this.canvasRef.nativeElement as HTMLCanvasElement }
+    get el() { return this.viewContainer.element.nativeElement as HTMLElement }
 
     camera: THREE.OrthographicCamera;
     scene = new THREE.Scene();
@@ -26,12 +27,13 @@ export class GameComponent {
     renderer: THREE.WebGLRenderer;
 
     composer: EffectComposer;
-    gui = new GUI();
 
     params = { pixelSize: 6, normalEdgeStrength: .3, depthEdgeStrength: .4, pixelAlignedPanning: true }
     crystalMesh: THREE.Mesh;
 
-    constructor() { }
+    playerMesh: THREE.Mesh;
+
+    constructor(private viewContainer: ViewContainerRef) { }
 
     ngAfterViewInit() {
 
@@ -39,16 +41,22 @@ export class GameComponent {
 
         this.init();
         this.animate();
+        window.addEventListener("keydown", this.onKeyDown.bind(this));
+        window.addEventListener("keyup", this.onKeyUp.bind(this));
     }
 
     ngOnDestroy() {
         cancelAnimationFrame(this.animationFrameRequest);
+
+        window.removeEventListener("keydown", this.onKeyDown.bind(this));
+        window.removeEventListener("keyup", this.onKeyUp.bind(this));
     }
 
     init() {
-        const aspectRatio = window.innerWidth / window.innerHeight;
+        const bounds = this.el.getBoundingClientRect();
+        const aspectRatio = bounds.width / bounds.height;
 
-        this.camera = new THREE.OrthographicCamera(- aspectRatio, aspectRatio, 1, - 1, 0.1, 10);
+        this.camera = new THREE.OrthographicCamera(-aspectRatio, aspectRatio, 1, - 1, 0.1, 10);
         this.camera.position.y = 2 * Math.tan(Math.PI / 6);
         this.camera.position.z = 2;
 
@@ -57,7 +65,7 @@ export class GameComponent {
         this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
         this.renderer.shadowMap.enabled = true;
         //renderer.setPixelRatio( window.devicePixelRatio );
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(bounds.width, bounds.height);
 
         this.composer = new EffectComposer(this.renderer);
         const renderPixelatedPass = new RenderPixelatedPass(6, this.scene, this.camera);
@@ -65,18 +73,6 @@ export class GameComponent {
 
         const controls = new OrbitControls(this.camera, this.renderer.domElement);
         controls.maxZoom = 2;
-
-        // gui
-
-        this.gui.add(this.params, 'pixelSize').min(1).max(16).step(1)
-            .onChange(() => {
-
-                renderPixelatedPass.pixelSize = this.params.pixelSize;
-
-            });
-        this.gui.add(renderPixelatedPass, 'normalEdgeStrength').min(0).max(2).step(.05);
-        this.gui.add(renderPixelatedPass, 'depthEdgeStrength').min(0).max(1).step(.05);
-        this.gui.add(this.params, 'pixelAlignedPanning');
 
         // textures
 
@@ -89,9 +85,9 @@ export class GameComponent {
         // meshes
 
         const boxMaterial = new THREE.MeshPhongMaterial({ map: texChecker2 });
+        const playerMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
 
         const addBox = (boxSideLength, x, z, rotation) => {
-
             const mesh = new THREE.Mesh(new THREE.BoxGeometry(boxSideLength, boxSideLength, boxSideLength), boxMaterial);
             mesh.castShadow = true;
             mesh.receiveShadow = true;
@@ -99,18 +95,26 @@ export class GameComponent {
             mesh.position.y = boxSideLength / 2;
             mesh.position.set(x, boxSideLength / 2 + .0001, z);
             this.scene.add(mesh);
-            return mesh;
 
+            return mesh;
         }
 
         addBox(.4, 0, 0, Math.PI / 4);
-        addBox(.5, - .5, - .5, Math.PI / 4);
+        addBox(.5, -.5, -.5, Math.PI / 4);
+
+        const player = this.playerMesh = new THREE.Mesh(new THREE.BoxGeometry(.2, .2, .2), playerMaterial);
+        player.castShadow = true;
+        player.receiveShadow = true;
+        player.position.y = 0;
+        player.position.set(0, .2 / 2 + .0001, 1);
+        this.scene.add(player);
 
         const planeSideLength = 2;
         const planeMesh = new THREE.Mesh(
             new THREE.PlaneGeometry(planeSideLength, planeSideLength),
             new THREE.MeshPhongMaterial({ map: texChecker })
         );
+
         planeMesh.receiveShadow = true;
         planeMesh.rotation.x = - Math.PI / 2;
         this.scene.add(planeMesh);
@@ -144,28 +148,17 @@ export class GameComponent {
         spotLight.position.set(2, 2, 0);
         const target = spotLight.target;
         this.scene.add(target);
+
         target.position.set(0, 0, 0);
         spotLight.castShadow = true;
         this.scene.add(spotLight);
-
-    }
-
-    onWindowResize() {
-
-        const aspectRatio = window.innerWidth / window.innerHeight;
-        this.camera.left = - aspectRatio;
-        this.camera.right = aspectRatio;
-        this.camera.updateProjectionMatrix();
-
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.composer.setSize(window.innerWidth, window.innerHeight);
-
     }
 
     animationFrameRequest;
     animate() {
         this.animationFrameRequest = requestAnimationFrame(this.animate.bind(this));
 
+        const d = this.clock.getDelta();
         const t = this.clock.getElapsedTime();
 
         // @ts-ignore Is this still valid?
@@ -173,27 +166,34 @@ export class GameComponent {
         this.crystalMesh.position.y = .7 + Math.sin(t * 2) * .05;
         this.crystalMesh.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
 
-        const rendererSize = this.renderer.getSize(new THREE.Vector2());
-        const aspectRatio = rendererSize.x / rendererSize.y;
-
-        if (this.params['pixelAlignedPanning']) {
-
-            this.pixelAlignFrustum(this.camera, aspectRatio, Math.floor(rendererSize.x / this.params['pixelSize']),
-                Math.floor(rendererSize.y / this.params['pixelSize']));
-
-        }
-        else if (this.camera.left != - aspectRatio || this.camera.top != 1.0) {
-
-            // Reset the Camera Frustum if it has been modified
-            this.camera.left = - aspectRatio;
-            this.camera.right = aspectRatio;
-            this.camera.top = 1.0;
-            this.camera.bottom = - 1.0;
-            this.camera.updateProjectionMatrix();
-
-        }
+        this.processKeys(d);
 
         this.composer.render();
+    }
+
+    processKeys(t: number) {
+        const keys = Object.entries(this.heldKeys).filter(e => e[1] == true);
+        for (let i = 0; i < keys.length; i++) {
+            const [key] = keys[i];
+            switch (key) {
+                case "w": {
+                    this.playerMesh.translateZ(-1 * t);
+                    break;
+                }
+                case "a": {
+                    this.playerMesh.translateX(-1 * t);
+                    break;
+                }
+                case "s": {
+                    this.playerMesh.translateZ(1 * t);
+                    break;
+                }
+                case "d": {
+                    this.playerMesh.translateX(1 * t);
+                    break;
+                }
+            }
+        }
     }
 
     pixelTexture(texture) {
@@ -226,35 +226,26 @@ export class GameComponent {
         return cycle + linStep;
     }
 
-    pixelAlignFrustum(camera, aspectRatio, pixelsPerScreenWidth, pixelsPerScreenHeight) {
+    @HostListener("window:resize")
+    onWindowResize() {
+        const bounds = this.el.getBoundingClientRect();
 
-        // 0. Get Pixel Grid Units
-        const worldScreenWidth = ((camera.right - camera.left) / camera.zoom);
-        const worldScreenHeight = ((camera.top - camera.bottom) / camera.zoom);
-        const pixelWidth = worldScreenWidth / pixelsPerScreenWidth;
-        const pixelHeight = worldScreenHeight / pixelsPerScreenHeight;
+        const aspectRatio = bounds.width / bounds.height;
+        this.camera.left = -aspectRatio;
+        this.camera.right = aspectRatio;
+        this.camera.updateProjectionMatrix();
 
-        // 1. Project the current camera position along its local rotation bases
-        const camPos = new THREE.Vector3(); camera.getWorldPosition(camPos);
-        const camRot = new THREE.Quaternion(); camera.getWorldQuaternion(camRot);
-        const camRight = new THREE.Vector3(1.0, 0.0, 0.0).applyQuaternion(camRot);
-        const camUp = new THREE.Vector3(0.0, 1.0, 0.0).applyQuaternion(camRot);
-        const camPosRight = camPos.dot(camRight);
-        const camPosUp = camPos.dot(camUp);
+        this.renderer.setSize(bounds.width, bounds.height);
+        this.composer.setSize(bounds.width, bounds.height);
+    }
 
-        // 2. Find how far along its position is along these bases in pixel units
-        const camPosRightPx = camPosRight / pixelWidth;
-        const camPosUpPx = camPosUp / pixelHeight;
 
-        // 3. Find the fractional pixel units and convert to world units
-        const fractX = camPosRightPx - Math.round(camPosRightPx);
-        const fractY = camPosUpPx - Math.round(camPosUpPx);
+    private heldKeys: { [key: string]: boolean; } = {};
+    onKeyDown(evt: KeyboardEvent) {
+        this.heldKeys[evt.key.toLowerCase()] = true;
+    }
 
-        // 4. Add fractional world units to the left/right top/bottom to align with the pixel grid
-        camera.left = - aspectRatio - (fractX * pixelWidth);
-        camera.right = aspectRatio - (fractX * pixelWidth);
-        camera.top = 1.0 - (fractY * pixelHeight);
-        camera.bottom = - 1.0 - (fractY * pixelHeight);
-        camera.updateProjectionMatrix();
+    onKeyUp(evt: KeyboardEvent) {
+        this.heldKeys[evt.key.toLowerCase()] = false;
     }
 }
