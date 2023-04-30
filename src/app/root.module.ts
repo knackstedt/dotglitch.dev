@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RootComponent } from './root.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
+import { GameComponent } from 'src/app/components/game/game.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
         BrowserAnimationsModule,
         PortalModule,
         LogoComponent,
+        GameComponent,
         HttpClientModule,
         MatButtonModule,
         MatToolbarModule,
