@@ -4,7 +4,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPixelatedPass } from 'three/examples/jsm/postprocessing/RenderPixelatedPass.js';
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
+import { Refractor } from 'three/examples/jsm/objects/Refractor.js';
+import { WaterRefractionShader } from 'three/examples/jsm/shaders/WaterRefractionShader.js';
+import { Water } from 'three/examples/jsm/objects/Water2.js';
 
 @Component({
     selector: 'app-game',
@@ -30,16 +32,25 @@ export class GameComponent {
 
     params = { pixelSize: 6, normalEdgeStrength: .3, depthEdgeStrength: .4, pixelAlignedPanning: true }
     crystalMesh: THREE.Mesh;
+    refractor: Refractor;
 
     playerMesh: THREE.Mesh;
+    pvx = 0;
+    pvy = 0;
+    pvz = 0;
+
+    readonly maxSpeedX = 1;
+    readonly maxSpeedY = 1;
+    readonly maxSpeedZ = 1;
 
     constructor(private viewContainer: ViewContainerRef) { }
 
     ngAfterViewInit() {
 
-        THREE.ColorManagement.enabled = false; // TODO: Consider enabling color management.
+        // THREE.ColorManagement.enabled = false; // TODO: Consider enabling color management.
 
         this.init();
+        this.onWindowResize();
         this.animate();
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("keyup", this.onKeyUp.bind(this));
@@ -56,27 +67,83 @@ export class GameComponent {
         const bounds = this.el.getBoundingClientRect();
         const aspectRatio = bounds.width / bounds.height;
 
-        this.camera = new THREE.OrthographicCamera(-aspectRatio, aspectRatio, 1, - 1, 0.1, 10);
-        this.camera.position.y = 2 * Math.tan(Math.PI / 6);
-        this.camera.position.z = 2;
+        // this.camera = new THREE.OrthographicCamera(-aspectRatio, aspectRatio, 1, - 1, 0.1, 10);
+        // this.camera.position.y = 2 * Math.tan(Math.PI / 6);
+        // this.camera.position.z = 2;
 
-        this.scene.background = new THREE.Color(0x151729);
+        // @ts-ignore
+        this.camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.1, 200);
+        this.camera.position.set(-3, 2, 3);
+        this.camera.lookAt(this.scene.position);
 
-        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+        // this.scene.background = new THREE.Color(0x151729);
+
+        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true });
         this.renderer.shadowMap.enabled = true;
-        //renderer.setPixelRatio( window.devicePixelRatio );
-        this.renderer.setSize(bounds.width, bounds.height);
-
         this.composer = new EffectComposer(this.renderer);
-        const renderPixelatedPass = new RenderPixelatedPass(6, this.scene, this.camera);
+        const renderPixelatedPass = new RenderPixelatedPass(1, this.scene, this.camera);
         this.composer.addPass(renderPixelatedPass);
 
         const controls = new OrbitControls(this.camera, this.renderer.domElement);
         controls.maxZoom = 2;
 
+        const waterGeometry = new THREE.PlaneGeometry(20, 20);
+        // waterGeometry.rotateX(Math.PI + Math.PI/2);
+        // waterGeometry.translate(0, -.001, 0);
+
+        // const refractor = this.refractor = new Refractor(waterGeometry, {
+        //     color: 0x999999,
+        //     textureWidth: 1024,
+        //     textureHeight: 1024,
+        //     shader: WaterRefractionShader
+        // });
+        const waterHorizon = new THREE.Mesh(waterGeometry, new THREE.MeshPhongMaterial({ color: 0x2196f3, }));
+        waterHorizon.position.y = -0.002;
+        waterHorizon.rotation.x = Math.PI * -.5;
+        this.scene.add(waterHorizon);
+
+        // refractor.position.set(0, 2, 0);
+        // this.scene.add(refractor);
+        // load dudv map for distortion effect
+
+        const dudvMap = new THREE.TextureLoader().load('assets/waterdudv.jpg');
+
+        dudvMap.wrapS = dudvMap.wrapT = THREE.RepeatWrapping;
+        // @ts-ignore
+        // refractor.material.uniforms.tDudv.value = dudvMap;
+        const loader = new THREE.TextureLoader();
+
+        const water = new Water(waterGeometry, {
+            color: '#cceeff',
+            scale: 4,
+            flowDirection: new THREE.Vector2(.1, .1),
+            textureWidth: 1024,
+            textureHeight: 1024,
+            normalMap0: loader.load('assets/Water_1_M_Normal.jpg'),
+            normalMap1: loader.load('assets/Water_2_M_Normal.jpg')
+        });
+
+        water.position.y = -.001;
+        water.rotation.x = Math.PI * - 0.5;
+
+        this.scene.add(water);
+
+
+
+        const cubeTextureLoader = new THREE.CubeTextureLoader();
+        cubeTextureLoader.setPath('assets/');
+
+        const cubeTexture = cubeTextureLoader.load([
+            'posx.jpg', 'negx.jpg',
+            'posy.jpg', 'negy.jpg',
+            'posz.jpg', 'negz.jpg'
+        ]);
+
+        this.scene.background = cubeTexture;
+
+
         // textures
 
-        const loader = new THREE.TextureLoader();
         const texChecker = this.pixelTexture(loader.load('assets/checker.png'));
         const texChecker2 = this.pixelTexture(loader.load('assets/checker.png'));
         texChecker.repeat.set(3, 3);
@@ -152,6 +219,8 @@ export class GameComponent {
         target.position.set(0, 0, 0);
         spotLight.castShadow = true;
         this.scene.add(spotLight);
+
+
     }
 
     animationFrameRequest;
@@ -166,30 +235,60 @@ export class GameComponent {
         this.crystalMesh.position.y = .7 + Math.sin(t * 2) * .05;
         this.crystalMesh.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
 
+        // @ts-ignore
+        // this.refractor.material.uniforms.time.value = t;
+
         this.processKeys(d);
 
-        this.composer.render();
+        this.playerMesh.translateX(this.pvx);
+        this.playerMesh.translateY(this.pvy);
+        this.playerMesh.translateZ(this.pvz);
+
+        // this.composer.render();
+        this.renderer.render(this.scene, this.camera);
     }
 
     processKeys(t: number) {
-        const keys = Object.entries(this.heldKeys).filter(e => e[1] == true);
+        const keys = Object.entries(this.heldKeys);
+        const processMove = (pvkey: string, held: boolean, accel: number, decel: number, max: number) => {
+            if (accel > 0) {
+                if (held)
+                    this[pvkey] = Math.min(this[pvkey] + (accel * t), max);
+                else if (this[pvkey] > 0) {
+                    this[pvkey] = Math.max(this[pvkey] - (decel * t), 0);
+                }
+            }
+            else {
+                if (held) {
+                    this[pvkey] = Math.max(this[pvkey] + (accel * t), max);
+                }
+                else if (this[pvkey] < 0) {
+                    this[pvkey] = Math.min(this[pvkey] + (decel * t), 0);
+                }
+            }
+        }
+
         for (let i = 0; i < keys.length; i++) {
-            const [key] = keys[i];
+            const [key, held] = keys[i];
             switch (key) {
                 case "w": {
-                    this.playerMesh.translateZ(-1 * t);
+                    processMove("pvz", held, -.01, .02, -this.maxSpeedZ);
+                    // this.playerMesh.translateZ(-1 * t);
                     break;
                 }
                 case "a": {
-                    this.playerMesh.translateX(-1 * t);
+                    processMove("pvx", held, -.01, .02, -this.maxSpeedX);
+                    // this.playerMesh.translateX(-1 * t);
                     break;
                 }
                 case "s": {
-                    this.playerMesh.translateZ(1 * t);
+                    processMove("pvz", held, .01, .02, this.maxSpeedZ);
+                    // this.playerMesh.translateZ(1 * t);
                     break;
                 }
                 case "d": {
-                    this.playerMesh.translateX(1 * t);
+                    processMove("pvx", held, .01, .02, this.maxSpeedX);
+                    // this.playerMesh.translateX(1 * t);
                     break;
                 }
             }
