@@ -78,7 +78,7 @@ metadata:
 spec:
   commonName: dev.dotglitch.dev
   dnsNames:
-    - dotglitch.dev
+    - dev.dotglitch.dev
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-prod
