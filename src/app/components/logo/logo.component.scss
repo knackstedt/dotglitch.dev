@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 8px
+}
+
+app-symbol {
+    height: 100%;
+    width: 104px;
+}
+
+app-text {
+    height: 100%;
+}
+
+app-widetext {
+    height: 100%;
+}

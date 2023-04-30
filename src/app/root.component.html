@@ -1,0 +1,38 @@
+<mat-drawer-container class="root" autosize>
+    <mat-drawer #drawer mode="side">
+        <ul class="links">
+            <li *ngFor="let link of headLinks">
+                <a [href]="link.url" target="_blank">
+                    <button mat-button>
+                        {{link.label}}
+                    </button>
+                </a>
+            </li>
+        </ul>
+        <button mat-icon-button (click)="openInfo()" style="position: absolute; bottom: 16px; left: 16px;"><mat-icon>info</mat-icon></button>
+    </mat-drawer>
+
+    <ng-container>
+        <mat-toolbar>
+            <app-logo style="width: 320px"></app-logo>
+
+            <span style="flex: 1"></span>
+
+            <ng-container *ngIf="!isDesktop">
+                <button mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>
+                </button>
+            </ng-container>
+            <ng-container *ngIf="isDesktop">
+                <a *ngFor="let link of headLinks" [href]="link.url" target="_blank">
+                    <button mat-button>
+                        {{link.label}}
+                    </button>
+                </a>
+            </ng-container>
+        </mat-toolbar>
+            WIP.
+        <div class="mainstage">
+        </div>
+    </ng-container>
+</mat-drawer-container>
