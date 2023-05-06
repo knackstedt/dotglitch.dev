@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^15.2.4",
     "@angular/platform-browser-dynamic": "^15.2.4",
     "@angular/service-worker": "^15.2.4",
+    "@dimforge/rapier3d": "^0.11.2",
+    "@dimforge/rapier3d-compat": "^0.11.2",
     "@fontsource/fira-mono": "^4.5.10",
     "@fontsource/fira-sans": "^4.5.10",
     "@fontsource/material-icons": "^4.5.4",
