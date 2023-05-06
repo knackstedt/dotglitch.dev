@@ -18,8 +18,6 @@ git push
 # Push the new docker image
 docker push harbor.dotglitch.dev/library/dotglitch:$version
 
-export CI_SUBJECT_VERSION=
-
 # Inject the version number into the deployment files
 sed -i -e "s/:latest/:$version/g" k3s.yml
 sed -i -e "s/:latest/:$version/g" k3s.prod.yml
