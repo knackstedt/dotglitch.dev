@@ -1,6 +1,6 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 
-type MeshPhysicsResult = {
+export type MeshPhysicsResult = {
     collider: RAPIER.Collider,
     body: RAPIER.RigidBody
 }
@@ -15,7 +15,12 @@ export class RapierPhysics {
     // Docs: https://rapier.rs/docs/api/javascript/JavaScript3D/
 
     gravity = { x: 0.0, y: - 9.81, z: 0.0 };
-    world: RAPIER.World;
+
+    private _world: RAPIER.World;
+    private set world(w: RAPIER.World) {
+        this._world = w;
+    }
+    public get world() { return this._world};
 
 
     meshes = [];
@@ -39,21 +44,21 @@ export class RapierPhysics {
         return null;
     }
 
-    vector = { x: 0, y: 0, z: 0 };
     setMeshPosition(mesh: THREE.Mesh | THREE.InstancedMesh, position: THREE.Vector3, index = 0) {
+        const vector = { x: 0, y: 0, z: 0 };
         if (mesh['isInstancedMesh']) {
             const bodies = this.meshMap.get(mesh);
             const body = bodies[index];
 
-            body.setAngvel(this.vector);
-            body.setLinvel(this.vector);
+            body.setAngvel(vector);
+            body.setLinvel(vector);
             body.setTranslation(position);
         }
         else if (mesh.isMesh) {
             const body = this.meshMap.get(mesh);
 
-            body.setAngvel(this.vector);
-            body.setLinvel(this.vector);
+            body.setAngvel(vector);
+            body.setLinvel(vector);
             body.setTranslation(position);
         }
     }
