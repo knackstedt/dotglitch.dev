@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -15,7 +14,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RootComponent } from './root.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
-import { GameComponent } from 'src/app/components/game/game.component';
+import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { NavMenuComponent } from 'src/app/components/navmenu/menu.component';
+import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
+
 
 @NgModule({
     declarations: [
@@ -25,10 +27,12 @@ import { GameComponent } from 'src/app/components/game/game.component';
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
-        PortalModule,
         LogoComponent,
-        GameComponent,
+        CubeGraphicComponent,
+        NavMenuComponent,
         HttpClientModule,
+        NgxAppMenuDirective,
+        NgxContextMenuDirective,
         MatButtonModule,
         MatToolbarModule,
         MatSidenavModule,

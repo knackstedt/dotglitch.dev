@@ -2,12 +2,11 @@
     display: flex;
     align-items: center;
     height: 100%;
-    gap: 8px
 }
 
 app-symbol {
     height: 100%;
-    width: 104px;
+    aspect-ratio: 1;
 }
 
 app-text {
@@ -16,4 +15,12 @@ app-text {
 
 app-widetext {
     height: 100%;
+    transition: all 250ms ease;
+}
+
+
+.collapse {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
 }

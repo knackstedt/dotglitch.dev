@@ -6,6 +6,7 @@ import { WallpaperService } from './services/wallpaper.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
+import { ContextMenuItem } from '@dotglitch/ngx-ctx-menu';
 
 const desktopWidth = 1126;
 
@@ -26,6 +27,32 @@ export class RootComponent {
         { url: "https://dankpods.net", label: "DankPods" }
     ]
 
+    theme = 'dark';
+    isMobile = false;
+
+
+    readonly mainCtxItems: ContextMenuItem<any>[] = [
+        {
+            label: "Appearance",
+            children: [
+                {
+                    labelTemplate: () => `${this.theme == "light" ? '⏺' : '\u00A0\u00A0\u00A0'} Light`,
+                    action: () => {
+                        document.body.classList.remove("dark");
+                        document.body.classList.add("light");
+                    }
+                },
+                {
+                    labelTemplate: () => `${this.theme == "dark" ? '⏺' : '\u00A0\u00A0\u00A0\u00A0'} Dark`,
+                    action: () => {
+                        document.body.classList.remove("dark");
+                        document.body.classList.add("light");
+                    }
+                }
+            ]
+        }
+    ]
+
     constructor(
         private fetch: Fetch,
         private keyboard: KeyboardService,
@@ -40,16 +67,13 @@ export class RootComponent {
     }
 
 
-    isDesktop = true;
     @HostListener("window:resize", ["$event"])
     onResize() {
-        if (window.innerWidth >= desktopWidth)
-            this.isDesktop = true;
-        else
-            this.isDesktop = false;
+        this.isMobile = (window.innerHeight / window.innerWidth > 1.5) || window.innerWidth < 900;
+        document.body.classList.remove("mobile");
+        document.body.classList.remove("desktop");
 
-        // Close the drawer if a resize expands to show desktop buttons
-        if (this.isDesktop)
-            this.drawer?.close()
+        this.isMobile && document.body.classList.add("mobile");
+        !this.isMobile && document.body.classList.add("desktop");
     }
 }

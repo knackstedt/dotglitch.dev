@@ -1,38 +1,15 @@
-<mat-drawer-container class="root" autosize>
-    <mat-drawer #drawer mode="side">
-        <ul class="links">
-            <li *ngFor="let link of headLinks">
-                <a [href]="link.url" target="_blank">
-                    <button mat-button>
-                        {{link.label}}
-                    </button>
-                </a>
-            </li>
-        </ul>
-        <button mat-icon-button (click)="openInfo()" style="position: absolute; bottom: 16px; left: 16px;"><mat-icon>info</mat-icon></button>
-    </mat-drawer>
+<app-menu [isMobile]="isMobile"></app-menu>
 
-    <ng-container>
-        <mat-toolbar>
-            <app-logo style="width: 320px"></app-logo>
-
-            <span style="flex: 1"></span>
-
-            <ng-container *ngIf="!isDesktop">
-                <button mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>
-                </button>
-            </ng-container>
-            <ng-container *ngIf="isDesktop">
-                <a *ngFor="let link of headLinks" [href]="link.url" target="_blank">
-                    <button mat-button>
-                        {{link.label}}
-                    </button>
-                </a>
-            </ng-container>
-        </mat-toolbar>
-            <app-game></app-game>
-        <div class="mainstage">
+<div style="display: flex; flex-direction: column; width: 100%; contain: content">
+    <div class="mainstage">
+        <div>
+            <div>
+                <h1>DotGlitch.DEV</h1>
+                <h5>A repository of my random side projects</h5>
+            </div>
+            <div>
+                <app-cube-graphic style="width: 600px; height: 600px; display: block;"></app-cube-graphic>
+            </div>
         </div>
-    </ng-container>
-</mat-drawer-container>
+    </div>
+</div>
