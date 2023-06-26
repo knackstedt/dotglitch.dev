@@ -1,3 +1,4 @@
+import { PhysicsHooks } from '@dimforge/rapier3d';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 
 export type MeshPhysicsResult = {
@@ -22,9 +23,22 @@ export class RapierPhysics {
     }
     public get world() { return this._world};
 
-
+    eventQueue = new RAPIER.EventQueue(true);
+    physicsHooks: PhysicsHooks;
     meshes = [];
     meshMap = new WeakMap();
+
+    constructor() {
+        this.eventQueue.drainCollisionEvents((handle1, handle2, started) => {
+            /* Handle the collision event. */
+        });
+
+        this.eventQueue.drainContactForceEvents(event => {
+            let handle1 = event.collider1(); // Handle of the first collider involved in the event.
+            let handle2 = event.collider2(); // Handle of the second collider involved in the event.
+            /* Handle the contact force event. */
+        });
+    }
 
     addMesh(mesh: THREE.InstancedMesh, mass?: number, restitution?: number): MeshPhysicsResult[]
     addMesh(mesh: THREE.Mesh, mass?: number, restitution?: number): MeshPhysicsResult
@@ -65,7 +79,7 @@ export class RapierPhysics {
 
     physicsStep(delta: number) {
         this.world.timestep = delta;
-        this.world.step();
+        this.world.step(this.eventQueue, this.physicsHooks);
 
         for (let i = 0, l = this.meshes.length; i < l; i++) {
             const mesh = this.meshes[i];
