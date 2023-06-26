@@ -35,6 +35,7 @@ export class GameComponent {
 
     scene = new THREE.Scene();
     clock = new THREE.Clock();
+    controls: OrbitControls;
     renderer: THREE.WebGLRenderer;
     mouseCoords: THREE.Vector2;
     raycaster: THREE.Raycaster;
@@ -43,6 +44,7 @@ export class GameComponent {
 
     params = { pixelSize: 6, normalEdgeStrength: .3, depthEdgeStrength: .4, pixelAlignedPanning: true }
     crystalMesh: THREE.Mesh;
+    crystalMeshCollider: MeshPhysicsResult;
     refractor: Refractor;
 
     playerMesh: THREE.Mesh;
@@ -110,7 +112,7 @@ export class GameComponent {
         const renderPixelatedPass = new RenderPixelatedPass(6, this.scene, this.camera);
         this.composer.addPass(renderPixelatedPass);
 
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
+        const controls = this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         controls.maxZoom = 2;
 
         this.mouseCoords = new THREE.Vector2();
@@ -172,12 +174,10 @@ export class GameComponent {
 
         // Add random cubes & the plain
         if (true) {
-            const texChecker = this.pixelTexture(loader.load('assets/checker.png'));
             const texChecker2 = this.pixelTexture(loader.load('assets/checker.png'));
             const texChecker3 = this.pixelTexture(loader.load('assets/checker.png'));
-            texChecker.repeat.set(3, 3);
             texChecker2.repeat.set(1.5, 1.5);
-            texChecker3.repeat.set(50, 50);
+            texChecker3.repeat.set(600, 600);
 
             const boxMaterial = new THREE.MeshPhongMaterial({ map: texChecker2 });
 
@@ -218,6 +218,10 @@ export class GameComponent {
             player.castShadow = true;
             player.receiveShadow = true;
             player.position.set(0, .15, 1);
+
+
+            this.enableRotationViz(player);
+
             this.scene.add(player);
             this.playerPhysics = this.physics.addMesh(player, 400);
             this.playerController = this.physics.world.createCharacterController(0.01);
@@ -246,6 +250,11 @@ export class GameComponent {
             this.crystalMesh.receiveShadow = true;
             this.crystalMesh.castShadow = true;
             this.scene.add(this.crystalMesh);
+
+            const collider = this.crystalMeshCollider = this.physics.addMesh(this.crystalMesh, 10);
+            collider.body.setGravityScale(0, false);
+            collider.collider.setActiveEvents(1);
+            // this.physics.world.
         }
     }
 
@@ -267,7 +276,7 @@ export class GameComponent {
             this.raycaster.setFromCamera(this.mouseCoords, this.camera);
 
             // Creates a ball and throws it
-            const ballMass = 35;
+            const ballMass = 3500;
             const ballRadius = 0.2;
 
             const ball = new THREE.Mesh(new THREE.SphereGeometry(ballRadius, 14, 10), new THREE.MeshPhongMaterial({ color: 0x202020 }));
@@ -309,6 +318,7 @@ export class GameComponent {
     euler = new THREE.Euler();
     inputVelocity = new THREE.Vector3();
     quat = new THREE.Quaternion();
+    humanIsMovingPlayer = false;
     animate() {
         this.animationFrameRequest = requestAnimationFrame(this.animate.bind(this));
 
@@ -317,45 +327,96 @@ export class GameComponent {
 
         // @ts-ignore Is this still valid?
         this.crystalMesh.material.emissiveIntensity = Math.sin(t * 3) * .5 + .5;
-        this.crystalMesh.position.y = .7 + Math.sin(t * 2) * .05;
-        this.crystalMesh.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
+
+        this.crystalMeshCollider.body.setTranslation({ x: 0, y: .7 + Math.sin(t * 2) * .05, z: 0 }, false);
+        this.crystalMeshCollider.body.setRotation({ x: 0, y: this.stopGoEased(t, 2, 4) * 2 * Math.PI , z: 0, w: 0}, false);
 
         this.processKeys(d);
 
-
-        // Apply rotation
-        // this.playerPhysics.body.setAngvel(this.quat, false);
         // Apply translation
         this.playerPhysics.body.setLinvel(this.inputVelocity, true);
 
+        const quat = this.camera.quaternion.clone();
+        const rot = this.playerPhysics.body.rotation();
+        quat.x = rot.x;
+        quat.z = rot.z;
+        this.playerPhysics.body.setRotation(quat, false);
+
         this.physics.physicsStep(d);
 
-        this.followCam.getWorldPosition(this.camTo);
-        this.camera.position.lerpVectors(this.camera.position, this.camTo, d*10);
-        this.camera.lookAt(this.playerMesh.position);
+        // If the human is moving the player, tween the camera into position
+        if (this.humanIsMovingPlayer) {
+            this.followCam.getWorldPosition(this.camTo);
+            this.camera.position.lerpVectors(this.camera.position, this.camTo, d*10);
+            this.camera.lookAt(this.playerMesh.position);
+            this.controls.target = this.playerMesh.position;
+        }
 
         // this.composer.render();
         this.renderer.render(this.scene, this.camera);
     }
 
+    enableRotationViz(parent: THREE.Mesh) {
+        const geometryX = new THREE.BufferGeometry();
+        const geometryY = new THREE.BufferGeometry();
+        const geometryZ = new THREE.BufferGeometry();
+
+        const verticesX = [];
+        const verticesY = [];
+        const verticesZ = [];
+
+        verticesX.push(0, 0, 0);
+        verticesX.push(parent.scale.x, 0, 0);
+
+        verticesY.push(0, 0, 0);
+        verticesY.push(0, parent.scale.y, 0);
+
+        verticesZ.push(0, 0, 0);
+        verticesZ.push(0, 0, parent.scale.z);
+
+        geometryX.setAttribute('position', new THREE.Float32BufferAttribute(verticesX, 3));
+        geometryY.setAttribute('position', new THREE.Float32BufferAttribute(verticesY, 3));
+        geometryZ.setAttribute('position', new THREE.Float32BufferAttribute(verticesZ, 3));
+
+        const materialX = new THREE.LineBasicMaterial({ color: 0x0000ff, opacity: 1 });
+        const materialY = new THREE.LineBasicMaterial({ color: 0x00ffff, opacity: 1 });
+        const materialZ = new THREE.LineBasicMaterial({ color: 0xff0000, opacity: 1 });
+
+        const lineX = new THREE.LineSegments(geometryX, materialX);
+        const lineY = new THREE.LineSegments(geometryY, materialY);
+        const lineZ = new THREE.LineSegments(geometryZ, materialZ);
+        // line.updateMatrix();
+
+        // this.scene.add(line);
+        parent.add(lineX);
+        parent.add(lineY);
+        parent.add(lineZ);
+    }
+
     processKeys(t: number) {
         this.inputVelocity.set(0, 0, 0);
+        this.humanIsMovingPlayer = false;
 
         if (this.heldKeys['w']) {
+            this.humanIsMovingPlayer = true;
             this.inputVelocity.z = -200 * t;
         }
         else if (this.heldKeys['s']) {
+            this.humanIsMovingPlayer = true;
             this.inputVelocity.z = 200 * t;
         }
 
         if (this.heldKeys['a']) {
+            this.humanIsMovingPlayer = true;
             this.inputVelocity.x = -200 * t;
         }
         else if (this.heldKeys['d']) {
+            this.humanIsMovingPlayer = true;
             this.inputVelocity.x = 200 * t;
         }
 
         if (this.heldKeys[' ']) {
+            this.humanIsMovingPlayer = true;
             // this.playerPhysics.body.setTranslation(new RAPIER.Vector3(0, 1, 0), false);
             this.inputVelocity.y = 200 * t;
         }
