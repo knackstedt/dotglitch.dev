@@ -42,6 +42,7 @@ export class CubeGraphicComponent {
 
     params = { pixelSize: 6, normalEdgeStrength: .3, depthEdgeStrength: .4, pixelAlignedPanning: true };
     crystalMesh: THREE.Mesh;
+    cubeGroup: THREE.Group;
 
     constructor(private viewContainer: ViewContainerRef) { }
 
@@ -64,18 +65,18 @@ export class CubeGraphicComponent {
         const aspectRatio = bounds.width / bounds.height;
 
         this.camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.1, 200);
-        this.camera.position.set(-3, 2, 3);
+        this.camera.position.set(-6, 6, 6);
 
-        this.followCamPivot = new THREE.Object3D();
-        this.followCamPivot.rotation.order = 'YXZ';
-        this.followCam = new THREE.Object3D();
-        this.followCam.position.y = 2;
-        this.followCam.position.z = 2;
-        this.followCamPivot.add(this.followCam);
+        // this.followCamPivot = new THREE.Object3D();
+        // this.followCamPivot.rotation.order = 'YXZ';
+        // this.followCam = new THREE.Object3D();
+        // this.followCam.position.y = 2;
+        // this.followCam.position.z = 2;
+        // this.followCamPivot.add(this.followCam);
 
         // this.scene.background = new THREE.Color(0x151729);
 
-        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true });
+        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
         this.renderer.shadowMap.enabled = true;
         this.composer = new EffectComposer(this.renderer);
         // const renderPixelatedPass = new RenderPixelatedPass(6, this.scene, this.camera);
@@ -126,7 +127,7 @@ export class CubeGraphicComponent {
         const loader = new THREE.TextureLoader();
 
         // Add the crystal
-        if (true) {
+        if (false) {
             const radius = .2;
             const geometry = new THREE.IcosahedronGeometry(radius);
             this.crystalMesh = new THREE.Mesh(
@@ -177,7 +178,7 @@ export class CubeGraphicComponent {
             const group = new THREE.Group();
 
             const placeWireframeCube = (x, y, z) => {
-                const size = .4;
+                const size = 1;
                 const cube = this.box(size, size, size);
 
                 const geometry = new WireframeGeometry2(cube);
@@ -187,14 +188,19 @@ export class CubeGraphicComponent {
                 console.log("mes")
             }
 
-            for (let x = 0; x < 3; x++)
-                for (let y = 0; y < 3; y++)
-                    for (let z = 0; z < 3; z++)
+            for (let x = -1; x < 2; x++)
+                for (let y = -1; y < 2; y++)
+                    for (let z = -1; z < 2; z++)
                         placeWireframeCube(x, y, z);
 
-            group.position.x = -(.5 + -.1);
-            group.position.z = -(.5 + -.1);
-            this.scene.add(group);
+            this.scene.add(this.cubeGroup = group);
+        }
+
+        // Show 0,0,0 sphere
+        if (false) {
+            const sphereG = new THREE.SphereGeometry(.2);
+            const sphere = new THREE.Mesh(sphereG, new THREE.MeshPhongMaterial({ color: 0xff0000 }));
+            this.scene.add(sphere);
         }
     }
 
@@ -273,9 +279,12 @@ export class CubeGraphicComponent {
         // @ts-ignore Is this still valid?
         // this.crystalMesh.material.emissiveIntensity = Math.sin(t * 3) * .5 + .5;
 
-        this.crystalMesh.material['emissiveIntensity'] = Math.sin(t * 3) * .5 + .5;
-        this.crystalMesh.position.y = Math.sin(t * 2) * .05;
-        this.crystalMesh.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
+        // this.crystalMesh.material['emissiveIntensity'] = Math.sin(t * 3) * .5 + .5;
+        // this.crystalMesh.position.y = Math.sin(t * 2) * .05;
+        // this.crystalMesh.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
+
+        this.cubeGroup.position.y = Math.sin(t * 2) * .05;
+        this.cubeGroup.rotation.y = this.stopGoEased(t, 2, 4) * 2 * Math.PI;
 
 
         this.composer.render();
