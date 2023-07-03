@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 
+import * as MonacoEditor from 'monaco-editor';
+
 // Monaco has a UMD loader that requires this
 // @ts-ignore
 window.require = { paths: { 'vs': '/lib/monaco/vs' } };
@@ -22,21 +24,7 @@ function installMonaco() {
     isInstalled = true;
 }
 
-let Monaco: any;
-
-const settings = {
-    automaticLayout: true,
-    theme: 'vs-dark',
-    scrollBeyondLastLine: false,
-    language: "auto",
-    colorDecorators: true,
-    folding: true,
-    scrollBeyondLastColumn: false,
-    tabSize: 2,
-    minimap: {
-        enabled: true
-    }
-};
+let Monaco: typeof MonacoEditor;
 
 @Component({
     selector: 'app-vscode',
@@ -48,7 +36,7 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
     @ViewChild("editor", { read: ElementRef, static: false }) editorElement: ElementRef;
 
     isDirty = false;
-    editor;
+    editor: MonacoEditor.editor.IStandaloneCodeEditor;
     filename: string;
 
     private _code: string;
@@ -71,29 +59,50 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
             'scss': 'css'
         }[value] || "auto"
 
-        if (this.editor) {
-            const model = this.editor.getModel();
-            Monaco.editor.setModelLanguage(model, this._language);
-        }
+        // if (this.editor) {
+        //     const model = this.editor.getModel();
+        //     Monaco.editor.setModelLanguage(model, this._language);
+        // }
     }
     get language() { return this._language }
 
-    settings = {
+    @Input() tabSize = 2;
+    @Input() minimapEnabled = true;
+    @Input() scrollbarAlwaysConsumeMouseWheel = 2;
+    @Input() readOnly = false;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+    // @Input() tabSize = 2;
+
+    private _settings: MonacoEditor.editor.IStandaloneEditorConstructionOptions = {
         automaticLayout: true,
         theme: 'vs-dark',
         scrollBeyondLastLine: false,
-        language: "auto",
         colorDecorators: true,
         folding: true,
-        scrollBeyondLastColumn: false,
-        tabSize: 2,
+        scrollBeyondLastColumn: 0,
         minimap: {
             enabled: true
         },
         scrollbar: {
-            alwaysConsumeMouseWheel: false
-        }
+            alwaysConsumeMouseWheel: false,
+            // scrollByPage: true
+        },
+        smoothScrolling: true,
+        mouseWheelScrollSensitivity: 2
     };
+    get settings() {
+        return {
+            ...this._settings,
+            language: this.language,
+            tabSize: this.tabSize,
+            readOnly: this.readOnly,
+        } as MonacoEditor.editor.IStandaloneEditorConstructionOptions;
+    }
 
     verticalScrollExhausted = false;
 
@@ -101,16 +110,15 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
         installMonaco();
     }
 
-    ngAfterViewInit() {
+    ngOnChanges() {
+        if (this.editor) {
+            this.editor?.dispose();
+            this.createEditor();
+        }
+    }
+    async ngAfterViewInit() {
         // this.settings.language = "json";
-        this.initEditor();
-    }
-    ngOnDestroy(): void {
-        this.editor?.dispose();
-    }
 
-    async initEditor() {
-        // Ensure Monaco is loaded.
         await new Promise((res, rej) => {
             let count = 0;
             let i = window.setInterval(() => {
@@ -129,28 +137,22 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
             }, 100);
         });
 
-        this.settings.language = this._language;
+        this.createEditor()
+    }
 
-        let editor = this.editor = Monaco.editor.create(this.editorElement.nativeElement, this.settings);
+    ngOnDestroy(): void {
+        this.editor?.dispose();
+    }
+
+    private createEditor() {
+        let editor = this.editor = Monaco.editor.create(this.editorElement.nativeElement, this.settings as any);
 
         if (this.code)
             editor.setValue(this.code);
-        // }
-        // else {
-        //     this.code = JSON.stringify(Monaco.editor, null, 4);
-        //     editor.setValue(this.code);
-        // }'
 
         editor.onDidChangeModelContent(() => {
             this.isDirty = this.editor.getValue() != this.code;
         });
-
-        // editor.onMouseWheel((...args) => {
-        //     console.log("onMouseWheel", args)
-        // });
-        // editor.onDidScrollChange((...args) => {
-        //     console.log("OnDidScrollChange", args)
-        // });
     }
 
     download() {

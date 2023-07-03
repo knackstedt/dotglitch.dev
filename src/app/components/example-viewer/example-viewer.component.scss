@@ -1,13 +1,26 @@
 :host {
-    height: 500px;
+    height: 700px;
     display: flex;
     overflow: hidden;
-
+    background: #212121;
 }
 mat-tab-group {
-    width: 75%;
+    width: 60%;
 }
 .portal {
-    width: 25%;
+    width: 40%;
     padding: 24px;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        top: 24px;
+        bottom: 24px;
+        width: 1px;
+        background-color: #3f3f3f;
+    }
+}
+::ng-deep .light app-example-viewer .portal::before {
+    background-color: #c0c0c0;
 }

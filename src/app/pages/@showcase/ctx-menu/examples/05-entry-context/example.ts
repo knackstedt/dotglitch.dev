@@ -1,5 +1,6 @@
 import { NgForOf } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { ContextMenuItem, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
 
 type Entry = {
@@ -12,7 +13,7 @@ type Entry = {
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
-    imports: [ NgForOf, NgxContextMenuDirective ],
+    imports: [ NgForOf, NgxContextMenuDirective, MatButtonModule ],
     standalone: true
 })
 export class ExampleEntryContextComponent {
