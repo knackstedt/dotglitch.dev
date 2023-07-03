@@ -1,5 +1,15 @@
 <div #diagram></div>
 
+<mat-form-field style="width: 400px;" appearance="outline">
+    <mat-label>Regular Expression</mat-label>
+    <input matInput #text type="text" [value]="regexText" (keyup)="regexText = text.value"/>
+</mat-form-field>
+
 <div>
-    <input #text type="text" [value]="regexText" (keyup)="regexText = text.value"/>
+    <mat-form-field>
+        <mat-label>Samples</mat-label>
+        <mat-select (selectionChange)="regexText = $event.value">
+            <mat-option *ngFor="let sample of samples" [value]="sample.value">{{sample.label}}</mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
