@@ -8,6 +8,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-builders/custom-webpack": "^15.0.0",
     "@angular/animations": "^15.2.4",
     "@angular/cdk": "^15.2.4",
     "@angular/common": "^15.2.4",
@@ -28,6 +29,7 @@
     "@fontsource/material-icons-outlined": "^5.0.3",
     "@types/three": "^0.150.2",
     "monaco-editor": "^0.39.0",
+    "raw-loader": "^4.0.2",
     "rxjs": "~7.5.0",
     "three": "^0.151.3",
     "tslib": "^2.3.0",

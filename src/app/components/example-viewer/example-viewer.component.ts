@@ -1,5 +1,6 @@
-import { NgForOf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ComponentPortal, PortalModule } from '@angular/cdk/portal';
+import { AsyncPipe, NgForOf } from '@angular/common';
+import { Component, Input, OnInit, Type } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
 
@@ -10,20 +11,27 @@ import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
     imports: [
         NgForOf,
         MatTabsModule,
-        VscodeComponent
+        VscodeComponent,
+        AsyncPipe,
+        PortalModule
     ],
     standalone: true
 })
 export class ExampleViewerComponent implements OnInit {
 
     @Input() example: {
-        label: string,
-        value: string
-    }[] = [];
+        component: Type<any>,
+        files: {
+            label: string,
+            value: any;
+        }[]
+    };
+
+    componentPortal: ComponentPortal<any>;
 
     constructor() { }
 
-    ngOnInit() {
+    async ngOnInit() {
+        this.componentPortal = new ComponentPortal(this.example.component);
     }
-
 }

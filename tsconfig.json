@@ -28,7 +28,11 @@
     ],
     "paths": {
       "path": ["src/polyfills.ts"]
-    }
+    },
+    "typeRoots": [
+        "node_modules/@types",
+        "./src/types"
+    ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

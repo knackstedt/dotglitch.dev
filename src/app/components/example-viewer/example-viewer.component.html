@@ -1,7 +1,9 @@
 <mat-tab-group>
-    <mat-tab *ngFor="let tab of example" [label]="tab.label || 'Example'">
-        <app-vscode [code]="tab.value" [language]="tab.label.split('.').pop()"/>
+    <mat-tab *ngFor="let tab of example.files" [label]="tab.label || 'Example'">
+        <app-vscode [code]="tab.value.default" [language]="tab.label.split('.').pop()"/>
     </mat-tab>
 </mat-tab-group>
 
-<!-- TODO: Live viewer -->
+<div class="portal">
+    <ng-template [cdkPortalOutlet]="componentPortal"></ng-template>
+</div>

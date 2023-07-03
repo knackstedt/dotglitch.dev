@@ -1,5 +1,13 @@
 :host {
     height: 500px;
-    display: block;
+    display: flex;
     overflow: hidden;
+
+}
+mat-tab-group {
+    width: 75%;
+}
+.portal {
+    width: 25%;
+    padding: 24px;
 }
