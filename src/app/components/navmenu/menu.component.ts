@@ -61,7 +61,7 @@ export class NavMenuComponent {
 
     collapsed = false;
     showAdvancedMenu = true;
-    theme = 'dark';
+    theme = document.body.classList.contains('light') ? 'light' : 'dark';
 
     profileLinks: ContextMenuItem[] = [
 
@@ -83,6 +83,7 @@ export class NavMenuComponent {
                     // label: "Light",
                     labelTemplate: () => `${this.theme == "light" ? '⏺' : '\u00A0\u00A0\u00A0'} Light`,
                     action: () => {
+                        this.theme = "light";
                         document.body.classList.remove("dark");
                         document.body.classList.add("light");
                     }
@@ -91,8 +92,9 @@ export class NavMenuComponent {
                     // label: "Dark",
                     labelTemplate: () => `${this.theme == "dark" ? '⏺' : '\u00A0\u00A0\u00A0\u00A0'} Dark`,
                     action: () => {
-                        document.body.classList.remove("dark");
-                        document.body.classList.add("light");
+                        this.theme = "dark";
+                        document.body.classList.remove("light");
+                        document.body.classList.add("dark");
                     }
                 }
             ]
