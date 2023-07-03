@@ -1,7 +1,10 @@
 <div>
     <h1 align="center">ngx-lazy-loader</h1>
     <p align="center">
-        `ngx-lazy-loader` provides a robust context menu and app menu for Angular applications.
+        `ngx-lazy-loader` provides a robust lazy component loading mechanism for Angular applications.
+        <br/>
+        Since it doesn't rely on Angular Router, it has support for binding @Input and @Output properties, as well as creating
+        more dynamic entry resolution that can rely on custom loader functions or regular expressions.
     </p>
 
     <div>
@@ -43,13 +46,13 @@
             style="height: 350px"
         />
 
-        <h3>Create Registry</h3>
+        <h3>Create your primary registry</h3>
         <app-vscode
             [code]="registryCode"
             language="ts"
             [tabSize]="4"
             [readOnly]="true"
-            style="height: 350px"
+            style="height: 160px"
         />
     </div>
 </div>
