@@ -59,10 +59,9 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
             throw new TypeError("Value must be of type string");
 
         this._code = value;
-        if (this.editor)
-            this.editor.setValue(this.code);
+        this.editor?.setValue(this.code);
     };
-    get code() { return this._code.trim() }
+    get code() { return this._code?.trim() }
 
     private _language: string;
     @Input() set language(value: string) {
