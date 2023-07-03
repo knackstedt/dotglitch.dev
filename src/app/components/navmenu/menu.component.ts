@@ -2,8 +2,9 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { ContextMenuItem, NgxAppMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { BaseCtx, ContextMenuItem, NgxAppMenuDirective } from '@dotglitch/ngx-ctx-menu';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
+import { RegisteredComponents } from 'src/app/component.registry';
 
 
 @Component({
@@ -21,26 +22,40 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
     standalone: true
 })
 export class NavMenuComponent {
-    rootItems: any[] = [
-        {
-            label: "Angular context menu",
-            link: "https://www.npmjs.com/package/@dotglitch/ngx-ctx-menu",
-            linkTarget: "_blank",
-            icon: "inventory_2"
-        },
-        {
-            label: "Angular lazy loader",
-            link: "https://www.npmjs.com/package/@dotglitch/ngx-lazy-loader",
-            linkTarget: "_blank",
-            icon: "inventory_2"
-        },
-        {
-            label: "Osiris (Web Desktop)",
-            link: "https://github.com/knackstedt/osiris",
-            linkTarget: "_blank",
-            icon: "desktop_windows"
-        }
-    ];
+
+    readonly pages: BaseCtx[] = RegisteredComponents
+        .filter(c => !c['hidden'])
+        .sort((a, b) => (a['order'] || 0) - (b['order'] || 0))
+        .map(i => {
+
+            return {
+                label: i.id,
+                link: '#/' + i.id,
+                // linkTarget: "_self",
+                ...i
+            }
+        });
+
+    // rootItems: any[] = [
+    //     {
+    //         label: "Angular context menu",
+    //         link: "https://www.npmjs.com/package/@dotglitch/ngx-ctx-menu",
+    //         linkTarget: "_blank",
+    //         icon: "inventory_2"
+    //     },
+    //     {
+    //         label: "Angular lazy loader",
+    //         link: "https://www.npmjs.com/package/@dotglitch/ngx-lazy-loader",
+    //         linkTarget: "_blank",
+    //         icon: "inventory_2"
+    //     },
+    //     {
+    //         label: "Osiris (Web Desktop)",
+    //         link: "https://github.com/knackstedt/osiris",
+    //         linkTarget: "_blank",
+    //         icon: "desktop_windows"
+    //     }
+    // ];
 
     @Input() isMobile = false;
 

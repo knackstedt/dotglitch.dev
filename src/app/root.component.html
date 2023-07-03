@@ -1,15 +1,9 @@
 <app-menu [isMobile]="isMobile"></app-menu>
 
 <div style="display: flex; flex-direction: column; width: 100%; contain: content">
-    <div class="mainstage">
-        <div>
-            <div>
-                <h1>DotGlitch.DEV</h1>
-                <h5>A repository of my random side projects</h5>
-            </div>
-            <div>
-                <app-cube-graphic style="width: 600px; height: 600px; display: block;"></app-cube-graphic>
-            </div>
-        </div>
-    </div>
+    <ngx-lazy-loader
+        *ngIf="navigator.activePage$.value?.id"
+        [component]="navigator.activePage$.value?.id"
+        [inputs]="navigator.activePage$.value?.args"
+    />
 </div>

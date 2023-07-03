@@ -17,6 +17,8 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
 import { NavMenuComponent } from 'src/app/components/navmenu/menu.component';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
+import { ComponentResolveStrategy, NgxLazyLoaderModule } from '@dotglitch/ngx-lazy-loader';
+import { RegisteredComponents } from 'src/app/component.registry';
 
 
 @NgModule({
@@ -28,7 +30,6 @@ import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graph
         BrowserModule,
         BrowserAnimationsModule,
         LogoComponent,
-        CubeGraphicComponent,
         NavMenuComponent,
         HttpClientModule,
         NgxAppMenuDirective,
@@ -38,6 +39,10 @@ import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graph
         MatSidenavModule,
         MatDialogModule,
         MatIconModule,
+        NgxLazyLoaderModule.forRoot({
+            entries: RegisteredComponents,
+            // componentResolveStrategy: ComponentResolveStrategy.PickFirst,
+        }),
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable

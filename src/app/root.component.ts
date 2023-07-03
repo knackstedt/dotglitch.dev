@@ -7,6 +7,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
 import { ContextMenuItem } from '@dotglitch/ngx-ctx-menu';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 const desktopWidth = 1126;
 
@@ -56,6 +57,7 @@ export class RootComponent {
     constructor(
         private fetch: Fetch,
         private keyboard: KeyboardService,
+        public navigator: NavigationService,
         public wallpaper: WallpaperService,
         private dialog: MatDialog
     ) {

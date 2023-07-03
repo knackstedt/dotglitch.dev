@@ -7,36 +7,34 @@
     <hr/>
 
     <!-- Create a side-by-side pane that can transition between views -->
-    <ng-container *ngFor="let rootitem of rootItems">
+    <ng-container *ngFor="let page of pages">
         <a
             class="item"
-            *ngIf="rootitem.link"
-            [class.selected]="rootitem.state?.includes('selected') ? true : null"
-            [matTooltip]="collapsed ? rootitem.label : null"
-            [href]="rootitem.link ? rootitem.link : null"
-            [target]="rootitem.linkTarget || null"
+            *ngIf="page.link"
+            [matTooltip]="collapsed ? page.label : null"
+            [href]="page.link ? page.link : null"
+            [target]="page.linkTarget || null"
         >
             <span class="icon">
-                <mat-icon [fontIcon]="rootitem.icon" [style.color]="rootitem.color" />
+                <mat-icon [fontIcon]="page.icon" [style.color]="page['color']" />
             </span>
             <span class="label">
-                {{rootitem.label}}
-                <mat-icon *ngIf="rootitem.linkTarget" style="width: 16px; height: 16px; font-size: 16px; vertical-align: middle;">open_in_new</mat-icon>
+                {{page.label}}
+                <mat-icon *ngIf="page.linkTarget" style="width: 16px; height: 16px; font-size: 16px; vertical-align: middle;">open_in_new</mat-icon>
             </span>
         </a>
 
         <div
             class="item"
-            *ngIf="!rootitem.link"
-            [class.selected]="rootitem.state?.includes('selected') ? true : null"
-            [matTooltip]="collapsed ? rootitem.label : null"
-            [ngx-app-menu]="rootitem['children']"
+            *ngIf="!page.link"
+            [matTooltip]="collapsed ? page.label : null"
+            [ngx-app-menu]="page['children']"
             [ngx-app-menu-config]="{ position: 'right', alignment: 'start', customClass: ['dt-menu'] }"
         >
             <span class="icon">
-                <mat-icon [fontIcon]="rootitem.icon" [style.color]="rootitem.color" />
+                <mat-icon [fontIcon]="page.icon" [style.color]="page['color']" />
             </span>
-            <span class="label">{{rootitem.label}}</span>
+            <span class="label">{{page.label}}</span>
         </div>
     </ng-container>
 
@@ -62,6 +60,7 @@
         [matTooltip]="collapsed ? 'Jane Doe' : null"
         [ngx-app-menu]="profileLinks"
         [ngx-app-menu-config]="{ position: 'right', alignment: 'end', customClass: ['nav-menu']}"
+        [ngx-app-menu-context]=""
     >
         <!-- Overlay search functionality -->
         <span class="icon">

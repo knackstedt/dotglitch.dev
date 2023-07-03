@@ -39,11 +39,6 @@ export class KeyboardService {
         window.addEventListener("keydown", (evt) => this.onKeyDown(evt));
         window.addEventListener("keyup", (evt) => this.onKeyUp(evt));
         window.addEventListener("keypress", (evt) => this.onKeyPress(evt));
-
-        window.addEventListener('hashchange', function () {
-            console.log("Hash Change");
-            debugger;
-        }, false);
     }
 
     private onKeyDown(evt: KeyboardEvent) {
