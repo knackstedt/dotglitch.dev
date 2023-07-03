@@ -9,6 +9,7 @@ import ChildrenExample from "./examples/03-children";
 import DynamicChildrenExample from "./examples/04-dynamic-children";
 import EntryContextExample from "./examples/05-entry-context";
 import CustomTriggersExample from "./examples/06-custom-triggers";
+import ChildTemplateExample from "./examples/07-child-template";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class CtxMenuComponent {
     DynamicChildrenExample = DynamicChildrenExample;
     EntryContextExample = EntryContextExample;
     CustomTriggersExample = CustomTriggersExample;
+    ChildTemplateExample = ChildTemplateExample;
 
     readonly importCode = `
 import { NgModule } from '@angular/core';

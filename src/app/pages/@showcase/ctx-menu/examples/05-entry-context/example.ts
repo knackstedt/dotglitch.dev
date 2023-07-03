@@ -53,9 +53,15 @@ export class ExampleEntryContextComponent {
         },
         {
             label: "Delete",
-            action: async item => {
-                console.log(item);
-            }
+            action: async item => console.log(item)
+        },
+        {
+            label: "Visible for Yellow",
+            isVisible: (data) => data.color == "yellow"
+        },
+        {
+            label: "Disabled for Red",
+            isDisabled: (data) => data.color == "red"
         }
     ];
 }
