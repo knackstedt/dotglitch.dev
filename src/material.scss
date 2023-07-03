@@ -13,8 +13,8 @@ $light-theme: mat.define-light-theme((
         accent: $light-accent,
         warn: $light-warn,
     ),
-    typography: $app-typography
-));
+    typography: $app-typography)
+);
 
 $dark-primary: mat.define-palette(mat.$blue-palette, 700, 500, 800);
 $dark-accent: mat.define-palette(mat.$purple-palette, 700, 500, 800);
@@ -26,46 +26,59 @@ $dark-theme: mat.define-dark-theme((
         accent: $dark-accent,
         warn: $dark-warn,
     ),
-    typography: $app-typography
-));
-@include mat.all-component-themes($dark-theme);
+    typography: $app-typography)
+);
 
-// dark
 :root {
-    --text-color: #efefef;
-    --background-color: #121212;
+    --mdc-typography-body1-line-height: 30px;
+    --mdc-typography-body1-font-size: 14px;
+    --mdc-typography-button-letter-spacing: 0;
+    --mdc-typography-body2-letter-spacing: 0;
+    --mdc-typography-body1-letter-spacing: 0;
+    --mdc-typography-subtitle2-letter-spacing: 0;
+    --mdc-typography-subtitle1-letter-spacing: 0;
+    --mdc-typography-headline6-letter-spacing: 0;
+    --mdc-typography-caption-letter-spacing: 0;
 }
+
+@include mat.all-component-themes($dark-theme);
 
 .light {
     @include mat.all-component-colors($light-theme);
-
-    --text-color: #121212;
-    --background-color: #efefef;
-    --ngx-ctx-menu-text-color: #111;
 }
 
-
-.mat-button {
-    font-size: 15px;
-}
-
-.mat-tab-group,
 .mat-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-mdc-tab-group {
     height: 100%;
 }
 
+.mat-mdc-tab {
+    flex-grow: 0!important;
+}
+
+.mat-mdc-tab-body-wrapper {
+    flex: 1;
+}
+.mat-mdc-tab-body-content {
+    overflow: hidden;
+}
 
 .mat-drawer-container {
-    width: 100%;
+    height: 100%;
 }
 
-.mat-dialog-container {
-    max-height: 80vh!important;
-    border-radius: 9px;
+.mat-icon {
+    vertical-align: middle;
 }
 
-mat-drawer-content.mat-drawer-content {
-    display: flex;
-    flex-direction: column;
+mat-sidenav-container.mat-sidenav-container {
+    background-color: unset;
+    color: unset;
 }
-
+mat-sidenav.mat-sidenav {
+    background-color: unset;
+    color: unset;
+}

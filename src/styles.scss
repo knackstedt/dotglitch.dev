@@ -28,3 +28,15 @@ mat-icon.material-icons {
     font-size: 24px;
 }
 
+
+// dark
+:root {
+    --text-color: #efefef;
+    --background-color: #121212;
+}
+
+.light {
+    --text-color: #121212;
+    --background-color: #efefef;
+    --ngx-ctx-menu-text-color: #111;
+}
