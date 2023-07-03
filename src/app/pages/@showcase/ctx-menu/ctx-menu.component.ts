@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExampleViewerComponent } from 'src/app/components/example-viewer/example-viewer.component';
+import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
 
 import BasicExample from "./examples/00-basic";
 import StylingExample from "./examples/01-styling";
@@ -7,6 +8,7 @@ import ActionExample from "./examples/02-actions";
 import ChildrenExample from "./examples/03-children";
 import DynamicChildrenExample from "./examples/04-dynamic-children";
 import EntryContextExample from "./examples/05-entry-context";
+import CustomTriggersExample from "./examples/06-custom-triggers";
 
 
 @Component({
@@ -15,6 +17,7 @@ import EntryContextExample from "./examples/05-entry-context";
     styleUrls: ['./ctx-menu.component.scss'],
     imports: [
         ExampleViewerComponent,
+        VscodeComponent
     ],
     standalone: true
 })
@@ -25,7 +28,25 @@ export class CtxMenuComponent {
     ChildrenExample = ChildrenExample;
     DynamicChildrenExample = DynamicChildrenExample;
     EntryContextExample = EntryContextExample;
+    CustomTriggersExample = CustomTriggersExample;
 
+    readonly importCode = `
+import { NgModule } from '@angular/core';
+import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { AppComponent } from './app.component';
+
+@NgModule({
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        NgxAppMenuDirective,
+        NgxContextMenuDirective,
+        ...
+    ]
+    bootstrap: [AppComponent]
+})
+export class AppModule { }`
 
     constructor() { }
 

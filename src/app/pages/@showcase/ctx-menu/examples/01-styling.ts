@@ -3,15 +3,15 @@ import { ExampleStyledComponent } from 'src/app/pages/@showcase/ctx-menu/example
 export default {
     files: [
         {
-            label: "template.ts",
+            label: "example.ts",
             value: require('!!raw-loader!./01-styling/example.ts')
         },
         {
-            label: "template.html",
+            label: "example.html",
             value: require('!!raw-loader!./01-styling/example.html')
         },
         {
-            label: "template.css",
+            label: "example.scss",
             value: require('!!raw-loader!./01-styling/example.scss')
         }
     ],

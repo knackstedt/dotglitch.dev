@@ -3,11 +3,11 @@ import { ExampleDynamicChildrenComponent } from 'src/app/pages/@showcase/ctx-men
 export default {
     files: [
         {
-            label: "template.ts",
+            label: "example.ts",
             value: require('!!raw-loader!./04-dynamic-children/example.ts')
         },
         {
-            label: "template.html",
+            label: "example.html",
             value: require('!!raw-loader!./04-dynamic-children/example.html')
         }
     ],

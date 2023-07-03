@@ -100,7 +100,7 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
             ...this._settings,
             language: this.language,
             tabSize: this.tabSize,
-            readOnly: this.readOnly,
+            readOnly: this.readOnly
         } as MonacoEditor.editor.IStandaloneEditorConstructionOptions;
     }
 

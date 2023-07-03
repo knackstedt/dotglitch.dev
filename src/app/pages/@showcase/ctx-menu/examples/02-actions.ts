@@ -3,11 +3,11 @@ import { ExampleActionComponent } from 'src/app/pages/@showcase/ctx-menu/example
 export default {
     files: [
         {
-            label: "template.ts",
+            label: "example.ts",
             value: require('!!raw-loader!./02-actions/example.ts')
         },
         {
-            label: "template.html",
+            label: "example.html",
             value: require('!!raw-loader!./02-actions/example.html')
         }
     ],

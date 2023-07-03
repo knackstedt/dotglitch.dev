@@ -1,6 +1,11 @@
 <mat-tab-group>
     <mat-tab *ngFor="let tab of example.files" [label]="tab.label || 'Example'">
-        <app-vscode [code]="tab.value.default" [language]="tab.label.split('.').pop()"/>
+        <app-vscode
+            [code]="tab.value.default"
+            [language]="tab.label.split('.').pop()"
+            [tabSize]="4"
+            [readOnly]="true"
+        />
     </mat-tab>
 </mat-tab-group>
 

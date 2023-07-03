@@ -11,16 +11,28 @@ mat-tab-group {
     width: 40%;
     padding: 24px;
     position: relative;
+    background-color: #181818;
+    // margin-left: 4px;
+
     &::before {
         content: "";
         position: absolute;
-        left: 1px;
-        top: 24px;
-        bottom: 24px;
+        left: 0;
+        top: 0;
+        bottom: 0;
         width: 1px;
-        background-color: #3f3f3f;
+        background-color: #2a2a2a;
     }
 }
-::ng-deep .light app-example-viewer .portal::before {
-    background-color: #c0c0c0;
+
+::ng-deep .light app-example-viewer {
+    background: #dedede;
+
+    .portal{
+        background-color: #e7e7e7;
+
+        ::before {
+            background-color: #d5d5d5;
+        }
+    }
 }

@@ -3,12 +3,16 @@ import { ExampleEntryContextComponent } from 'src/app/pages/@showcase/ctx-menu/e
 export default {
     files: [
         {
-            label: "template.ts",
+            label: "example.ts",
             value: require('!!raw-loader!./05-entry-context/example.ts')
         },
         {
-            label: "template.html",
+            label: "example.html",
             value: require('!!raw-loader!./05-entry-context/example.html')
+        },
+        {
+            label: "example.scss",
+            value: require('!!raw-loader!./05-entry-context/example.scss')
         }
     ],
     component: ExampleEntryContextComponent
