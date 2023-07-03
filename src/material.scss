@@ -74,6 +74,16 @@ $dark-theme: mat.define-dark-theme((
     vertical-align: middle;
 }
 
+.dark {
+    --mdc-theme-surface: #212121;
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: #212121;
+    }
+    .mat-mdc-form-field-focus-overlay {
+        background-color: rgba(255, 255, 255, 0.27)
+    }
+}
+
 mat-sidenav-container.mat-sidenav-container {
     background-color: unset;
     color: unset;
