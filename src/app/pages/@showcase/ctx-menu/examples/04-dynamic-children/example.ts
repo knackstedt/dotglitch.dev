@@ -20,7 +20,7 @@ export class ExampleDynamicChildrenComponent {
             label: "Free Use Assets",
             childrenResolver: (data) => new Promise((res) => {
                 setTimeout(() => {
-                    return [
+                    res([
                         {
                             label: "Material Icons",
                             link: "https://fonts.google.com/icons?icon.set=Material+Icons&icon.query=dashboard"
@@ -37,7 +37,7 @@ export class ExampleDynamicChildrenComponent {
                             label: "Hero Patterns",
                             link: "https://heropatterns.com/"
                         }
-                    ];
+                    ]);
                 }, 5000);
             }),
         }
