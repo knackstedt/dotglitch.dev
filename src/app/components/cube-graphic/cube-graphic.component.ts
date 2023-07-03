@@ -30,6 +30,8 @@ export class CubeGraphicComponent {
     camera: THREE.PerspectiveCamera;
     camTo = new THREE.Vector3();
 
+    context: WebGL2RenderingContext;
+    ext: WEBGL_lose_context;
 
     scene = new THREE.Scene();
     clock = new THREE.Clock();
@@ -44,16 +46,38 @@ export class CubeGraphicComponent {
     crystalMesh: THREE.Mesh;
     cubeGroup: THREE.Group;
 
+    placeholder: string = '';
+
     constructor(private viewContainer: ViewContainerRef) { }
 
     async ngAfterViewInit() {
         await this.init();
 
+        this.canvas.addEventListener("webglcontextlost", () => {
+            // console.log("canvas context has been lost!");
+
+            this.ngOnDestroy();
+        });
+        this.canvas.addEventListener("webglcontextrestored", () => {
+            // console.log("canvas context has been restored!");
+            this.animate();
+        });
+
+        // this.canvas.oncontextlost
         // Create Scene
         this.initScene();
 
         this.onWindowResize();
         this.animate();
+
+        setTimeout(() => {
+            // this.placeholder = this.canvas.toDataURL();
+            // this.placeholder = this.context.()
+        }, 5000);
+    }
+
+    test() {
+        // this.context.image
     }
 
     ngOnDestroy() {
@@ -85,6 +109,9 @@ export class CubeGraphicComponent {
         bloomPass.threshold = 0;
         bloomPass.strength = .1;
         bloomPass.radius = .5;
+
+        this.context = this.renderer.getContext() as any;
+        this.ext = this.context.getExtension('WEBGL_lose_context');
 
         const renderScene = new RenderPass(this.scene, this.camera);
         const fxaaPass = new ShaderPass(FXAAShader);
@@ -273,7 +300,7 @@ export class CubeGraphicComponent {
     animate() {
         this.animationFrameRequest = requestAnimationFrame(this.animate.bind(this));
 
-        const d = this.clock.getDelta();
+        // const d = this.clock.getDelta();
         const t = this.clock.getElapsedTime();
 
         // @ts-ignore Is this still valid?
@@ -319,5 +346,13 @@ export class CubeGraphicComponent {
 
         this.renderer.setSize(bounds.width, bounds.height);
         this.composer.setSize(bounds.width, bounds.height);
+    }
+
+    @HostListener("window:focus")
+    onWindowFocus() {
+        // Attempt to restore canvas context
+        if (this.context.isContextLost()) {
+            this.ext.restoreContext();
+        }
     }
 }
