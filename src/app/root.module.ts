@@ -16,8 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
 import { NavMenuComponent } from 'src/app/components/navmenu/menu.component';
-import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
-import { ComponentResolveStrategy, NgxLazyLoaderModule } from '@dotglitch/ngx-lazy-loader';
+import { NgxLazyLoaderModule } from '@dotglitch/ngx-lazy-loader';
 import { RegisteredComponents } from 'src/app/component.registry';
 
 
@@ -51,6 +50,6 @@ import { RegisteredComponents } from 'src/app/component.registry';
         })
     ],
     providers: [],
-    bootstrap: [RootComponent]
+    bootstrap: [ RootComponent ]
 })
 export class AppModule { }

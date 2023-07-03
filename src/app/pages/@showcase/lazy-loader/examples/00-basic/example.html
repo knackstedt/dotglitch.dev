@@ -1,0 +1,11 @@
+<button mat-stroked-button (click)="ttl = 30">
+    Click me to load the content
+</button>
+<div style="height: 42px"></div>
+<ngx-lazy-loader
+    *ngIf="ttl > 0"
+    component="child"
+    [inputs]="{
+        ttl
+    }"
+/>
