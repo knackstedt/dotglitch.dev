@@ -499,7 +499,7 @@ NonTerminal.prototype.format = function (x, y, width) {
   x += gaps[0];
 
   FakeSVG('rect', { x: x, y: y - 11, width: this.width, height: this.up + this.down }).addTo(this);
-  attrs = { x: x + this.width / 2, y: y + 4 }
+  let attrs = { x: x + this.width / 2, y: y + 4 }
   // if (this.title) {
   // 	debugger
   // 	attrs['title'] = this.title;
