@@ -36,3 +36,29 @@ mat-tab-group {
         }
     }
 }
+
+
+// move view area below
+@media screen and (max-width: 1200px) {
+    :host {
+        flex-direction: column;
+        height: 700px;
+
+        mat-tab-group,
+        .portal {
+            width: 100%;
+        }
+        mat-tab-group {
+            height: 60%;
+        }
+        .portal {
+            height: 40%;
+        }
+    }
+    .portal::before {
+        bottom: unset;
+        right: 0;
+        height: 1px;
+        width: unset;
+    }
+}
