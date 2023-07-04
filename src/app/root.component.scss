@@ -11,3 +11,11 @@ ngx-lazy-loader {
     overflow-y: auto;
     contain: content;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    contain: content;
+    overflow: hidden;
+}
