@@ -122,7 +122,8 @@ export class CubeGraphicComponent {
         // this.composer.addPass(outputPass);
 
         const controls = this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        controls.maxZoom = 2;
+        // controls.maxZoom = 2;
+        controls.enabled = false;
 
         this.mouseCoords = new THREE.Vector2();
         this.raycaster = new THREE.Raycaster();
