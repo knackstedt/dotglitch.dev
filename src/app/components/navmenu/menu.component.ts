@@ -45,7 +45,7 @@ export class NavMenuComponent {
             return {
                 label: i.id,
                 link: '#/' + i.id,
-                // linkTarget: "_self",
+                linkTarget: "_self" as "_self",
                 ...i
             }
         })
