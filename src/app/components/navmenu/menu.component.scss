@@ -71,6 +71,10 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
+
+            img {
+                width: 24px;
+            }
         }
         .label {
             transition: all 200ms ease;

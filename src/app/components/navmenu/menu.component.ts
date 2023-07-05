@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BaseCtx, ContextMenuItem, NgxAppMenuDirective } from '@dotglitch/ngx-ctx-menu';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { RegisteredComponents } from 'src/app/component.registry';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -23,7 +24,20 @@ import { RegisteredComponents } from 'src/app/component.registry';
 })
 export class NavMenuComponent {
 
-    readonly pages: BaseCtx[] = RegisteredComponents
+    readonly pages: BaseCtx[] = [
+        {
+            label: "My GitHub",
+            link: "https://github.com/knackstedt",
+            icon: "https://github.com/favicon.ico",
+            linkTarget: "_blank"
+        },
+        {
+            label: "Dankpods.net",
+            link: "https://dankpods.net",
+            icon: "music_note",
+            linkTarget: "_blank"
+        },
+        ...RegisteredComponents
         .filter(c => !c['hidden'])
         .sort((a, b) => (a['order'] || 0) - (b['order'] || 0))
         .map(i => {
@@ -34,28 +48,11 @@ export class NavMenuComponent {
                 // linkTarget: "_self",
                 ...i
             }
-        });
+        })
+    ]
 
-    // rootItems: any[] = [
-    //     {
-    //         label: "Angular context menu",
-    //         link: "https://www.npmjs.com/package/@dotglitch/ngx-ctx-menu",
-    //         linkTarget: "_blank",
-    //         icon: "inventory_2"
-    //     },
-    //     {
-    //         label: "Angular lazy loader",
-    //         link: "https://www.npmjs.com/package/@dotglitch/ngx-lazy-loader",
-    //         linkTarget: "_blank",
-    //         icon: "inventory_2"
-    //     },
-    //     {
-    //         label: "Osiris (Web Desktop)",
-    //         link: "https://github.com/knackstedt/osiris",
-    //         linkTarget: "_blank",
-    //         icon: "desktop_windows"
-    //     }
-    // ];
+    public readonly matIconRx = /[\/\.]/i;
+
 
     @Input() isMobile = false;
 
@@ -63,7 +60,7 @@ export class NavMenuComponent {
     showAdvancedMenu = true;
     theme = document.body.classList.contains('light') ? 'light' : 'dark';
 
-    profileLinks: ContextMenuItem[] = [
+    readonly profileLinks: ContextMenuItem[] = [
 
         // {
         //     label: "User Settings",
@@ -104,7 +101,9 @@ export class NavMenuComponent {
         // { label: "Log out", link: "/api/logout?ngsw-bypass=true" }
     ]
 
-    constructor() {
+    constructor(
+        public readonly sanitizer: DomSanitizer
+    ) {
 
     }
 }
