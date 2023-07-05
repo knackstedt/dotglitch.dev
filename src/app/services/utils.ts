@@ -44,13 +44,13 @@ export const updateUrl = (page?: string, data: string | string[][] | Record<stri
         query.delete('id');
 
 
-
-    console.log(data, hash, query.toString());
+    const strQuery = query.toString();
+    console.log(data, hash, strQuery);
     if (replaceState) {
-        window.history.replaceState(data, '', hash + '?' + query.toString());
+        window.history.replaceState(data, '', hash + (strQuery ? ('?' + strQuery) : ''));
     }
     else {
-        window.history.pushState(data, '', hash + '?' + query.toString());
+        window.history.pushState(data, '', hash + (strQuery ? ('?' + strQuery) : ''));
     }
 };
 
