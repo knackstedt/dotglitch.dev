@@ -2,7 +2,6 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 import { Fetch } from 'src/app/services/fetch.service';
 import { environment } from 'src/environment';
 import { KeyboardService } from './services/keyboard.service';
-import { WallpaperService } from './services/wallpaper.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
@@ -10,7 +9,6 @@ import { ContextMenuItem } from '@dotglitch/ngx-ctx-menu';
 import { NavigationService } from 'src/app/services/navigation.service';
 
 const desktopWidth = 1126;
-
 
 @Component({
     selector: 'app-root',
@@ -21,16 +19,9 @@ export class RootComponent {
     @ViewChild("drawer") drawer: MatDrawer;
     environment = environment;
 
-    taskbarPosition: "top" | "right" | "bottom" | "left" = "left";
-
-    readonly headLinks = [
-        { url: "https://github.com/knackstedt", label: "GitHub" },
-        { url: "https://dankpods.net", label: "DankPods" }
-    ]
 
     theme = 'dark';
     isMobile = false;
-
 
     readonly mainCtxItems: ContextMenuItem<any>[] = [
         {
@@ -58,7 +49,6 @@ export class RootComponent {
         private fetch: Fetch,
         private keyboard: KeyboardService,
         public navigator: NavigationService,
-        public wallpaper: WallpaperService,
         private dialog: MatDialog
     ) {
         this.onResize();
