@@ -3,6 +3,10 @@ import { Regex2RailRoadDiagram } from './diagram/regex-to-railroad';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf } from '@angular/common';
+import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
+
+import * as RegexLanguage from './regex-syntax';
+
 
 @Component({
     selector: 'app-regex-diagram',
@@ -11,12 +15,17 @@ import { NgForOf } from '@angular/common';
     imports: [
         NgForOf,
         MatInputModule,
-        MatSelectModule
+        MatSelectModule,
+        VscodeComponent
     ],
     standalone: true
 })
 export class RegexDiagramComponent implements AfterViewInit {
     @ViewChild('diagram', { read: ElementRef, static: false }) diagram: ElementRef;
+
+    RegexLanguage = RegexLanguage;
+
+    code = '^(?P<protocol>(?:ftp|https?)):\/\/(?P<subDomain>(?:[\-.0-9A-Za-z])+)\.(?P<tld>(?:[A-Za-z]){2,4})(?:(?P<port>:(?:6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{3}|[1-9][0-9]{2}|[1-9][0-9]|[1-9])))?(?:\/)?(?P<resource>(?:.)*)$'
 
     readonly samples = [
         {
@@ -41,7 +50,7 @@ export class RegexDiagramComponent implements AfterViewInit {
         }
     ]
 
-    private _regexText: string = "a+b+c+";
+    private _regexText: string = "foo(bar)baz(limes(?:and)lemons)?are(coo((l)io))+";
     get regexText() { return this._regexText }
     set regexText(text: string) {
         this._regexText = text;

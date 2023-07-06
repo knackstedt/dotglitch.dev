@@ -4,8 +4,25 @@
     /* max-width: 100%; */
 
     padding: 24px;
-    display: block;
+    display: flex;
+    flex-direction: column;
     height: 100%;
+}
+
+app-vscode {
+    height: 150px;
+}
+
+.diagram {
+    flex: 1;
+    overflow: auto;
+}
+
+mat-form-field {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 10;
 }
 
 /* path, g, text{
