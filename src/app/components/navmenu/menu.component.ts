@@ -6,6 +6,7 @@ import { BaseCtx, ContextMenuItem, NgxAppMenuDirective } from '@dotglitch/ngx-ct
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { RegisteredComponents } from 'src/app/component.registry';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ThemeService } from 'src/app/services/theme.service';
 
 
 @Component({
@@ -53,19 +54,12 @@ export class NavMenuComponent {
 
     public readonly matIconRx = /[\/\.]/i;
 
-
     @Input() isMobile = false;
 
     collapsed = false;
     showAdvancedMenu = true;
-    theme = document.body.classList.contains('light') ? 'light' : 'dark';
 
     readonly profileLinks: ContextMenuItem[] = [
-
-        // {
-        //     label: "User Settings",
-        //     link: "#/users?trail=user.{current.user.id}"
-        // },
         {
             label: "Appearance",
             children: [
@@ -78,31 +72,23 @@ export class NavMenuComponent {
                 // "separator",
                 {
                     // label: "Light",
-                    labelTemplate: () => `${this.theme == "light" ? '⏺' : '\u00A0\u00A0\u00A0'} Light`,
-                    action: () => {
-                        this.theme = "light";
-                        document.body.classList.remove("dark");
-                        document.body.classList.add("light");
-                    }
+                    labelTemplate: () => `${this.theme.value == "light" ? '⏺' : '\u00A0\u00A0\u00A0'} Light`,
+                    action: () => this.theme.setTheme("light")
                 },
                 {
                     // label: "Dark",
-                    labelTemplate: () => `${this.theme == "dark" ? '⏺' : '\u00A0\u00A0\u00A0\u00A0'} Dark`,
-                    action: () => {
-                        this.theme = "dark";
-                        document.body.classList.remove("light");
-                        document.body.classList.add("dark");
-                    }
+                    labelTemplate: () => `${this.theme.value == "dark" ? '⏺' : '\u00A0\u00A0\u00A0\u00A0'} Dark`,
+                    action: () => this.theme.setTheme("dark")
                 }
             ]
         },
-        // { label: "Account Management", link: "https://dt-url.net/myaccount", linkTarget: "_blank" },
         // "separator",
         // { label: "Log out", link: "/api/logout?ngsw-bypass=true" }
     ]
 
     constructor(
-        public readonly sanitizer: DomSanitizer
+        public readonly sanitizer: DomSanitizer,
+        private readonly theme: ThemeService
     ) {
 
     }
