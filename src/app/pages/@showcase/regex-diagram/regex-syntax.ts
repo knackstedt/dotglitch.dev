@@ -2,8 +2,6 @@ import * as Monaco from 'monaco-editor';
 
 
 const basicFlags: [RegExp, any][] = [
-    // [/\\a|\\z|\^|\$/, { token: "sequence-operator" }],
-
     // +*?
     // Mark invalid quantifiers
     [ /[+?*][+?][+*?]/, "invalid"],
@@ -14,6 +12,7 @@ const basicFlags: [RegExp, any][] = [
 
     [/\\[ux][A-F0-9a-f]{2}/, "unicode"],
     [/\\[ux][A-F0-9a-f]{4}/, "unicode"],
+    [/\\\d{3}/, "octal"],
 
     [ /\\./, "escape"],
 
@@ -23,7 +22,7 @@ const basicFlags: [RegExp, any][] = [
 
     [ /\{/,     { token: "quantifier", bracket: '@open', next: "@quantifier" }],
     [ /\[\[:/,  { token: "posix", bracket: '@open', next: "@posix" }],
-    [ /\[\^/,   { token: "negativeLiteral", bracket: '@open', next: '@negativeLiteral' }],
+    [ /\[\^/,   { token: "neg-literal", bracket: '@open', next: '@negativeLiteral' }],
     [ /\[/,     { token: "literal", bracket: '@open', next: '@literal' }],
 ]
 
@@ -95,7 +94,7 @@ export function init(monaco: typeof Monaco){
 
             // {1,99} {99} {,99} {99,}
             quantifier: [
-                [/\d+/, 'quantifier-number'],
+                [/\d+/, 'quantifier'],
                 [/,/, 'quantifier'],
                 [/\}/, { token: "quantifier", bracket: "@close", next: '@pop' }]
             ],
@@ -110,9 +109,11 @@ export function init(monaco: typeof Monaco){
             literal: [
                 [/\\[ux][A-F0-9a-f]{4}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
                 [/\\[ux][A-F0-9a-f]{2}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\\d{3}(?:-)/i, { token: "octal-range", bracket: '@open', next: "@unicodeRange" }],
 
                 [/\\[ux][A-F0-9a-f]{2}/, "literal-unicode"],
                 [/\\[ux][A-F0-9a-f]{4}/, "literal-unicode"],
+                [/\\\d{3}/, "octal"],
 
                 [/\\./, "literal-escape"],
 
@@ -120,20 +121,29 @@ export function init(monaco: typeof Monaco){
 
                 // [/(?<=\/)\]/, "literal"],
                 [/\]/, { token: "literal", bracket: "@close", next: '@pop' }],
+                [/./, 'literal']
             ],
 
             negativeLiteral: [
-                [/(?=-)\\[ux][A-F0-9a-f]{4}/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
-                [/(?=-)\\[ux][A-F0-9a-f]{2}/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\[ux][A-F0-9a-f]{4}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\[ux][A-F0-9a-f]{2}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\\d{3}(?=-)/i, { token: "octal-range", bracket: '@open', next: "@unicodeRange" }],
 
                 [/\\[ux][A-F0-9a-f]{2}/, "neg-literal-unicode"],
                 [/\\[ux][A-F0-9a-f]{4}/, "neg-literal-unicode"],
+                [/\\\d{3}/, "octal"],
 
                 [/\\./, "literal-escape"],
 
                 [/.(?:-)/i, { token: "char-range", bracket: '@open', next: "@charRange" }],
 
                 [/\]/, { token: "neg-literal", bracket: "@close", next: '@pop' }],
+                [/./, 'neg-literal']
+            ],
+
+            octalRange: [
+                [/-/, "octal-range"],
+                [/\\\d{3}/, { token: "octal-range", bracket: "@close", next: '@pop' }],
             ],
 
             unicodeRange: [
@@ -156,65 +166,36 @@ export function init(monaco: typeof Monaco){
         inherit: true,
         colors: { },
         rules: [
-            { token: 'basic.rgx', foreground: '#8eff8e', },
-            { token: 'unicode.rgx', foreground: '#009900' },
+            { token: 'basic.rgx', foreground: '#aedaae', },
+            { token: 'unicode.rgx', foreground: '#ffa500' },
 
             { token: 'invalid.rgx', foreground: '#ff0000', fontStyle: 'italic' },
             { token: 'comment.rgx', foreground: '#6a9955', fontStyle: 'italic' },
             { token: 'posix.rgx', foreground: '#8eff8e', },
             { token: 'posix-operator.rgx', foreground: '#8eff8e' },
 
-            // { token: 'literal-operator.rgx', foreground: '#8e8eff' },
             { token: 'literal.rgx', foreground: '#dcdc96' },
-            { token: 'literal-unicode.rgx', foreground: '#ffa500' },
+            { token: 'literal-unicode.rgx', foreground: '#ffa500', fontStyle: "italic" },
             { token: 'literal-escape.rgx', foreground: '#8eff8e' },
+            { token: 'octal.rgx', foreground: '#ff00ff', fontStyle: "italic" },
+            { token: 'octal-range.rgx', foreground: '#ffff00', fontStyle: "italic" },
 
             { token: 'char-range.rgx', foreground: '#f0f064' },
-            { token: 'unicode-range.rgx', foreground: '#f0f064' },
+            { token: 'unicode-range.rgx', foreground: '#f0f064', fontStyle: "italic" },
 
             { token: 'neg-literal.rgx', foreground: '#d27878' },
-            { token: 'neg-literal-unicode.rgx', foreground: '#eb6464' },
+            { token: 'neg-literal-unicode.rgx', foreground: '#eb6464', fontStyle: "italic" },
 
 
-            { token: 'quantifier.rgx', foreground: '#8e8eff' },
+            { token: 'quantifier.rgx', foreground: '#80c4ff' },
             { token: 'escape.rgx', foreground: '#8e8eff' },
-            { token: 'alternator.rgx', foreground: '#ffa500' },
-            // { token: 'quantifier.rgx', foreground: '#8e8eff' },
-            // { token: 'quantifier.rgx', foreground: '#8e8eff' },
-            // { token: 'quantifier.rgx', foreground: '#8e8eff' },
-            // { token: 'quantifier.rgx', foreground: '#8e8eff' },
+            { token: 'alternator.rgx', foreground: '#ffffff' },
 
-            { token: 'negative-lookahead.rgx', foreground: '#999999' },
-            { token: 'capture-group.rgx', foreground: '#999999' },
-            { token: 'non-capture-group.rgx', foreground: '#999999' },
-            { token: 'lookahead.rgx', foreground: '#999999' },
-            { token: 'lookbehind.rgx', foreground: '#999999' },
-
-
-
-            // { token: 'severity-verbose.rgx', foreground: '#90a4ae' },
-            // { token: 'severity-debug.rgx',   foreground: '#7cace8' },
-            // { token: 'severity-error.rgx',   foreground: '#e43e3e', fontStyle: 'bold' },
-            // { token: 'severity-warning.rgx', foreground: '#ff9800' },
-
-            // { token: 'date.rgx',             foreground: '#00bfae' },
-            // { token: 'scope.rgx',            foreground: '#aaaaaa' },
-            // { token: 'code.rgx',             foreground: '#8aacbc' },
-
-            // { token: 'exception-stack.rgx',  foreground: '#ff9800', fontStyle: 'bold' },
-            // { token: 'file-uri1.rgx',         foreground: '#90caf8', fontStyle: 'italic' },
-            // { token: 'file-uri2.rgx',         foreground: '#90caf7', fontStyle: 'italic' },
-            // { token: 'file-uri3.rgx',         foreground: '#90caf6', fontStyle: 'italic' },
-            // { token: 'file-uri4.rgx',         foreground: '#90caf5', fontStyle: 'italic' },
-            // { token: 'file-uri5.rgx',         foreground: '#90caf4', fontStyle: 'italic' },
-            // { token: 'file-uri6.rgx',         foreground: '#90caf3', fontStyle: 'italic' },
-            // { token: 'file-uri7.rgx',         foreground: '#90caf2', fontStyle: 'italic' },
-            // { token: 'ip-address.rgx',       foreground: '#90f998', fontStyle: 'italic' },
-            // { token: 'file-position.rgx',    foreground: '#b6e7ff' },
-            // { token: 'type.rgx',             foreground: '#2196f3' },
-            // { token: 'http-method.rgx',      foreground: '#bdbdbd' },
-            // { token: 'system-error.rgx',     foreground: '#ffc107' },
-            // { token: 'muted.rgx',            foreground: '#777777' },
+            { token: 'negative-lookahead.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'capture-group.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'non-capture-group.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'lookahead.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'lookbehind.rgx', foreground: '#999999', fontStyle: "italic" },
         ],
     });
 }
