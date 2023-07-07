@@ -69,34 +69,49 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
     get language() { return this._language }
 
     @Input() tabSize = 2;
-    @Input() minimapEnabled = true;
-    @Input() scrollbarAlwaysConsumeMouseWheel = 2;
     @Input() readOnly = false;
     @Input() theme = "vs-dark";
+    @Input() fontFamily = "Droid Sans Mono";
+    @Input() fontSize = 14;
 
-    private _settings: MonacoEditor.editor.IStandaloneEditorConstructionOptions = {
-        automaticLayout: true,
-        scrollBeyondLastLine: false,
-        colorDecorators: true,
-        folding: true,
-        scrollBeyondLastColumn: 0,
-        minimap: {
-            enabled: true
-        },
-        scrollbar: {
-            alwaysConsumeMouseWheel: false,
-            // scrollByPage: true
-        },
-        smoothScrolling: true,
-        mouseWheelScrollSensitivity: 2
+    @Input() automaticLayout = true;
+    @Input() colorDecorators = true;
+    @Input() folding = true;
+
+    @Input() minimapEnabled = true;
+    @Input() minimap: MonacoEditor.editor.IEditorMinimapOptions = {
+        enabled: true
     };
+    @Input() scrollbar: MonacoEditor.editor.IEditorScrollbarOptions = {
+        alwaysConsumeMouseWheel: false,
+        // scrollByPage: true
+    };
+    @Input() smoothScrolling = true;
+    @Input() mouseWheelScrollSensitivity = 2;
+    @Input() scrollBeyondLastLine = false;
+    @Input() scrollBeyondLastColumn = 0;
+    @Input() scrollbarAlwaysConsumeMouseWheel = 2;
+
+    @Input() lineNumbers: MonacoEditor.editor.LineNumbersType = "on";
+
     get settings() {
         return {
-            ...this._settings,
             theme: this.theme,
             language: this.language,
             tabSize: this.tabSize,
-            readOnly: this.readOnly
+            readOnly: this.readOnly,
+            fontFamily: this.fontFamily,
+            fontSize: this.fontSize,
+            automaticLayout: this.automaticLayout,
+            scrollBeyondLastLine: this.scrollBeyondLastLine,
+            colorDecorators: this.colorDecorators,
+            folding: this.folding,
+            scrollBeyondLastColumn: this.scrollBeyondLastColumn,
+            minimap: this.minimap,
+            scrollbar: this.scrollbar,
+            smoothScrolling: this.smoothScrolling,
+            mouseWheelScrollSensitivity: this.mouseWheelScrollSensitivity,
+            lineNumbers: this.lineNumbers
         } as MonacoEditor.editor.IStandaloneEditorConstructionOptions;
     }
 
@@ -112,19 +127,8 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
-        const inputs = [
-            "customLanguage",
-            "language",
-            "tabSize",
-            "minimapEnabled",
-            "scrollbarAlwaysConsumeMouseWheel",
-            "readOnly",
-            "theme"
-        ];
-
         // If we changed anything OTHER than code, reload the editor
-        if (inputs.find(i => changes[i])) {
+        if (Object.keys(changes).length > 1 || !changes['code']) {
             if (this.editor) {
                 this.editor?.dispose();
                 this.createEditor();
@@ -133,7 +137,6 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
     }
 
     async ngAfterViewInit() {
-        // this.settings.language = "json";
 
         await new Promise((res, rej) => {
             let count = 0;
@@ -166,28 +169,12 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
             this.customLanguage.init(Monaco);
         }
 
-        console.log(this.settings);
         let editor = this.editor = Monaco.editor.create(this.editorElement.nativeElement, this.settings as any);
 
         if (this.code)
             editor.setValue(this.code);
 
         editor.getModel().onDidChangeContent(() => this.onCodeType.emit());
-
-        // editor['onDidType'](() => {
-        //     this.onCodeType.emit();
-        // });
-        // editor.onDidPaste(() => {
-        //     this.onCodeType.emit();
-        // });
-
-        // editor.getModel().onDidChangeContent
-        // editor.onDidChangeModelContent
-        // editor.
-
-        //     editor.onDidChangeModelContent(() => {
-        //         this.isDirty = this.editor.getValue() != this.code;
-        //     });
     }
 
     download() {
