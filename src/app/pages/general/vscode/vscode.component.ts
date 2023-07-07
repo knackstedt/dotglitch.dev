@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input
 
 import * as MonacoEditor from 'monaco-editor';
 import { debounceTime } from 'rxjs';
+import { ThemeService } from 'src/app/services/theme.service';
 
 // Monaco has a UMD loader that requires this
 // @ts-ignore
@@ -118,8 +119,15 @@ export class VscodeComponent implements AfterViewInit, OnDestroy {
     verticalScrollExhausted = false;
 
     private _sub;
-    constructor() {
+    constructor(
+        private themeService: ThemeService
+    ) {
         installMonaco();
+
+        themeService.subscribe(t => {
+            this.theme = t == "dark" ? "vs-dark" : "vs";
+            Monaco?.editor.setTheme(this.theme);
+        });
 
         this._sub = this.typeDebounce.subscribe(t => {
             this.codeChange.next(this._code = this.editor.getValue());
