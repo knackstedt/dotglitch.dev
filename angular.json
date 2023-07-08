@@ -32,7 +32,7 @@
               "src/assets",
             {
                 "glob": "**/*",
-                "input": "node_modules/monaco-editor/min/vs/",
+                "input": "node_modules/@dotglitch/ngx-web-components/assets/lib/vs/",
                 "output": "./lib/monaco/vs"
             },
               "src/manifest.webmanifest"

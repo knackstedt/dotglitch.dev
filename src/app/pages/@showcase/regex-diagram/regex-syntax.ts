@@ -161,10 +161,48 @@ export function init(monaco: typeof Monaco){
         }
     });
 
-    monaco.editor.defineTheme('vs-regex', {
+    monaco.editor.defineTheme('vs-dark', {
         base: 'vs-dark',
         inherit: true,
         colors: { },
+        rules: [
+            { token: 'basic.rgx', foreground: '#aedaae', },
+            { token: 'unicode.rgx', foreground: '#ffa500' },
+
+            { token: 'invalid.rgx', foreground: '#ff0000', fontStyle: 'italic' },
+            { token: 'comment.rgx', foreground: '#6a9955', fontStyle: 'italic' },
+            { token: 'posix.rgx', foreground: '#8eff8e', },
+            { token: 'posix-operator.rgx', foreground: '#8eff8e' },
+
+            { token: 'literal.rgx', foreground: '#dcdc96' },
+            { token: 'literal-unicode.rgx', foreground: '#ffa500', fontStyle: "italic" },
+            { token: 'literal-escape.rgx', foreground: '#8eff8e' },
+            { token: 'octal.rgx', foreground: '#ff00ff', fontStyle: "italic" },
+            { token: 'octal-range.rgx', foreground: '#ffff00', fontStyle: "italic" },
+
+            { token: 'char-range.rgx', foreground: '#f0f064' },
+            { token: 'unicode-range.rgx', foreground: '#f0f064', fontStyle: "italic" },
+
+            { token: 'neg-literal.rgx', foreground: '#d27878' },
+            { token: 'neg-literal-unicode.rgx', foreground: '#eb6464', fontStyle: "italic" },
+
+
+            { token: 'quantifier.rgx', foreground: '#80c4ff' },
+            { token: 'escape.rgx', foreground: '#8e8eff' },
+            { token: 'alternator.rgx', foreground: '#ffffff' },
+
+            { token: 'negative-lookahead.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'capture-group.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'non-capture-group.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'lookahead.rgx', foreground: '#999999', fontStyle: "italic" },
+            { token: 'lookbehind.rgx', foreground: '#999999', fontStyle: "italic" },
+        ],
+    });
+
+    monaco.editor.defineTheme('vs', {
+        base: 'vs',
+        inherit: true,
+        colors: {},
         rules: [
             { token: 'basic.rgx', foreground: '#aedaae', },
             { token: 'unicode.rgx', foreground: '#ffa500' },

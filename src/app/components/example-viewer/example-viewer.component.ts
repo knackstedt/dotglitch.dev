@@ -2,7 +2,7 @@ import { ComponentPortal, PortalModule } from '@angular/cdk/portal';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { Component, Input, OnInit, Type } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
+import { VscodeComponent } from '@dotglitch/ngx-web-components';
 
 @Component({
     selector: 'app-example-viewer',

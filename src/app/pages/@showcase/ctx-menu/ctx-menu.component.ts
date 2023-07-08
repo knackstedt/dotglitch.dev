@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExampleViewerComponent } from 'src/app/components/example-viewer/example-viewer.component';
-import { VscodeComponent } from 'src/app/pages/general/vscode/vscode.component';
+import { VscodeComponent } from '@dotglitch/ngx-web-components';
 
 import BasicExample from "./examples/00-basic";
 import StylingExample from "./examples/01-styling";
