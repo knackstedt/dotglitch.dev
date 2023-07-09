@@ -10,8 +10,8 @@ const basicFlags: [RegExp, any][] = [
     [ /[+?*][+?]?/, "quantifier"],
     [ /\|/, "alternator" ],
 
-    [/\\[ux][A-F0-9a-f]{2}/, "unicode"],
-    [/\\[ux][A-F0-9a-f]{4}/, "unicode"],
+    [/\\u[A-F0-9a-f]{2}/, "unicode"],
+    [/\\x[A-F0-9a-f]{4}/, "unicode"],
     [/\\\d{3}/, "octal"],
 
     [ /\\./, "escape"],
@@ -107,12 +107,12 @@ export function init(monaco: typeof Monaco){
 
             // [a-z] [abcdef()] [^abcdef] [abc\]def]
             literal: [
-                [/\\[ux][A-F0-9a-f]{4}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
-                [/\\[ux][A-F0-9a-f]{2}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\x[A-F0-9a-f]{2}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\u[A-F0-9a-f]{4}(?:-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
                 [/\\\d{3}(?:-)/i, { token: "octal-range", bracket: '@open', next: "@unicodeRange" }],
 
-                [/\\[ux][A-F0-9a-f]{2}/, "literal-unicode"],
-                [/\\[ux][A-F0-9a-f]{4}/, "literal-unicode"],
+                [/\\x[A-F0-9a-f]{2}/, "literal-unicode"],
+                [/\\u[A-F0-9a-f]{4}/, "literal-unicode"],
                 [/\\\d{3}/, "octal"],
 
                 [/\\./, "literal-escape"],
@@ -125,12 +125,12 @@ export function init(monaco: typeof Monaco){
             ],
 
             negativeLiteral: [
-                [/\\[ux][A-F0-9a-f]{4}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
-                [/\\[ux][A-F0-9a-f]{2}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\x[A-F0-9a-f]{2}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
+                [/\\u[A-F0-9a-f]{4}(?=-)/i, { token: "unicode-range", bracket: '@open', next: "@unicodeRange" }],
                 [/\\\d{3}(?=-)/i, { token: "octal-range", bracket: '@open', next: "@unicodeRange" }],
 
-                [/\\[ux][A-F0-9a-f]{2}/, "neg-literal-unicode"],
-                [/\\[ux][A-F0-9a-f]{4}/, "neg-literal-unicode"],
+                [/\\x[A-F0-9a-f]{2}/, "neg-literal-unicode"],
+                [/\\u[A-F0-9a-f]{4}/, "neg-literal-unicode"],
                 [/\\\d{3}/, "octal"],
 
                 [/\\./, "literal-escape"],
@@ -148,14 +148,14 @@ export function init(monaco: typeof Monaco){
 
             unicodeRange: [
                 [/-/, "unicode-range"],
-                [/\\[ux][a-f0-9A-F]{4}/, { token: "unicode-range", bracket: "@close", next: '@pop' }],
-                [/\\[ux][a-f0-9A-F]{2}/, { token: "unicode-range", bracket: "@close", next: '@pop' }],
+                [/\\x[a-f0-9A-F]{2}/, { token: "unicode-range", bracket: "@close", next: '@pop' }],
+                [/\\u[a-f0-9A-F]{4}/, { token: "unicode-range", bracket: "@close", next: '@pop' }],
             ],
 
             charRange: [
                 [/-/, "char-range"],
-                [/\\[ux][a-f0-9A-F]{4}/, { token: "char-range", bracket: "@close", next: '@pop' }],
-                [/\\[ux][a-f0-9A-F]{2}/, { token: "char-range", bracket: "@close", next: '@pop' }],
+                [/\\x[a-f0-9A-F]{2}/, { token: "char-range", bracket: "@close", next: '@pop' }],
+                [/\\u[a-f0-9A-F]{4}/, { token: "char-range", bracket: "@close", next: '@pop' }],
                 [/./, { token: "char-range", bracket: "@close", next: '@pop' }],
             ]
         }
