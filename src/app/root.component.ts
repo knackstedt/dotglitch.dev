@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
 import { ContextMenuItem } from '@dotglitch/ngx-ctx-menu';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { UpdateService } from 'src/app/services/update.service';
 
 const desktopWidth = 1126;
 
@@ -49,7 +50,8 @@ export class RootComponent {
         private fetch: Fetch,
         private keyboard: KeyboardService,
         public navigator: NavigationService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private updater: UpdateService
     ) {
         this.onResize();
     }
