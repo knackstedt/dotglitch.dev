@@ -11,6 +11,7 @@ import { ContextMenuItem, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-men
 })
 export class ExampleBasicComponent {
 
+    // A bare-minimum context menu
     readonly ctxMenu: ContextMenuItem[] = [
         {
             label: "Google",

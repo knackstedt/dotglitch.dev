@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ContextMenuItem, NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
 import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples/07-child-template/example-child/example-child';
@@ -15,15 +15,28 @@ import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples
     standalone: true
 })
 export class ExampleChildTemplateComponent {
+    @ViewChild('yahooTemplate', { read: TemplateRef }) yahooTemplate: TemplateRef<any>;
 
-    readonly ctxMenu: ContextMenuItem[] = [
-        {
-            label: "Google",
-            link: "www.google.com"
-        },
-        {
-            label: "Bing",
-            childTemplate: ExampleChildComponent
-        }
-    ];
+    ctxMenu: ContextMenuItem[];
+
+    ngAfterViewInit() {
+        this.ctxMenu = [
+            {
+                label: "Google",
+                link: "www.google.com"
+            },
+            {
+                label: "Bing",
+                // We can directly reference child templates
+                // Note: We do not yet support @Input and @Output bindings.
+                childTemplate: ExampleChildComponent
+            },
+            {
+                label: "Yahoo",
+                // We can also directly reference templates
+                // in the current component
+                childTemplate: this.yahooTemplate
+            }
+        ]
+    }
 }

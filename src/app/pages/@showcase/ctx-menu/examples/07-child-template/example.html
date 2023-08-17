@@ -1,3 +1,18 @@
 <button mat-stroked-button [ngx-ctx-menu]="ctxMenu">Right click me</button>
-<button mat-stroked-button [ngx-app-menu]="ctxMenu">Left click me</button>
-<button mat-stroked-button [ngx-app-menu]="ctxMenu" [ngx-app-menu-config]="{ trigger: ['dblclick', 'contextmenu']}">Double click or right click me</button>
+
+<ng-template #yahooTemplate>
+    <div class="yahoo">
+        <div>
+            DuckDuckGo
+        </div>
+        <div style="color: green">
+            Ecosia
+        </div>
+        <div>
+            Quant
+        </div>
+        <div>
+            Wikipedia
+        </div>
+    </div>
+</ng-template>

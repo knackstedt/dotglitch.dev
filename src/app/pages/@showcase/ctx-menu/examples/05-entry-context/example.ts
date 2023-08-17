@@ -49,6 +49,10 @@ export class ExampleEntryContextComponent {
     readonly ctxMenu: ContextMenuItem<Entry>[] = [
         {
             labelTemplate: item => "Edit " + item.name,
+
+            // When the menu item is clicked,
+            // action will be invoked with the context
+            // entry
             action: item => alert("Editing item\m" + JSON.stringify(item, null, 4))
         },
         {
@@ -57,10 +61,17 @@ export class ExampleEntryContextComponent {
         },
         {
             label: "Visible for Yellow",
+
+            // When the menu opens, we check if isVisible returns true
+            // if false, no menu item will be shown.
             isVisible: (data) => data.color == "yellow"
         },
         {
             label: "Disabled for Red",
+
+            // When the menu opens, we check if isDisabled returns true
+            // if false, the menu item will be in a `disabled` state.
+            // Similar to disabled buttons and switches.
             isDisabled: (data) => data.color == "red"
         }
     ];

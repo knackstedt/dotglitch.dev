@@ -11,6 +11,7 @@ import { ContextMenuItem, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-men
 })
 export class ExampleChildrenComponent {
 
+    // Add a separator to the items, and add an entry that has child entries.
     readonly ctxMenu: ContextMenuItem[] = [
         {
             label: "Google",
@@ -23,6 +24,7 @@ export class ExampleChildrenComponent {
         "separator",
         {
             label: "DNS Tools",
+            // Children will be visible when the menu item is selected.
             children: [
                 {
                     label: "DNS Propagation",

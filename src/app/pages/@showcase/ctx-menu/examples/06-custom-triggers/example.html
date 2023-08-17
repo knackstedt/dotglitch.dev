@@ -1,3 +1,26 @@
+<!--
+    Context menus are for right-mouse click events and
+    touchscreen long-touch events.
+ -->
 <button mat-stroked-button [ngx-ctx-menu]="ctxMenu">Right click me</button>
+
+<!--
+    Additionally, we may want to handle left-clicks through a
+    button in addition to a context menu (as context menus)
+    aren't normative in web applications
+ -->
 <button mat-stroked-button [ngx-app-menu]="ctxMenu">Left click me</button>
-<button mat-stroked-button [ngx-app-menu]="ctxMenu" [ngx-app-menu-config]="{ trigger: ['dblclick', 'contextmenu']}">Double click or right click me</button>
+
+<!--
+    We can also add different handlers, essentially anything that is an event.
+    Here we set a dblclick handler, and a context menu handler.
+ -->
+<button
+    mat-stroked-button
+    [ngx-app-menu]="ctxMenu"
+    [ngx-app-menu-config]="{
+        trigger: ['dblclick', 'contextmenu']
+    }"
+>
+    Double click or right click me
+</button>

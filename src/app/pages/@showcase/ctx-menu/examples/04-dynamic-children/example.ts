@@ -18,7 +18,12 @@ export class ExampleDynamicChildrenComponent {
         },
         {
             label: "Free Use Assets",
+            // Instead of using the `children` property, we can
+            // dynamically resolve the list of children for the item.
             childrenResolver: (data) => new Promise((res) => {
+                // Normally, you would perform some Fetch request.
+                // For demonstrative purposes, we use a setTimeout
+                // event to simulate such a request.
                 setTimeout(() => {
                     res([
                         {

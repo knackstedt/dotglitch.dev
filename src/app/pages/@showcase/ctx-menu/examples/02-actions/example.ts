@@ -11,6 +11,7 @@ import { ContextMenuItem, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-men
 })
 export class ExampleActionComponent {
 
+    // Slightly more detailed actions, using JS events instead of links.
     readonly ctxMenu: ContextMenuItem[] = [
         {
             label: "Alert",

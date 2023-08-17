@@ -26,4 +26,20 @@ export class ExampleTooltipComponent {
         code: require("!!raw-loader!../../../../../../../k3s.yml").default,
         language: "yaml"
     }
+
+    arbitraryData = {
+        label: "This is some arbitrary data field",
+        value: 0
+    }
+
+    private interval;
+    constructor() {
+        this.interval = setInterval(() => {
+            this.arbitraryData.value++;
+        }, 1500);
+    }
+
+    ngOnDestroy() {
+        clearInterval(this.interval);
+    }
 }

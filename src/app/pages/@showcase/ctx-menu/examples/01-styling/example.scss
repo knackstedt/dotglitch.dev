@@ -1,3 +1,6 @@
+
+// Styles need to pierce template encapsulation
+// and specify the custom class(es)
 ::ng-deep .ngx-ctx-menu.my-class,
 ::ng-deep .ngx-app-menu.my-class {
     border-radius: 6px;
