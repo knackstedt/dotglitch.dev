@@ -22,19 +22,6 @@ export default {
             label: "example-child.scss",
             value: require('!!raw-loader!./07-child-template/example-child/example-child.scss')
         },
-
-        {
-            label: "monaco-editor.ts",
-            value: require('!!raw-loader!./08-tooltip/monaco-editor/monaco-editor.ts')
-        },
-        {
-            label: "monaco-editor.html",
-            value: require('!!raw-loader!./08-tooltip/monaco-editor/monaco-editor.html')
-        },
-        {
-            label: "monaco-editor.scss",
-            value: require('!!raw-loader!./08-tooltip/monaco-editor/monaco-editor.scss')
-        }
     ],
     component: ExampleTooltipComponent
 };

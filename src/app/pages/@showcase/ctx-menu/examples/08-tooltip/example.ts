@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxTooltipDirective } from '@dotglitch/ngx-ctx-menu';
 import { ExampleChildComponent } from '../07-child-template/example-child/example-child';
-import { MonacoEditorComponent } from 'src/app/pages/@showcase/ctx-menu/examples/08-tooltip/monaco-editor/monaco-editor';
 import { VscodeComponent } from '@dotglitch/ngx-web-components';
 
 @Component({
@@ -13,7 +12,6 @@ import { VscodeComponent } from '@dotglitch/ngx-web-components';
         NgxTooltipDirective,
         MatButtonModule,
         ExampleChildComponent,
-        MonacoEditorComponent,
         VscodeComponent
     ],
     standalone: true
