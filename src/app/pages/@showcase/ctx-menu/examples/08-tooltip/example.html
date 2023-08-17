@@ -1,0 +1,16 @@
+<button mat-stroked-button [ngx-tooltip]="monacoLangTooltip" [ngx-tooltip-context]="langData" [ngx-tooltip-config]="{ customClass: ['example-1']}">Hover me (Monaco Languages)</button>
+<button mat-stroked-button [ngx-tooltip]="monacoLangTooltip" [ngx-tooltip-context]="kubeData" [ngx-tooltip-config]="{ customClass: ['example-1']}">Hover me (Kube YAML)</button>
+<button mat-stroked-button [ngx-tooltip]="basicTooltip">Hover me (Basic)</button>
+
+<!-- Load a di -->
+<ng-template #basicTooltip>
+    <app-example-child></app-example-child>
+</ng-template>
+
+<ng-template #monacoLangTooltip let-data>
+    <app-vscode
+        [code]="data.code"
+        [language]="data.language"
+        style="width: 600px; height: 400px"
+    />
+</ng-template>
