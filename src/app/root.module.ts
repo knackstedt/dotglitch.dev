@@ -18,6 +18,7 @@ import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx
 import { NavMenuComponent } from 'src/app/components/navmenu/menu.component';
 import { NgxLazyLoaderModule } from '@dotglitch/ngx-lazy-loader';
 import { RegisteredComponents } from 'src/app/component.registry';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { RegisteredComponents } from 'src/app/component.registry';
         MatSidenavModule,
         MatDialogModule,
         MatIconModule,
+        MatSnackBarModule,
         NgxLazyLoaderModule.forRoot({
             entries: RegisteredComponents,
             // componentResolveStrategy: ComponentResolveStrategy.PickFirst,
