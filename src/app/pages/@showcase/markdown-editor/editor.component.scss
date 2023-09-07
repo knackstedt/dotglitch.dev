@@ -1,0 +1,18 @@
+:host {
+    padding: 24px;
+    display: block;
+}
+
+app-example-viewer {
+    border-radius: 6px;
+
+    ::ng-deep {
+        mat-tab-group {
+            max-width: 550px;
+        }
+        .portal {
+            flex: 1;
+            padding: 0;
+        }
+    }
+}
