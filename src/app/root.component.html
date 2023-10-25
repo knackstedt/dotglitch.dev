@@ -2,8 +2,8 @@
 
 <div class="container">
     <ngx-lazy-loader
-        *ngIf="navigator.activePage$.value?.id"
-        [component]="navigator.activePage$.value?.id"
-        [inputs]="navigator.activePage$.value?.args"
+        *ngIf="navigator.virtualPath$.value?.root"
+        [component]="navigator.virtualPath$.value?.root"
+        [inputs]="navigator.virtualPath$.value?.args"
     />
 </div>
