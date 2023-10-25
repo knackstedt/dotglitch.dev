@@ -31,7 +31,7 @@
     "@fontsource/material-icons-outlined": "^5.0.3",
     "@types/three": "^0.150.2",
     "monaco-editor": "^0.43.0",
-    "ngx-stackedit": "^1.0.17",
+    "ngx-stackedit": "^1.0.28",
     "path-browserify": "^1.0.1",
     "raw-loader": "^4.0.2",
     "rxjs": "~7.5.0",
