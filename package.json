@@ -8,7 +8,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-builders/custom-webpack": "^15.0.0",
+    "@angular-builders/custom-webpack": "^16.0.0",
     "@angular/animations": "^16.2.10",
     "@angular/cdk": "^16.2.10",
     "@angular/common": "^16.2.10",
@@ -31,7 +31,7 @@
     "@fontsource/material-icons-outlined": "^5.0.3",
     "@types/three": "^0.150.2",
     "monaco-editor": "^0.43.0",
-    "ngx-stackedit": "^1.0.28",
+    "ngx-stackedit": "^1.0.33",
     "path-browserify": "^1.0.1",
     "raw-loader": "^4.0.2",
     "rxjs": "~7.5.0",
