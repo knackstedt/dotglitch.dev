@@ -12,391 +12,166 @@ import { StackEditorComponent } from 'ngx-stackedit';
 })
 export class ExampleBasicComponent {
 
-    defaultValue = `> Source: https://gist.github.com/allysonsilva/85fff14a22bbdf55485be947566cc09e
-# Headers
+    defaultValue = `
+# @dotglitch StackEdit
+
+#### Basic Styling
+
+Lorem **ipsum** _dolor_ sit amet, consectetur adipiscing elit, sed do _eiusmod tempor incididunt_ \
+ut labore et dolore magna ~~aliqua~~. Ut enim ad minim veniam, quis nostrud exercitation \
+ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in \
+_reprehenderit_ in <span style="color: #ff0000">voluptate</span> velit esse cillum \
+dolore eu fugiat nulla pariatur. Excepteur sint ~~occaecat cupidatat~~ non proident, \
+sunt in culpa qui **officia deserunt mollit** anim id est laborum.
+
+#### Colored text
+ > Full-featured, <span style="color: #33b579">open-source <span style="color: #f4d679">Markdown</span> editor based </span> on PageDown, the <span style="color: #11b3a5">Markdown</span> library used by Stack Overflow and the other Stack <span style="color: #eaa100">Exchange</span> sites.
+
+#### Images
+
+![NPM version](https://cdn.dotglitch.dev/lowpoly%20(1).png)
+![NPM version](https://cdn.dotglitch.dev/lowpoly%20(2).png)
+![NPM version](https://cdn.dotglitch.dev/lowpoly%20(3).png)
+![NPM version](https://cdn.dotglitch.dev/lowpoly%20(4).png)
+
+#### Links
+
+We autodetect links via the gfm extension
+> Something Nice: https://www.npmjs.com/package/@dotglitch/ngx-common
+
+But you can also embed links normally like [so](https://npmgraph.js.org/?q=ngx-stackedit).
+
+#### Lists
+
+ - A bulleted list from dashes
+ - Can have n number of entries
+
+ 1. Now when we number a _list_, things can get spicy.
+ 2. we can add some pretty neat <span style="color: #36955f">colors</span>.
+ 3. We can also put a table inside of the list.
+
+ - [X] Install Linux
+ - [ ] Stop using Google
+
+#### Tables
+
+| Tables   |      Are      |  Cool |
+|----------|:-------------:|------:|
+| col 1 is |  left-aligned | $1600 |
+| col 2 is |    centered   |   $12 |
+| col 3 is | right-aligned |    $1 |
+
+
+#### Code blocks
+\`\`\`ts
+import 'zone.js';  // Included with Angular CLI.
+
+import { AppComponent } from './app/app.component';
+import { isDevMode, importProvidersFrom } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+
+bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(CommonModule, BrowserModule,
+        MatButtonModule, MatSidenavModule, MatDialogModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        })),
+        provideAnimations(),
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
+  .catch(err => console.error(err));
 
-# h1 Heading 8-)
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
-
-Alternatively, for H1 and H2, an underline-ish style:
-
-Alt-H1
-======
-
-Alt-H2
-------
-
-------
-
-# Emphasis
-
-Emphasis, aka italics, with *asterisks* or _underscores_.
-
-Strong emphasis, aka bold, with **asterisks** or __underscores__.
-
-Combined emphasis with **asterisks and _underscores_**.
-
-Strikethrough uses two tildes. ~~Scratch this.~~
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-
-------
-
-# Lists
-
-1. First ordered list item
-2. Another item
-⋅⋅* Unordered sub-list.
-1. Actual numbers don't matter, just that it's a number
-⋅⋅1. Ordered sub-list
-4. And another item.
-
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
-
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
-
-* Unordered list can use asterisks
-- Or minuses
-+ Or pluses
-
-1. Make my changes
-    1. Fix bug
-    2. Improve formatting
-        - Make the headings bigger
-2. Push my commits to GitHub
-3. Open a pull request
-    * Describe my changes
-    * Mention all the members of my team
-        * Ask for feedback
-
-+ Create a list by starting a line with\`\`,\`\`, or\`\`
-+ Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    * Ac tristique libero volutpat at
-    + Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-+ Very easy!
-
-------
-
-# Task lists
-
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] Open a pull request
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
-- [x] list syntax required (any unordered or ordered list supported)
-- [ ] this is a complete item
-- [ ] this is an incomplete item
-
-------
-
-# Ignoring Markdown formatting
-
-You can tell GitHub to ignore (or escape) Markdown formatting by using \ before the Markdown character.
-
-Let's rename \*our-new-project\* to \*our-old-project\*.
-
-------
-
-# Links
-
-[I'm an inline-style link](https://www.google.com)
-
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
-
-[I'm a reference-style link][Arbitrary case-insensitive reference text]
-
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
-
-[You can use numbers for reference-style link definitions][1]
-
-Or leave it empty and use the [link text itself].
-
-URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or <http://www.example.com> and sometimes
-example.com (but not on Github, for example).
-
-Some text to show that the reference links can follow later.
-
-[arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
-
-------
-
-# Images
-
-Here's our logo (hover to see the title text):
-
-Inline-style:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
-Reference-style:
-![alt text][logo]
-
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
-
-<!-- Editor note: The minion image from the source gist is horrible and I refuse to share it. -->
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-------
-
-# [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
-
-Footnote 1 link[^first].
-
-Footnote 2 link[^second].
-
-Inline footnote^[Text of inline footnote] definition.
-
-Duplicated footnote reference[^second].
-
-[^first]: Footnote **can have markup**
-
-    and multiple paragraphs.
-
-[^second]: Footnote text.
-
-------
-
-# Code and Syntax Highlighting
-
-Inline\`code\` has\`back-ticks around\` it.
-
-\`\`\`c#
-using System.IO.Compression;
-
-#pragma warning disable 414, 3021
-
-namespace MyApplication
-{
-    [Obsolete("...")]
-    class Program : IInterface
-    {
-        public static List<int> JustDoIt(int count)
-        {
-            Console.WriteLine($"Hello {Name}!");
-            return new List<int>(new int[] { 1, 2, 3 })
-        }
-    }
-}
 \`\`\`
 
 \`\`\`css
-@font-face {
-  font-family: Chunkfive; src: url('Chunkfive.otf');
-}
-
-body, .usertext {
-  color: #F0F0F0; background: #600;
-  font-family: Chunkfive, sans;
-}
-
-@import url(print.css);
-@media print {
-  a[href^=http]::after {
-    content: attr(href)
-  }
+body { margin: 0 }
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Fira Sans', Arial;
+    background-color: var(--background-color, #121212);
+    color: var(--text-color);
 }
 \`\`\`
 
-\`\`\`javascript
-function $initHighlight(block, cls) {
-  try {
-    if (cls.search(/\bno\-highlight\b/) != -1)
-      return process(block, true, 0x0F) +
-            \` class="\${cls}\`;
-  } catch (e) {
-    /* handle exception */
-  }
-  for (var i = 0 / 2; i < classes.length; i++) {
-    if (checkCondition(classes[i]) === undefined)
-      console.log('undefined');
-  }
-}
+\`\`\`bash
+#!/usr/bin/env bash
+KEEP_GOING=1
 
-export  $initHighlight;
+export SD_WEBUI_RESTART=tmp/restart
+while [[ "$KEEP_GOING" -eq "1" ]]; do
+    if [[ ! -z "\${ACCELERATE}" ]] && [ \${ACCELERATE}="True" ] && [ -x "$(command -v accelerate)" ]; then
+        printf "\\n%s\\n" "\${delimiter}"
+        printf "Accelerating launch.py..."
+        printf "\\n%s\\n" "\${delimiter}"
+        prepare_tcmalloc
+        accelerate launch --num_cpu_threads_per_process=6 "\${LAUNCH_SCRIPT}" "$@"
+    else
+        printf "\\n%s\\n" "\${delimiter}"
+        printf "Launching launch.py..."
+        printf "\\n%s\\n" "\${delimiter}"
+        prepare_tcmalloc
+        "\${python_cmd}" -u "\${LAUNCH_SCRIPT}" "$@"
+    fi
+
+    if [[ ! -f tmp/restart ]]; then
+        KEEP_GOING=0
+    fi
+done
 \`\`\`
 
-\`\`\`php
-require_once 'Zend/Uri/Http.php';
+#### Mermaid Diagrams
 
-namespace Location\Web;
+\`\`\`mermaid
+pie title Pets adopted by volunteers
+    "Dogs": 386
+    "Cats": 85
+    "Rats": 15
+\`\`\`
 
-interface Factory
-{
-    static function _factory();
-}
+\`\`\`mermaid
+classDiagram
+    note "From Duck till Zebra"
+    Animal <|-- Duck
+    note for Duck "can fly
+can swim
+can dive
+can help in debugging"
 
-abstract class URI extends BaseURI implements Factory
-{
-    abstract function test();
-
-    public static $st1 = 1;
-    const ME = "Yo";
-    var $list = NULL;
-    private $var;
-
-    /**
-     * Returns a URI
-     *
-     * @return URI
-     */
-    static public function _factory($stats = array(), $uri = 'http')
-    {
-        echo __METHOD__;
-        $uri = explode(':', $uri, 0b10);
-        $schemeSpecific = isset($uri[1]) ? $uri[1] : '';
-        $desc = 'Multi
-line description';
-
-        // Security check
-        if (!ctype_alnum($scheme)) {
-            throw new Zend_Uri_Exception('Illegal scheme');
-        }
-
-        $this->var = 0 - self::$st;
-        $this->list = list(Array("1"=> 2, 2=>self::ME, 3 => \Location\Web\URI::class));
-
-        return [
-            'uri'   => $uri,
-            'value' => null,
-        ];
+    Animal <|-- Fish
+    Animal <|-- Zebra
+    Animal: +int age
+    Animal: +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck {
+        +String beakColor
+        +swim()
+        +quack()
     }
-}
-
-echo URI::ME . URI::$st1;
-
-__halt_compiler () ; datahere
-datahere
-datahere */
-datahere
+    class Fish {
+        -int sizeInFeet
+        -canEat()
+    }
+    class Zebra {
+        +bool is_wild
+        +run()
+    }
 \`\`\`
-
-------
-
-# Tables
-
-Colons can be used to align columns.
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
-
-There must be at least 3 dashes separating each header cell.
-The outer pipes (|) are optional, and you don't need to make the
-raw Markdown line up prettily. You can also use inline Markdown.
-
-Markdown | Less | Pretty
---- | --- | ---
-*Still* |\`render\` | **nicely**
-1 | 2 | 3
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
-
-| Command | Description |
-| --- | --- |
-|\`git statu\` | List all *new or modified* files |
-|\`git dif\` | Show file differences that **haven't been** staged |
-
-| Left-aligned | Center-aligned | Right-aligned |
-| :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
-
-| Name     | Character |
-| ---      | ---       |
-| Backtick |\`         |
-| Pipe     | \|        |
-
-------
-
-# Blockquotes
-
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
-
-Quote break.
-
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
-------
-
-# Inline HTML
-
-<dl>
-  <dt>Definition list</dt>
-  <dd>Is something people use sometimes.</dd>
-
-  <dt>Markdown in HTML</dt>
-  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
-</dl>
-
-------
-
-# Horizontal Rules
-
-Three or more...
-
----
-
-Hyphens
-
-***
-
-Asterisks
-
-___
-
-Underscores
-
-------
-
-# YouTube Videos
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE" target="_blank">
-<img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10">
-</a>
-
-[![IMAGE ALT TEXT HERE](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/YouTube_logo_2015.svg/1200px-YouTube_logo_2015.svg.png)](https://www.youtube.com/watch?v=ciawICBvQoE)
-`
+    `
 
     constructor() {
     }
