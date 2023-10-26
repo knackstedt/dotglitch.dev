@@ -1,96 +1,17 @@
-<div>
-    <h1 align="center">ngx-stackedit</h1>
-    <p align="center">
-        Full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the
-        other Stack Exchange sites.
-        <br/>
-
-        This is a rewrite of StackEdit.
-        <!-- > This is an Angular rewrite of the StackEdit implementation.
-        > * Rewrote editor and preview components to use Angular instead of Vue
-        > * Rewrote several files to TS
-        > * Added support for more inline editor rendering
-        > * Upgraded dependencies
-        > * Optimized event handling (generically across clEdit)
-        > * Improved content parsing on paste (duplicate lines, extra spaces etc.)
-        > * Improved dark & light mode support
-        > * Packaging for Angular component distribution -->
-    </p>
-
-    <div>
-        <a href="https://www.npmjs.com/package/@dotglitch/ngx-lazy-loader" rel="nofollow">
-            <img src="https://camo.githubusercontent.com/5bf7a65d77cd0705910b21db43052e13276e55132de4e0dfdabf8c81c0787e7b/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f40646f74676c697463682f6e67782d6374782d6d656e752e737667"
-                alt="npm"
-                data-canonical-src="https://img.shields.io/npm/v/@dotglitch/ngx-lazy-loader.svg"
-                style="max-width: 100%;">
-        </a>
-        <a href="https://www.npmjs.com/package/@dotglitch/ngx-lazy-loader" rel="nofollow">
-            <img src="https://camo.githubusercontent.com/26591309e18252f0ca7a8ce5123238248a76f84ddaa6bb98ae18afde4cf7419b/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f646d2f40646f74676c697463682f6e67782d6374782d6d656e752e737667"
-                alt="npm"
-                data-canonical-src="https://img.shields.io/npm/dm/@dotglitch/ngx-lazy-loader.svg"
-                style="max-width: 100%;">
-        </a>
-        <a href="https://npmjs.org/@dotglitch/ngx-lazy-loader" rel="nofollow">
-            <img src="https://camo.githubusercontent.com/c4a727e5973aefd03cbfe0151ccefa0f47fd88f580b336a498842facf4a6c182/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f64742f40646f74676c697463682f6e67782d6374782d6d656e752e737667"
-                alt="npm downloads"
-                data-canonical-src="https://img.shields.io/npm/dt/@dotglitch/ngx-lazy-loader.svg"
-                style="max-width: 100%;">
-        </a>
-        <a href="https://github.com/knackstedt/ngx-lazy-loader">
-            <img src="https://camo.githubusercontent.com/603ddceb65a9b4e82ef1ab06040a25b19e1ada5e3ad81be0c4ce972e9bb6fb04/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f6b6e61636b73746564742f6e67782d6374782d6d656e752e7376673f6c6162656c3d4769744875622532305374617273267374796c653d666c6174"
-                alt="GitHub stars"
-                data-canonical-src="https://img.shields.io/github/stars/knackstedt/ngx-lazy-loader.svg?label=GitHub%20Stars&amp;style=flat"
-                style="max-width: 100%;">
-        </a>
-    </div>
-    <div>
-        <!-- <h3>Installation</h3>
-        <code>npm i @dotglitch/ngx-lazy-loader</code>
-
-        <h3>Import module</h3>
-        <app-vscode
-            [code]="importCode"
-            language="ts"
-            [tabSize]="4"
-            [readOnly]="true"
-            style="height: 350px"
-        />
-
-        <h3>Create your primary registry</h3>
-        <app-vscode
-            [code]="registryCode"
-            language="ts"
-            [tabSize]="4"
-            [readOnly]="true"
-            style="height: 160px"
-        /> -->
-    </div>
+<div style="position: absolute; right: 12px; top: 12px; z-index: 100">
+    <a
+        href="https://github1s.com/knackstedt/stackedit"
+        matTooltip="View Source"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+                fill="#ffffff"
+                d="m640-360 120-120-42-43-48 48v-125h-60v125l-48-48-42 43 120 120ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Zm60-120h60v-180h40v120h60v-120h40v180h60v-200q0-17-11.5-28.5T440-600H260q-17 0-28.5 11.5T220-560v200Z" />
+        </svg>
+    </a>
 </div>
 
-
-<h3>Example</h3>
-
-<app-example-viewer [example]="BasicExample"/>
-
-<!-- <h5>Styling</h5>
-<app-example-viewer [example]="StylingExample"/>
-
-<h5>Actions</h5>
-<app-example-viewer [example]="ActionExample"/>
-
-<h5>Child elements</h5>
-<app-example-viewer [example]="ChildrenExample"/>
-
-<h5>Dynamic Children</h5>
-<app-example-viewer [example]="DynamicChildrenExample"/>
-
-<h5>Action Entry Context</h5>
-<app-example-viewer [example]="EntryContextExample"/>
-
-<h5>Custom Triggers</h5>
-<app-example-viewer [example]="CustomTriggersExample" />
-
-<h5>Child Template</h5>
-<app-example-viewer [example]="ChildTemplateExample" />
- -->
-
+<app-example-viewer
+    [fullscreenMode]="true"
+    [example]="BasicExample"
+/>
