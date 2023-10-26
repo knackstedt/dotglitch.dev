@@ -1,5 +1,5 @@
 import { ComponentPortal, PortalModule } from '@angular/cdk/portal';
-import { AsyncPipe, NgForOf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Input, OnInit, Type } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VscodeComponent } from '@dotglitch/ngx-web-components';
@@ -9,6 +9,7 @@ import { VscodeComponent } from '@dotglitch/ngx-web-components';
     templateUrl: './example-viewer.component.html',
     styleUrls: ['./example-viewer.component.scss'],
     imports: [
+        NgIf,
         NgForOf,
         MatTabsModule,
         VscodeComponent,
@@ -26,6 +27,8 @@ export class ExampleViewerComponent implements OnInit {
             value: any;
         }[]
     };
+
+    @Input() fullscreenMode = false;
 
     componentPortal: ComponentPortal<any>;
 
