@@ -29,8 +29,8 @@
             class="item"
             *ngIf="!page.link"
             [matTooltip]="collapsed ? page.label : null"
-            [ngx-app-menu]="page['children']"
-            [ngx-app-menu-config]="{ position: 'right', alignment: 'start', customClass: ['dt-menu'] }"
+            [ngx-menu]="page['children']"
+            [ngx-menu-config]="{ position: 'right', alignment: 'start', customClass: ['dt-menu'] }"
         >
             <span class="icon">
                 <mat-icon *ngIf="!matIconRx.test(page.icon)" [fontIcon]="page.icon" [style.color]="page['color']" />
@@ -60,9 +60,9 @@
 
     <div class="item"
         [matTooltip]="collapsed ? 'Jane Doe' : null"
-        [ngx-app-menu]="profileLinks"
-        [ngx-app-menu-config]="{ position: 'right', alignment: 'end', customClass: ['nav-menu']}"
-        [ngx-app-menu-context]=""
+        [ngx-menu]="profileLinks"
+        [ngx-menu-config]="{ position: 'right', alignment: 'end', customClass: ['nav-menu']}"
+        [ngx-menu-context]=""
     >
         <!-- Overlay search functionality -->
         <span class="icon">

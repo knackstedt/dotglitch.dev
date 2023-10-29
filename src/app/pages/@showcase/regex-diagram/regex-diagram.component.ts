@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import { Regex2RailRoadDiagram } from './diagram/regex-to-railroad';
 import { MatSelectModule } from '@angular/material/select';
 import { NgForOf } from '@angular/common';
-import { VscodeComponent } from '@dotglitch/ngx-web-components';
+import { VscodeComponent } from '@dotglitch/ngx-common';
 
 import * as RegexLanguage from './regex-syntax';
 

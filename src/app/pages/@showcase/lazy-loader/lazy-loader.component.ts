@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExampleViewerComponent } from 'src/app/components/example-viewer/example-viewer.component';
-import { VscodeComponent } from '@dotglitch/ngx-web-components';
+import { VscodeComponent } from '@dotglitch/ngx-common';
 
 import BasicExample from './examples/00-basic';
 
@@ -21,7 +21,7 @@ export class LazyLoaderComponent implements OnInit {
 
     readonly importCode = `
 import { NgModule } from '@angular/core';
-import { NgxLazyLoaderModule } from '@dotglitch/ngx-lazy-loader';
+import { NgxLazyLoaderModule } from '@dotglitch/ngx-common';
 import { AppComponent } from './app.component';
 import { RegisteredComponents } from './component.registry';
 
@@ -40,7 +40,7 @@ import { RegisteredComponents } from './component.registry';
 export class AppModule { }`;
 
     readonly registryCode = `
-import { ComponentRegistration } from '@dotglitch/ngx-lazy-loader';
+import { ComponentRegistration } from '@dotglitch/ngx-common';
 
 export const RegisteredComponents: ComponentRegistration[] = [
     { id: 'Homepage', load: () => import('src/app/pages/landing/landing.component') },

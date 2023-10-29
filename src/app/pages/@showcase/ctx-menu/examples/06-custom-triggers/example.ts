@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ContextMenuItem, NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 
 @Component({
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [
-        NgxContextMenuDirective,
-        NgxAppMenuDirective,
+        MenuDirective,
         MatButtonModule
     ],
     standalone: true
 })
 export class ExampleCustomTriggersComponent {
 
-    readonly ctxMenu: ContextMenuItem[] = [
+    readonly ctxMenu: MenuItem[] = [
         {
             label: "Google",
             link: "www.google.com"

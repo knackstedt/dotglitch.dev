@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExampleViewerComponent } from 'src/app/components/example-viewer/example-viewer.component';
-import { VscodeComponent } from '@dotglitch/ngx-web-components';
+import { VscodeComponent } from '@dotglitch/ngx-common';
 
 import BasicExample from "./examples/00-basic";
 import StylingExample from "./examples/01-styling";
@@ -36,7 +36,7 @@ export class CtxMenuComponent {
 
     readonly importCode = `
 import { NgModule } from '@angular/core';
-import { NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { MenuDirective, MenuDirective } from '@dotglitch/ngx-common';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -45,8 +45,8 @@ import { AppComponent } from './app.component';
         ...
     ],
     imports: [
-        NgxAppMenuDirective,
-        NgxContextMenuDirective,
+        MenuDirective,
+        MenuDirective,
         ...
     ]
     bootstrap: [AppComponent]

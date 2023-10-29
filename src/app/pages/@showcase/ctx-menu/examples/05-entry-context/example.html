@@ -1,13 +1,13 @@
 <!--
-    By providing [ngx-ctx-menu-context] or [ngx-app-menu-context],
+    By providing [ngx-menu-config] or [ngx-menu-context],
     we can reference the entry in menu event hooks such as
     isVisible, isDisabled, action, childrenResolver
 -->
 <button
     mat-stroked-button
     *ngFor="let entry of entries"
-    [ngx-ctx-menu]="ctxMenu"
-    [ngx-ctx-menu-context]="entry"
+    [ngx-contextmenu]="ctxMenu"
+    [ngx-menu-context]="entry"
 >
     Item {{entry.name}}
 </button>

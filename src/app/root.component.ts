@@ -5,21 +5,17 @@ import { KeyboardService } from './services/keyboard.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
-import { ContextMenuItem } from '@dotglitch/ngx-ctx-menu';
-import { NavigationService } from 'src/app/services/navigation.service';
 import { UpdateService } from 'src/app/services/update.service';
-import { NgxLazyLoaderComponent } from '@dotglitch/ngx-lazy-loader';
 import { NgIf } from '@angular/common';
 import { NavMenuComponent } from './components/navmenu/menu.component';
-
-const desktopWidth = 1126;
+import { LazyLoaderComponent, MenuItem, NavigationService } from '@dotglitch/ngx-common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './root.component.html',
     styleUrls: ['./root.component.scss'],
     standalone: true,
-    imports: [NavMenuComponent, NgIf, NgxLazyLoaderComponent]
+    imports: [NavMenuComponent, NgIf, LazyLoaderComponent]
 })
 export class RootComponent {
     @ViewChild("drawer") drawer: MatDrawer;
@@ -29,7 +25,7 @@ export class RootComponent {
     theme = 'dark';
     isMobile = false;
 
-    readonly mainCtxItems: ContextMenuItem<any>[] = [
+    readonly mainCtxItems: MenuItem<any>[] = [
         {
             label: "Appearance",
             children: [

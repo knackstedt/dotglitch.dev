@@ -1,6 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ContextMenuItem, NgxAppMenuDirective, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples/07-child-template/example-child/example-child';
 
 @Component({
@@ -8,8 +8,7 @@ import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [
-        NgxContextMenuDirective,
-        NgxAppMenuDirective,
+        MenuDirective,
         MatButtonModule
     ],
     standalone: true
@@ -17,7 +16,7 @@ import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples
 export class ExampleChildTemplateComponent {
     @ViewChild('yahooTemplate', { read: TemplateRef }) yahooTemplate: TemplateRef<any>;
 
-    ctxMenu: ContextMenuItem[];
+    ctxMenu: MenuItem[];
 
     ngAfterViewInit() {
         this.ctxMenu = [

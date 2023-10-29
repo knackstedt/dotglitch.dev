@@ -2,7 +2,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { BaseCtx, ContextMenuItem, NgxAppMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { RegisteredComponents } from 'src/app/component.registry';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -16,7 +16,7 @@ import { ThemeService } from 'src/app/services/theme.service';
     imports: [
         NgForOf,
         NgIf,
-        NgxAppMenuDirective,
+        MenuDirective,
         MatTooltipModule,
         MatIconModule,
         LogoComponent
@@ -25,7 +25,7 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class NavMenuComponent {
 
-    readonly pages: BaseCtx[] = [
+    readonly pages: any[] = [
         {
             label: "My GitHub",
             link: "https://github.com/knackstedt",
@@ -59,7 +59,7 @@ export class NavMenuComponent {
     collapsed = false;
     showAdvancedMenu = true;
 
-    readonly profileLinks: ContextMenuItem[] = [
+    readonly profileLinks: MenuItem[] = [
         {
             label: "Appearance",
             children: [

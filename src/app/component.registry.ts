@@ -1,4 +1,4 @@
-import { ComponentRegistration } from '@dotglitch/ngx-lazy-loader';
+import { ComponentRegistration } from '@dotglitch/ngx-common';
 
 export const RegisteredComponents: ComponentRegistration[] = [
     // @ae-component-inject

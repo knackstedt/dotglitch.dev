@@ -1,7 +1,7 @@
 import { NgForOf } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ContextMenuItem, NgxContextMenuDirective } from '@dotglitch/ngx-ctx-menu';
+import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 
 type Entry = {
     name: string,
@@ -13,7 +13,7 @@ type Entry = {
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
-    imports: [ NgForOf, NgxContextMenuDirective, MatButtonModule ],
+    imports: [ NgForOf, MenuDirective, MatButtonModule ],
     standalone: true
 })
 export class ExampleEntryContextComponent {
@@ -46,7 +46,7 @@ export class ExampleEntryContextComponent {
         }
     ];
 
-    readonly ctxMenu: ContextMenuItem<Entry>[] = [
+    readonly ctxMenu: MenuItem<Entry>[] = [
         {
             labelTemplate: item => "Edit " + item.name,
 

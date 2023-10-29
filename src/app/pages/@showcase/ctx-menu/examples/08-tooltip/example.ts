@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgxTooltipDirective } from '@dotglitch/ngx-ctx-menu';
+import { TooltipDirective } from '@dotglitch/ngx-common';
 import { ExampleChildComponent } from '../07-child-template/example-child/example-child';
-import { VscodeComponent } from '@dotglitch/ngx-web-components';
+import { VscodeComponent } from '@dotglitch/ngx-common';
 
 @Component({
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [
-        NgxTooltipDirective,
+        TooltipDirective,
         MatButtonModule,
         ExampleChildComponent,
         VscodeComponent
