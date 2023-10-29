@@ -17,12 +17,22 @@ export class ExampleBasicComponent {
 
 #### Basic Styling
 
-Lorem **ipsum** _dolor_ sit amet, consectetur adipiscing elit, sed do _eiusmod tempor incididunt_ \
-ut labore et dolore magna ~~aliqua~~. Ut enim ad minim veniam, quis nostrud exercitation \
-ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in \
-_reprehenderit_ in <span style="color: #ff0000">voluptate</span> velit esse cillum \
-dolore eu fugiat nulla pariatur. Excepteur sint ~~occaecat cupidatat~~ non proident, \
-sunt in culpa qui **officia deserunt mollit** anim id est laborum.
+
+<span style="color: #33b579">Markdown</span> is a ~~heavyweight~~ lightweight and easy-to-read markup language \
+used for text formatting. It was designed to provide a simple \
+and straightforward way to structure and style plain text documents \
+using a set of plain text symbols. In Markdown, you can easily \
+create headers, emphasis (such as _italics_, **bold** text, \
+and ~~strikethroughs~~), lists, links, code blocks, and more, \
+all by using a **minimalistic** _syntax_ \
+that resembles the way people often naturally format text in plain \
+email or text documents. Markdown is widely used for creating \
+documentation, writing \`web content\`, and even in \
+[software development](https://en.wikipedia.org/wiki/Software_development), \
+making it a popular choice for those who value simplicity and \
+readability in their writing and document creation processes.
+
+
 
 #### Colored text
  > Full-featured, <span style="color: #33b579">open-source <span style="color: #f4d679">Markdown</span> editor based </span> on PageDown, the <span style="color: #11b3a5">Markdown</span> library used by Stack Overflow and the other Stack <span style="color: #eaa100">Exchange</span> sites.
