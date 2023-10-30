@@ -27,7 +27,7 @@
     "@fontsource/material-symbols-outlined": "^5.0.16",
     "@types/three": "^0.150.2",
     "monaco-editor": "^0.43.0",
-    "ngx-stackedit": "^1.0.42",
+    "ngx-stackedit": "^1.0.48",
     "path-browserify": "^1.0.1",
     "raw-loader": "^4.0.2",
     "rxjs": "~7.5.0",
