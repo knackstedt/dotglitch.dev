@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,13 +14,11 @@ import { ThemeService } from 'src/app/services/theme.service';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
     imports: [
-        NgForOf,
-        NgIf,
-        MenuDirective,
-        MatTooltipModule,
-        MatIconModule,
-        LogoComponent
-    ],
+    MenuDirective,
+    MatTooltipModule,
+    MatIconModule,
+    LogoComponent
+],
     standalone: true
 })
 export class NavMenuComponent {

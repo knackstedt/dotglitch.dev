@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
 
@@ -7,10 +7,8 @@ import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graph
     templateUrl: './landing.component.html',
     styleUrls: ['./landing.component.scss'],
     imports: [
-        NgIf,
-        NgForOf,
-        CubeGraphicComponent,
-    ],
+    CubeGraphicComponent
+],
     standalone: true
 })
 export class LandingComponent {

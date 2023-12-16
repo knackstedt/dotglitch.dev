@@ -6,7 +6,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
 import { UpdateService } from 'src/app/services/update.service';
-import { NgIf } from '@angular/common';
+
 import { NavMenuComponent } from './components/navmenu/menu.component';
 import { LazyLoaderComponent, MenuItem, NavigationService } from '@dotglitch/ngx-common';
 
@@ -15,7 +15,7 @@ import { LazyLoaderComponent, MenuItem, NavigationService } from '@dotglitch/ngx
     templateUrl: './root.component.html',
     styleUrls: ['./root.component.scss'],
     standalone: true,
-    imports: [NavMenuComponent, NgIf, LazyLoaderComponent]
+    imports: [NavMenuComponent, LazyLoaderComponent]
 })
 export class RootComponent {
     @ViewChild("drawer") drawer: MatDrawer;

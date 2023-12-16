@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
@@ -13,7 +13,7 @@ type Entry = {
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
-    imports: [ NgForOf, MenuDirective, MatButtonModule ],
+    imports: [MenuDirective, MatButtonModule],
     standalone: true
 })
 export class ExampleEntryContextComponent {

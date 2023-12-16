@@ -1,21 +1,23 @@
 
 <mat-form-field>
-    <mat-label>Samples</mat-label>
-    <mat-select (selectionChange)="regexText = $event.value">
-        <mat-option *ngFor="let sample of samples" [value]="sample.value">{{sample.label}}</mat-option>
-    </mat-select>
+  <mat-label>Samples</mat-label>
+  <mat-select (selectionChange)="regexText = $event.value">
+    @for (sample of samples; track sample) {
+      <mat-option [value]="sample.value">{{sample.label}}</mat-option>
+    }
+  </mat-select>
 </mat-form-field>
 
 <app-vscode
-    [(code)]="regexText"
-    language="rgx"
-    theme="vs-dark"
-    lineNumbers="off"
-    [fontSize]="24"
-    [minimapEnabled]="false"
-    [customLanguage]="RegexLanguage"
-/>
+  [(code)]="regexText"
+  language="rgx"
+  theme="vs-dark"
+  lineNumbers="off"
+  [fontSize]="24"
+  [minimapEnabled]="false"
+  [customLanguage]="RegexLanguage"
+  />
 
-<div #diagram class="diagram"></div>
+  <div #diagram class="diagram"></div>
 
 

@@ -1,43 +1,47 @@
 <div class="contents">
-    <div class="intro">
-        <div class="left" style="padding-top: 120px;">
-            <h2>Dotglitch.DEV</h2>
-            <div>
-                <span>aka</span>
-                Andrew Knackstedt
-            </div>
-            <p>
-                I'm a <b>Sr. Software Engineer</b> who creates stunning interactive web components.
-                I am an expert who can advise you on <b>web performance optimization</b>, SDLC best
-                practices, and complex string parsing.
-            </p>
-            <p>
-                This is the point that I have to emphasize <b>interactive</b> web components.
-                I'm not a designer, so don't hold that against me if I make a very interactive
-                web component that happens to look like a potato.
-            </p>
-        </div>
-        <div class="right">
-            <app-cube-graphic style="width: 600px; height: 600px; display: block;"></app-cube-graphic>
-        </div>
+  <div class="intro">
+    <div class="left" style="padding-top: 120px;">
+      <h2>Dotglitch.DEV</h2>
+      <div>
+        <span>aka</span>
+        Andrew Knackstedt
+      </div>
+      <p>
+        I'm a <b>Sr. Software Engineer</b> who creates stunning interactive web components.
+        I am an expert who can advise you on <b>web performance optimization</b>, SDLC best
+        practices, and complex string parsing.
+      </p>
+      <p>
+        This is the point that I have to emphasize <b>interactive</b> web components.
+        I'm not a designer, so don't hold that against me if I make a very interactive
+        web component that happens to look like a potato.
+      </p>
     </div>
-
-    <hr/>
-
-    <!-- <div>
-        <h2></h2>
-        <p></p>
-    </div> -->
-
-    <div class="">
-        <h2>Projects</h2>
-        <div *ngFor="let project of projects">
-            <h4>{{project.name}}</h4>
-            <span>{{project.startDate}}-{{project.endDate}}</span>
-            <p>{{project.description}}</p>
-            <ul>
-                <li *ngFor="let highlight of project.highlights">{{highlight}}</li>
-            </ul>
-        </div>
+    <div class="right">
+      <app-cube-graphic style="width: 600px; height: 600px; display: block;"></app-cube-graphic>
     </div>
+  </div>
+
+  <hr/>
+
+  <!-- <div>
+  <h2></h2>
+  <p></p>
+</div> -->
+
+<div class="">
+  <h2>Projects</h2>
+  @for (project of projects; track project) {
+    <div>
+      <h4>{{project.name}}</h4>
+      <span>{{project.startDate}}-{{project.endDate}}</span>
+      <p>{{project.description}}</p>
+      <ul>
+        @for (highlight of project.highlights; track highlight) {
+          <li>{{highlight}}</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
 </div>

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { LazyLoaderComponent, LazyLoaderService } from '@dotglitch/ngx-common';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
-    imports: [ NgIf, LazyLoaderComponent, MatButtonModule ],
+    imports: [LazyLoaderComponent, MatButtonModule],
     standalone: true
 })
 export class ExampleBasicComponent {

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Regex2RailRoadDiagram } from './diagram/regex-to-railroad';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
+
 import { VscodeComponent } from '@dotglitch/ngx-common';
 
 import * as RegexLanguage from './regex-syntax';
@@ -12,10 +12,9 @@ import * as RegexLanguage from './regex-syntax';
     templateUrl: './regex-diagram.component.html',
     styleUrls: ['./regex-diagram.component.scss'],
     imports: [
-        NgForOf,
-        MatSelectModule,
-        VscodeComponent
-    ],
+    MatSelectModule,
+    VscodeComponent
+],
     standalone: true
 })
 export class RegexDiagramComponent implements AfterViewInit {

@@ -1,18 +1,24 @@
 <mat-tab-group [class.sidebyside]="!fullscreenMode">
-    <mat-tab *ngIf="fullscreenMode" label="Demo">
-        <ng-template [cdkPortalOutlet]="componentPortal" ></ng-template>
+  @if (fullscreenMode) {
+    <mat-tab label="Demo">
+      <ng-template [cdkPortalOutlet]="componentPortal" ></ng-template>
     </mat-tab>
+  }
 
-    <mat-tab *ngFor="let tab of example.files" [label]="tab.label || 'Example'">
-        <app-vscode
-            [code]="tab.value.default"
-            [language]="tab.label.split('.').pop()"
-            [tabSize]="4"
-            [readOnly]="true"
+  @for (tab of example.files; track tab) {
+    <mat-tab [label]="tab.label || 'Example'">
+      <app-vscode
+        [code]="tab.value.default"
+        [language]="tab.label.split('.').pop()"
+        [tabSize]="4"
+        [readOnly]="true"
         />
     </mat-tab>
+  }
 </mat-tab-group>
 
-<div class="portal" *ngIf="!fullscreenMode">
+@if (!fullscreenMode) {
+  <div class="portal">
     <ng-template [cdkPortalOutlet]="componentPortal"></ng-template>
-</div>
+  </div>
+}

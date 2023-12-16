@@ -1,9 +1,10 @@
 <app-menu [isMobile]="isMobile"></app-menu>
 
 <div class="container">
+  @if (navigator.virtualPath$.value?.root) {
     <ngx-lazy-loader
-        *ngIf="navigator.virtualPath$.value?.root"
-        [component]="navigator.virtualPath$.value?.root"
-        [inputs]="navigator.virtualPath$.value?.args"
-    />
+      [component]="navigator.virtualPath$.value?.root"
+      [inputs]="navigator.virtualPath$.value?.args"
+      />
+  }
 </div>
