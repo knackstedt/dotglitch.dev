@@ -213,7 +213,7 @@ export class CubeGraphicComponent {
                 const mesh = new THREE.Mesh(geometry, mat);
                 mesh.position.addScaledVector(new THREE.Vector3(x, y, z), size);
                 group.add(mesh);
-                console.log("mes")
+                // console.log("mes")
             }
 
             for (let x = -1; x < 2; x++)

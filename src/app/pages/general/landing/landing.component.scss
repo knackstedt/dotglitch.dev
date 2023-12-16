@@ -1,5 +1,13 @@
 :host {
-    padding: 24px;
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+    font-size: 16px;
+
+    .contents {
+        max-width: 960px;
+        width: min(960px, 60%);
+    }
 }
 
 .mainstage {
@@ -8,4 +16,15 @@
     flex: 1;
     justify-content: space-around;
     align-items: center;
+}
+
+.intro {
+    display: flex;
+
+    .left {
+
+    }
+    .right {
+
+    }
 }
