@@ -1,6 +1,4 @@
 import { enableProdMode, isDevMode, importProvidersFrom } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
 
 import { environment } from './environment';
 import { RootComponent } from './app/root.component';
@@ -19,8 +17,13 @@ import { CommonModule } from '@angular/common';
 import { LazyLoaderModule, MenuDirective } from '@dotglitch/ngx-common';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
+// Stub the global `process` variable because React
+// uses a bad convention for developers.
+// @ts-ignore
+window.process = window.process ?? { env: { NODE_ENV: isDevMode() ? "development" : "production" }};
+
 
 bootstrapApplication(RootComponent, {
     providers: [

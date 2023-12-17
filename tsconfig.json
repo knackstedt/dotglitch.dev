@@ -22,12 +22,13 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "es2020",
+    "jsx": "react",
     "lib": [
       "es2020",
       "dom"
     ],
     "paths": {
-      "path": ["src/polyfills.ts"]
+      "path": [""]
     },
     "typeRoots": [
         "node_modules/@types",
