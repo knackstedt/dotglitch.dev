@@ -42,7 +42,7 @@ export class NavMenuComponent {
         .map(i => {
 
             return {
-                label: i.id,
+                label: i['name'] ?? i.id,
                 link: '#/' + i.id,
                 linkTarget: "_self" as "_self",
                 ...i
