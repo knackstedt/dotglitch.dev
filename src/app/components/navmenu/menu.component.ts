@@ -14,11 +14,11 @@ import { ThemeService } from 'src/app/services/theme.service';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
     imports: [
-    MenuDirective,
-    MatTooltipModule,
-    MatIconModule,
-    LogoComponent
-],
+        MenuDirective,
+        MatTooltipModule,
+        MatIconModule,
+        LogoComponent
+    ],
     standalone: true
 })
 export class NavMenuComponent {
@@ -27,15 +27,35 @@ export class NavMenuComponent {
         {
             label: "My GitHub",
             link: "https://github.com/knackstedt",
-            icon: "https://github.com/favicon.ico",
+            icon: "https://github.com/fluidicon.png",
             linkTarget: "_blank"
         },
         {
-            label: "Dankpods.net",
-            link: "https://dankpods.net",
-            icon: "music_note",
-            linkTarget: "_blank"
+            label: "Angular React Bridge",
+            icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
+            children: [
+                {
+                    label: "ReactFlow",
+                    icon: "https://reactflow.dev/img/favicon.ico",
+                    link: "#/Reactflow"
+                }, {
+                    label: "Excalidraw",
+                    icon: "https://plus.excalidraw.com/favicon-32x32.png",
+                    link: "#/Excalidraw"
+                }
+            ]
         },
+        // {
+        //     label: "My Libraries",
+        //     icon: "",
+        //     children: [
+        //         {
+        //             label: "@dotglitch/ngx-common",
+        //             icon: "",
+        //             link: ""
+        //         }
+        //     ]
+        // },
         ...RegisteredComponents
         .filter(c => !c['hidden'])
         .sort((a, b) => (a['order'] || 0) - (b['order'] || 0))

@@ -9,11 +9,11 @@ import { VscodeComponent } from '@dotglitch/ngx-common';
     templateUrl: './example-viewer.component.html',
     styleUrls: ['./example-viewer.component.scss'],
     imports: [
-    MatTabsModule,
-    VscodeComponent,
-    AsyncPipe,
-    PortalModule
-],
+        MatTabsModule,
+        VscodeComponent,
+        AsyncPipe,
+        PortalModule
+    ],
     standalone: true
 })
 export class ExampleViewerComponent implements OnInit {

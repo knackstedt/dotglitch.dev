@@ -9,10 +9,10 @@ import { WidetextComponent } from 'src/app/components/logo/widetext/widetext.com
     templateUrl: './logo.component.html',
     styleUrls: ['./logo.component.scss'],
     imports: [
-    SymbolComponent,
-    TextComponent,
-    WidetextComponent
-],
+        SymbolComponent,
+        TextComponent,
+        WidetextComponent
+    ],
     standalone: true
 })
 export class LogoComponent implements OnInit {

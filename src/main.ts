@@ -22,7 +22,7 @@ if (environment.production) {
 // Stub the global `process` variable because React
 // uses a bad convention for developers.
 // @ts-ignore
-window.process = window.process ?? { env: { NODE_ENV: isDevMode() ? "development" : "production" }};
+window.process = window.process ?? { env: { NODE_ENV: isDevMode() ? "development" : "production" } };
 
 
 bootstrapApplication(RootComponent, {
@@ -52,4 +52,4 @@ bootstrapApplication(RootComponent, {
         provideHttpClient(withInterceptorsFromDi())
     ]
 })
-  .catch(err => console.error(err));
+    .catch(err => console.error(err));
