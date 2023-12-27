@@ -8,7 +8,7 @@
   @for (tab of example.files; track tab) {
     <mat-tab [label]="tab.label || 'Example'">
       <app-vscode
-        [code]="tab.value.default"
+        [code]="(tab.value | async)"
         [language]="tab.label.split('.').pop()"
         [tabSize]="4"
         [readOnly]="true"

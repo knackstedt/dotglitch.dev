@@ -4,11 +4,11 @@ export default {
     files: [
         {
             label: "example.ts",
-            value: require('!!raw-loader!./03-children/example.ts')
+            value: fetch('/assets/@showcase/ctx-menu/03-children/example.ts').then(e => e.text())
         },
         {
             label: "example.html",
-            value: require('!!raw-loader!./03-children/example.html')
+            value: fetch('/assets/@showcase/ctx-menu/03-children/example.html').then(e => e.text())
         }
     ],
     component: ExampleChildrenComponent

@@ -35,6 +35,21 @@
                 "input": "node_modules/@dotglitch/ngx-common/assets/lib/vs/",
                 "output": "./lib/monaco/vs"
             },
+            {
+                "glob": "**/*",
+                "input": "src/app/pages/@showcase/ctx-menu/examples/",
+                "output": "./assets/@showcase/ctx-menu"
+            },
+            {
+                "glob": "**/*",
+                "input": "src/app/pages/@showcase/lazy-loader/examples/",
+                "output": "./assets/@showcase/lazy-loader"
+            },
+            {
+                "glob": "**/*",
+                "input": "src/app/pages/@showcase/markdown-editor/examples/",
+                "output": "./assets/@showcase/markdown"
+            },
               "src/manifest.webmanifest"
             ],
             "styles": [

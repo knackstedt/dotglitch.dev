@@ -26,7 +26,7 @@ const basicFlags: [RegExp, any][] = [
     [ /\[/,     { token: "literal", bracket: '@open', next: '@literal' }],
 ]
 
-export function init(monaco: typeof Monaco){
+export function init(monaco: typeof Monaco) {
     monaco.languages.register({ id: 'rgx' });
 
     monaco.languages.setMonarchTokensProvider('rgx', {

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TooltipDirective } from '@dotglitch/ngx-common';
+import { TooltipDirective, VscodeComponent } from '@dotglitch/ngx-common';
 import { ExampleChildComponent } from '../07-child-template/example-child/example-child';
-import { VscodeComponent } from '@dotglitch/ngx-common';
 
 @Component({
     selector: 'app-example',
@@ -23,7 +22,93 @@ export class ExampleTooltipComponent {
     }
 
     kubeData = {
-        code: require("!!raw-loader!../../../../../../../k3s.yml").default,
+        code: `
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dotglitch.dev-ingress
+spec:
+  entryPoints:
+   - web
+  routes:
+    - match: Host(\`dev.dotglitch.dev\`)
+      kind: Rule
+      services:
+      - name: dotglitch-server
+        port: 80
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dotglitch.dev-secure-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(\`dev.dotglitch.dev\`)
+      services:
+        - name: dotglitch-server
+          port: 80
+  tls:
+    secretName: dev.dotglitch.dev-tls
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotglitch-server
+spec:
+  selector:
+    app: dotglitch-server
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotglitch-server
+spec:
+  selector:
+    matchLabels:
+      app: dotglitch-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dotglitch-server
+    spec:
+      containers:
+      - name: dotglitch
+        image: harbor.dotglitch.dev/library/dotglitch:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: harbor-key
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dev.dotglitch.dev
+spec:
+  commonName: dev.dotglitch.dev
+  dnsNames:
+    - dev.dotglitch.dev
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: dev.dotglitch.dev-tls
+        `,
         language: "yaml"
     }
 

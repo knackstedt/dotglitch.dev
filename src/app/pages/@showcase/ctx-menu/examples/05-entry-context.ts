@@ -4,15 +4,15 @@ export default {
     files: [
         {
             label: "example.ts",
-            value: require('!!raw-loader!./05-entry-context/example.ts')
+            value: fetch('/assets/@showcase/ctx-menu/05-entry-context/example.ts').then(e => e.text())
         },
         {
             label: "example.html",
-            value: require('!!raw-loader!./05-entry-context/example.html')
+            value: fetch('/assets/@showcase/ctx-menu/05-entry-context/example.html').then(e => e.text())
         },
         {
             label: "example.scss",
-            value: require('!!raw-loader!./05-entry-context/example.scss')
+            value: fetch('/assets/@showcase/ctx-menu/05-entry-context/example.scss').then(e => e.text())
         }
     ],
     component: ExampleEntryContextComponent

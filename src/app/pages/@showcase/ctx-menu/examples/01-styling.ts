@@ -4,15 +4,15 @@ export default {
     files: [
         {
             label: "example.ts",
-            value: require('!!raw-loader!./01-styling/example.ts')
+            value: fetch('/assets/@showcase/ctx-menu/01-styling/example.ts').then(e => e.text())
         },
         {
             label: "example.html",
-            value: require('!!raw-loader!./01-styling/example.html')
+            value: fetch('/assets/@showcase/ctx-menu/01-styling/example.html').then(e => e.text())
         },
         {
             label: "example.scss",
-            value: require('!!raw-loader!./01-styling/example.scss')
+            value: fetch('/assets/@showcase/ctx-menu/01-styling/example.scss').then(e => e.text())
         }
     ],
     component: ExampleStyledComponent

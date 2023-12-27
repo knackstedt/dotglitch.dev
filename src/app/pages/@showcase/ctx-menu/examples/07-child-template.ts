@@ -4,23 +4,23 @@ export default {
     files: [
         {
             label: "example.ts",
-            value: require('!!raw-loader!./07-child-template/example.ts')
+            value: fetch('/assets/@showcase/ctx-menu/07-child-template/example.ts').then(e => e.text())
         },
         {
             label: "example.html",
-            value: require('!!raw-loader!./07-child-template/example.html')
+            value: fetch('/assets/@showcase/ctx-menu/07-child-template/example.html').then(e => e.text())
         },
         {
             label: "example-child.ts",
-            value: require('!!raw-loader!./07-child-template/example-child/example-child.ts')
+            value: fetch('/assets/@showcase/ctx-menu/07-child-template/example-child/example-child.ts').then(e => e.text())
         },
         {
             label: "example-child.html",
-            value: require('!!raw-loader!./07-child-template/example-child/example-child.html')
+            value: fetch('/assets/@showcase/ctx-menu/07-child-template/example-child/example-child.html').then(e => e.text())
         },
         {
             label: "example-child.scss",
-            value: require('!!raw-loader!./07-child-template/example-child/example-child.scss')
+            value: fetch('/assets/@showcase/ctx-menu/07-child-template/example-child/example-child.scss').then(e => e.text())
         }
 
     ],

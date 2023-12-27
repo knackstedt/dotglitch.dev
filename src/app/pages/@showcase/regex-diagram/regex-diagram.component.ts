@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import { Regex2RailRoadDiagram } from './diagram/regex-to-railroad';
 import { MatSelectModule } from '@angular/material/select';
 
-import { VscodeComponent } from '@dotglitch/ngx-common';
+import { ConsoleLogger, LogIcon, VscodeComponent } from '@dotglitch/ngx-common';
 
 import * as RegexLanguage from './regex-syntax';
 
@@ -83,7 +83,9 @@ export class RegexDiagramComponent implements AfterViewInit {
         }
     };
 
-    constructor() { }
+    constructor() {
+
+    }
 
     @Input() errorMessageOverride: CallableFunction = (ex) => {
         // Syntax Highlighting taken from:
@@ -98,9 +100,11 @@ export class RegexDiagramComponent implements AfterViewInit {
                     } else {
                         cls = 'string';
                     }
-                } else if (/true|false/.test(match)) {
+                }
+                else if (/true|false/.test(match)) {
                     cls = 'boolean';
-                } else if (/null/.test(match)) {
+                }
+                else if (/null/.test(match)) {
                     cls = 'null';
                 }
                 if (cls == 'string')

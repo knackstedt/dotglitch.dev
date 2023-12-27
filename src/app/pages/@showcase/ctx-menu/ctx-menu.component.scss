@@ -1,6 +1,8 @@
 :host {
     padding: 24px;
     display: block;
+    overflow: auto;
+    height: 100%;
 }
 
 app-example-viewer {
