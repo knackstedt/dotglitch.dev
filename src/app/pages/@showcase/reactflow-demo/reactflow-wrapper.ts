@@ -19,8 +19,8 @@ export class ReactFlowComponent extends ReactMagicWrapperComponent {
 
     @Input() nodes?: Node<any, string | undefined>[] | undefined;
     @Input() edges?: Edge<any>[] | undefined;
-    @Input() defaultNodes?: Node<any, string | undefined>[] | undefined;
-    @Input() defaultEdges?: Edge<any>[] | undefined;
+    @Input() initialNodes?: Node<any, string | undefined>[] | undefined;
+    @Input() initialEdges?: Edge<any>[] | undefined;
     @Input() defaultEdgeOptions?: DefaultEdgeOptions | undefined;
 
     @Output() onNodeClick = new EventEmitter<[MouseEvent, Node]>();
