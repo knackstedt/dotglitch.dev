@@ -5,6 +5,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 WORKDIR /app/
 
-COPY dist/dotglitch .
+COPY dist/dotglitch/browser .
 
 EXPOSE 80
