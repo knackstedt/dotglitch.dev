@@ -1,14 +1,12 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { Fetch } from 'src/app/services/fetch.service';
 import { environment } from 'src/environment';
-import { KeyboardService } from './services/keyboard.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
-import { UpdateService } from 'src/app/services/update.service';
 
 import { NavMenuComponent } from './components/navmenu/menu.component';
-import { LazyLoaderComponent, MenuItem, NavigationService } from '@dotglitch/ngx-common';
+import { Fetch, LazyLoaderComponent, MenuItem, NavigationService, CommandPaletteService } from '@dotglitch/ngx-common';
+import { UpdateService } from 'src/app/services/update.service';
 
 @Component({
     selector: 'app-root',
@@ -48,13 +46,30 @@ export class RootComponent {
     ]
 
     constructor(
-        private fetch: Fetch,
-        private keyboard: KeyboardService,
-        public navigator: NavigationService,
-        private dialog: MatDialog,
-        private updater: UpdateService
+        private readonly fetch: Fetch,
+        public readonly navigator: NavigationService,
+        private readonly dialog: MatDialog,
+        private readonly updater: UpdateService,
+        private readonly commandPalette: CommandPaletteService
     ) {
         this.onResize();
+
+        this.commandPalette.initialize({
+            keybind: "ctrl+p"
+        });
+
+        this.commandPalette.attachElementCommands([
+            { label: "Silent scream", shortcutKey: "ctrl+h", action: () => {} },
+            { label: "Old news", shortcutKey: "ctrl+g", action: () => {} },
+            { label: "Civil war", shortcutKey: "ctrl+e", action: () => {} },
+            { label: "Plastic silverware", shortcutKey: "ctrl+l", action: () => {} },
+            { label: "Crash landing", shortcutKey: "ctrl+t", action: () => {} },
+            { label: "Even odds", shortcutKey: "ctrl+y", action: () => {} },
+            { label: "Freezer burn", shortcutKey: "ctrl+u", action: () => {} },
+            { label: "Honest politician", shortcutKey: "ctrl+i", action: () => {} },
+            { label: "Random order", shortcutKey: "ctrl+o", action: () => {} },
+            { label: "Dry lake", shortcutKey: "ctrl+j", action: () => {} },
+        ])
     }
 
     openInfo() {
