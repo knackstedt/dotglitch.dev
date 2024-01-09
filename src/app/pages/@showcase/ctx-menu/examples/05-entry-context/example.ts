@@ -10,7 +10,7 @@ type Entry = {
 };
 
 @Component({
-    selector: 'app-example',
+    selector: 'ctx-05-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [MenuDirective, MatButtonModule],

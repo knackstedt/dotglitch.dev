@@ -4,7 +4,7 @@ import { LazyLoaderComponent, LazyLoaderService } from '@dotglitch/ngx-common';
 
 
 @Component({
-    selector: 'app-example',
+    selector: 'll-00-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [LazyLoaderComponent, MatButtonModule],

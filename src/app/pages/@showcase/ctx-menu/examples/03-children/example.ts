@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 
 @Component({
-    selector: 'app-example',
+    selector: 'ctx-03-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [ MenuDirective, MatButtonModule ],

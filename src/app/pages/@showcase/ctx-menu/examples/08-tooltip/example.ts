@@ -4,7 +4,7 @@ import { TooltipDirective, VscodeComponent } from '@dotglitch/ngx-common';
 import { ExampleChildComponent } from '../07-child-template/example-child/example-child';
 
 @Component({
-    selector: 'app-example',
+    selector: 'ctx-08-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [

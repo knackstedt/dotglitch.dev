@@ -4,7 +4,7 @@ import { MenuItem, MenuDirective } from '@dotglitch/ngx-common';
 import { ExampleChildComponent } from 'src/app/pages/@showcase/ctx-menu/examples/07-child-template/example-child/example-child';
 
 @Component({
-    selector: 'app-example',
+    selector: 'ctx-07-example',
     templateUrl: './example.html',
     styleUrls: ['./example.scss'],
     imports: [
