@@ -1,10 +1,27 @@
 
-import { Component, HostListener, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { StackEditorComponent } from 'ngx-stackedit';
+import { NgxFlickingModule, NgxFlickingComponent } from '@egjs/ngx-flicking';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+
+@Component({
+    selector: 'app-img',
+    template: '<img [src]="url" (click)="dialog.close()">',
+    styles: `:host{max-width: min(90vh, 90vw); max-height: min(90vh, 90vw)}`,
+    standalone: true
+})
+class ImageComponent {
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public readonly url: string,
+        public readonly dialog: MatDialogRef<any>
+    ) {}
+}
 
 @Component({
     selector: 'app-landing',
@@ -13,28 +30,39 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
     imports: [
         MatIconModule,
         MatButtonModule,
+        MatGridListModule,
         CubeGraphicComponent,
         LogoComponent,
-        StackEditorComponent
+        StackEditorComponent,
+        NgxFlickingModule
     ],
     standalone: true
 })
 export class LandingComponent {
 
+    @ViewChild('rootFlicker') rootFlicker: NgxFlickingComponent;
+    @ViewChild('projectFlicker') projectFlicker: NgxFlickingComponent;
+
     readonly projects = [
-    //     {
-    //     name: "Angular StackEdit",
-    //     description: "A Makdown Writing application and Web Component that is fully loaded with Batteries",
-    //     startDate: "2023-07",
-    //     endDate: "Present",
-    //     url: "https://md.dotglitch.dev",
-    //     highlights: [
-    //         "Rewrote the entire app in Angular",
-    //         "Created custom Tokenizer to provide best-in-class markdown highlighting",
-    //         "Packaged as .exe, .dmg, .appimage and deployed as public website",
-    //         "Using modern technologies such as Angular, Markdown-It and TypeScript"
-    //     ]
-    // },
+        {
+        name: "Angular StackEdit",
+        description: "A Makdown Writing application and Web Component that is fully loaded with Batteries",
+        startDate: "2023-07",
+        endDate: "Present",
+        url: "https://md.dotglitch.dev",
+        highlights: [
+            "Rewrote the entire app in Angular",
+            "Created custom Tokenizer to provide best-in-class markdown highlighting",
+            "Packaged as .exe, .dmg, .appimage and deployed as public website",
+            "Using modern technologies such as Angular, Markdown-It and TypeScript",
+            "Embedded React components in Angular application"
+        ],
+        images: [
+            "./assets/ngx-stackedit/stackedit.png",
+            "./assets/ngx-stackedit/excalidraw.png",
+            "./assets/ngx-stackedit/monaco.png"
+        ]
+    },
     {
         name: "Angular Common Components",
         description: "A set of useful Angular components, services and utilities used across various projects",
@@ -50,6 +78,11 @@ export class LandingComponent {
             "Web file manager component",
             "Web kanban component",
             "Common services for data retrieval, dialog management, and updates among others"
+        ],
+        images: [
+            "./assets/ngx-common/filemanager.png",
+            "./assets/ngx-common/command-palette.png",
+            "./assets/ngx-common/menu.png"
         ]
     },
     {
@@ -157,6 +190,7 @@ import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http'
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import Flicking from '@egjs/flicking';
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -254,8 +288,10 @@ class Zebra {
 \`\`\`
     `
 
-    pageIndex = 0;
+    pageFlickerIndex = 0;
+    projectFlickerIndex = 0;
     pages = [
+        {},
         {},
         {},
         {},
@@ -264,7 +300,8 @@ class Zebra {
     viewportHeight = window.innerHeight;
 
     constructor(
-        private viewContainer: ViewContainerRef
+        private readonly viewContainer: ViewContainerRef,
+        private readonly dialog: MatDialog
     ) {
 
     }
@@ -273,23 +310,13 @@ class Zebra {
         this.viewContainer.element.nativeElement.focus();
     }
 
-    private isTransitioning = false;
-    private offset = 0;
-    @HostListener("scroll", ["$event"])
-    onScroll(evt: MouseEvent) {
-        const target = evt.target as HTMLElement;
+    onImageClick(image) {
+        this.dialog.open(ImageComponent, { data: image })
+    }
 
-        // const isScrollDown = target.scrollTop > this.offset;
-        // this.offset = target.scrollTop;
-
-        // if (isScrollDown) {
-        //     this.pageIndex = Math.min(this.pages.length, this.pageIndex+1);
-        // }
-        // else {
-        //     this.pageIndex = Math.max(0, this.pageIndex-1);
-        // }
-
-        // this.pageIndex = Math.floor(target.scrollTop / this.viewportHeight);
+    moveFlicker() {
+        this.rootFlicker.stopAnimation();
+        this.rootFlicker.moveTo(this.pageFlickerIndex);
     }
 
     @HostListener("wheel", ['$event'])
@@ -300,15 +327,43 @@ class Zebra {
     @HostListener("window:keydown.arrowdown")
     @HostListener("window:keydown.pagedown")
     onArrowDown() {
-        if ([document.body, this.viewContainer.element.nativeElement].includes(document.activeElement))
-            this.pageIndex = Math.min(this.pages.length, this.pageIndex + 1);
+        if ([document.body, this.viewContainer.element.nativeElement].includes(document.activeElement)) {
+            this.pageFlickerIndex = Math.min(this.pages.length, this.pageFlickerIndex + 1);
+            this.moveFlicker();
+        }
     }
 
     @HostListener("window:keydown.arrowup")
     @HostListener("window:keydown.pageup")
     onArrowUp() {
-        if ([document.body, this.viewContainer.element.nativeElement].includes(document.activeElement))
-            this.pageIndex = Math.max(0, this.pageIndex-1);
+        if ([document.body, this.viewContainer.element.nativeElement].includes(document.activeElement)) {
+            this.pageFlickerIndex = Math.max(0, this.pageFlickerIndex-1);
+            this.moveFlicker();
+        }
+    }
+
+    @HostListener("window:keydown.arrowleft")
+    onArrowLeft() {
+        if (
+            [document.body, this.viewContainer.element.nativeElement].includes(document.activeElement) &&
+            this.pageFlickerIndex == 2
+        ) {
+            this.projectFlickerIndex = Math.max(0, this.projectFlickerIndex-1);
+            this.projectFlicker.stopAnimation();
+            this.projectFlicker.moveTo(this.projectFlickerIndex);
+        }
+    }
+
+    @HostListener("window:keydown.arrowright")
+    onArrowRight() {
+        if (
+            [document.body, this.viewContainer.element.nativeElement].includes(document.activeElement) &&
+            this.pageFlickerIndex == 2
+        ) {
+            this.projectFlickerIndex = Math.min(this.projects.length, this.projectFlickerIndex + 1);
+            this.projectFlicker.stopAnimation();
+            this.projectFlicker.moveTo(this.projectFlickerIndex);
+        }
     }
 
     @HostListener("window:resize")
