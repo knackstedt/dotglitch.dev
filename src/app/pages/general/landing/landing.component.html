@@ -1,8 +1,12 @@
 
-<app-logo></app-logo>
+<app-logo
+    [class.narrow]="width < 1020"
+></app-logo>
 
 <ngx-flicking
     class="root"
+    [class.slim]="width < 1060"
+    [class.narrow]="width < 720"
     #rootFlicker
     [options]="{
         duration: 800,
@@ -25,7 +29,7 @@
                     </button>
                 </span>
             </div>
-            <div class="panel">
+            <div class="panel" style="overflow: hidden">
                 <app-cube-graphic style="width: 100%; height: 100%; display: block;"></app-cube-graphic>
             </div>
         </div>

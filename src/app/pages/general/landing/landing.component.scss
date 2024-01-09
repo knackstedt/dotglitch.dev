@@ -171,11 +171,34 @@ p {
     }
 }
 
-@media (max-width: 640px) {
-    app-logo {
-        opacity: 0;
-        pointer-events: none;
+.slim {
+    .page {
+        padding: 16px;
+        overflow: hidden;
     }
+
+    .columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    &.root {
+        margin: 0 16px;
+        margin-right: 86px;
+    }
+
+    .skills {
+        gap: 24px;
+
+        .skill img {
+            width: 72px;
+            height: 72px;
+        }
+    }
+}
+
+.narrow {
+
     .page {
         padding: 16px;
         overflow: hidden;
@@ -184,12 +207,32 @@ p {
         flex-direction: column;
         gap: 20px;
     }
-    .root {
+    &.root {
         margin: 0 16px;
+        margin-right: 64px;
     }
     .page-navbar {
         top: 4px;
         right: 4px;
+    }
+
+    .skills {
+        gap: 12px;
+        .skill img {
+            width: 48px;
+            height: 48px;
+        }
+    }
+}
+app-logo.narrow {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-height: 450px) {
+    app-logo {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .skills {
