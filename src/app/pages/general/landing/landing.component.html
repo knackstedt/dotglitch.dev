@@ -5,14 +5,11 @@
     class="root"
     #rootFlicker
     [options]="{
-        circular: false,
         duration: 800,
         horizontal: false,
-        autoInit: true,
         interruptable: true,
         moveType: 'snap'
     }"
-    (willChange)="pageFlickerIndex = $event.index"
 >
     <div flicking-panel class="page">
         <div class="columns">
@@ -125,10 +122,14 @@
             @for (project of projects; track project; let i = $index) {
                 <div
                     class="project-marker"
-                    [class.selected]="projectFlickerIndex == i"
+                    [class.selected]="projectFlicker.index == i"
                     (click)="projectFlickerIndex = i;
                         projectFlicker.stopAnimation();
-                        projectFlicker.moveTo(projectFlickerIndex);
+                        projectFlicker.moveTo(i);
+                    "
+                    (touch)="projectFlickerIndex = i;
+                        projectFlicker.stopAnimation();
+                        projectFlicker.moveTo(i);
                     "
                 >
                     {{i.toString().padStart(2, '0')}}
@@ -150,34 +151,46 @@
                 Visit my <a href="https://www.linkedin.com/in/andrew-knackstedt/"><img src="/assets/technology-logos/linkedin.svg"></a> to see more.
             </p>
 
-            <div style="display: flex; flex-direction: column; gap: 48px;">
-                <div class="skills">
-                    @for (technology of technologies_1; track technology) {
-                        <div class="skill">
-                            <img [src]="technology.icon">
-                            <span>{{technology.name}}</span>
-                        </div>
-                    }
-                </div>
+            @if (width > 800) {
+                <div style="display: flex; flex-direction: column; gap: 48px;">
+                    <div class="skills">
+                        @for (technology of technologies_1; track technology) {
+                            <div class="skill">
+                                <img [src]="technology.icon">
+                                <span>{{technology.name}}</span>
+                            </div>
+                        }
+                    </div>
 
-                <div class="skills">
-                    @for (technology of technologies_2; track technology) {
-                        <div class="skill">
-                            <img [src]="technology.icon">
-                            <span>{{technology.name}}</span>
-                        </div>
-                    }
-                </div>
+                    <div class="skills">
+                        @for (technology of technologies_2; track technology) {
+                            <div class="skill">
+                                <img [src]="technology.icon">
+                                <span>{{technology.name}}</span>
+                            </div>
+                        }
+                    </div>
 
+                    <div class="skills">
+                        @for (technology of technologies_3; track technology) {
+                            <div class="skill">
+                                <img [src]="technology.icon">
+                                <span>{{technology.name}}</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            @else {
                 <div class="skills">
-                    @for (technology of technologies_3; track technology) {
+                    @for (technology of allTechnologies; track technology) {
                         <div class="skill">
                             <img [src]="technology.icon">
                             <span>{{technology.name}}</span>
                         </div>
                     }
                 </div>
-            </div>
+            }
         </div>
     </div>
     <!-- <div flicking-panel class="page">
@@ -208,6 +221,7 @@
         >
             <ngx-stackedit
                 [value]="markdownText"
+                [showPreview]="width > 820"
             />
         </div>
     </div>
@@ -217,8 +231,9 @@
     @for (page of pages; track page; let i = $index) {
         <div
             class="page-marker"
-            [class.selected]="pageFlickerIndex == i"
+            [class.selected]="rootFlicker.index == i"
             (click)="pageFlickerIndex = i; moveFlicker()"
+            (touch)="pageFlickerIndex = i; moveFlicker()"
         >
             {{i.toString().padStart(2, '0')}}
         </div>

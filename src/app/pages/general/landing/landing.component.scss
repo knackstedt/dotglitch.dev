@@ -19,6 +19,10 @@ app-logo {
     width: 180px;
 }
 
+img {
+    user-select: none;
+}
+
 .columns {
     display: flex;
     align-items: center;
@@ -53,6 +57,9 @@ app-logo {
     padding: 80px 0;
     padding-bottom: 200px;
     position: relative;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .page-navbar {
@@ -62,6 +69,7 @@ app-logo {
     height: 100%;
     width: 48px;
     user-select: none;
+    z-index: 1;
 
     .page-marker {
         height: 48px;
@@ -93,6 +101,7 @@ app-logo {
     height: 48px;
     user-select: none;
     display: flex;
+    z-index: 1;
 
     .project-marker {
         height: 48px;
@@ -134,6 +143,7 @@ p {
     display: flex;
     gap: 48px;
     justify-content: center;
+    flex-wrap: wrap;
 
     .skill {
         display: flex;
@@ -172,12 +182,21 @@ p {
     }
     .columns {
         flex-direction: column;
+        gap: 20px;
     }
-    ngx-flicking {
+    .root {
         margin: 0 16px;
     }
     .page-navbar {
         top: 4px;
         right: 4px;
+    }
+
+    .skills {
+        gap: 12px;
+        .skill img {
+            width: 48px;
+            height: 48px;
+        }
     }
 }

@@ -107,7 +107,7 @@ export class LandingComponent {
         { name: "NodeJS", icon: "/assets/technology-logos/nodejs.svg"},
         { name: "Angular", icon: "/assets/technology-logos/angular.gif"},
         { name: "PWA", icon: "/assets/technology-logos/pwa.svg"},
-    ]
+    ];
 
     readonly technologies_2 = [
         { name: "Azure", icon: "/assets/technology-logos/azure.svg"},
@@ -117,14 +117,18 @@ export class LandingComponent {
         { name: "Kubernetes", icon: "/assets/technology-logos/kubernetes.svg"},
         { name: "THREE.js", icon: "/assets/technology-logos/threejs.svg"},
         { name: "GitHub", icon: "/assets/technology-logos/github.svg"},
-    ]
+    ];
 
     readonly technologies_3 = [
         { name: "VS Code", icon: "/assets/technology-logos/vscode.svg"},
         { name: "Dynatrace", icon: "/assets/technology-logos/dynatrace.svg"},
         { name: "Pop!_os", icon: "/assets/technology-logos/pop_os.svg"},
         { name: "Diagrams.net", icon: "/assets/technology-logos/diagrams.net.svg"},
-    ]
+    ];
+
+    readonly allTechnologies = this.technologies_1
+        .concat(this.technologies_2)
+        .concat(this.technologies_3);
 
     readonly markdownText = `
 #### Basic Styling
@@ -177,7 +181,7 @@ But you can also embed links normally like [so](https://npmgraph.js.org/?q=ngx-s
 
 
 #### Code blocks
-\`\`\`ts;
+\`\`\`ts
 import 'zone.js';  // Included with Angular CLI.
 
 import { AppComponent } from './app/app.component';
@@ -190,7 +194,6 @@ import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http'
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import Flicking from '@egjs/flicking';
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -213,12 +216,12 @@ bootstrapApplication(AppComponent, {
 \`\`\`css
 body { margin: 0; }
 html, body {
-    height: 100 %;
-    width: 100 %;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
-    font - family: 'Fira Sans', Arial;
-    background - color: var(--background - color, #121212);
-    color: var(--text - color);
+    font-family: 'Fira Sans', Arial;
+    background-color: var(--background-color, #121212);
+    color: var(--text-color);
 }
 \`\`\`
 
@@ -229,15 +232,15 @@ KEEP_GOING = 1
 export SD_WEBUI_RESTART = tmp / restart;
 while [["$KEEP_GOING" - eq "1"]]; do
     if [[! -z "\${ACCELERATE}"]] && [\${ ACCELERATE } = "True"] && [-x "$(command -v accelerate)"]; then
-        printf "\n%s\n" "\${delimiter}"
+        printf "\\n%s\\n" "\${delimiter}"
         printf "Accelerating launch.py..."
-        printf "\n%s\n" "\${delimiter}";
+        printf "\\n%s\\n" "\${delimiter}";
 prepare_tcmalloc
         accelerate launch--num_cpu_threads_per_process = 6 "\${LAUNCH_SCRIPT}" "$@"
     else
-        printf "\n%s\n" "\${delimiter}"
+        printf "\\n%s\\n" "\${delimiter}"
         printf "Launching launch.py..."
-        printf "\n%s\n" "\${delimiter}";
+        printf "\\n%s\\n" "\${delimiter}";
 prepare_tcmalloc;
 "\${python_cmd}" - u "\${LAUNCH_SCRIPT}" "$@";
 fi;
@@ -251,27 +254,26 @@ done
 #### Mermaid Diagrams
 
 \`\`\`mermaid
-pie title Pets adopted by volunteers;
-    "Dogs": 386;
-    "Cats": 85;
+pie title Pets adopted by volunteers
+    "Dogs": 386
+    "Cats": 85
     "Rats": 15
 \`\`\`
 
 \`\`\`mermaid
 classDiagram
-    note "From Duck till Zebra";
+    note "From Duck till Zebra"
 Animal <| --Duck
     note for Duck "can fly
     can swim
     can dive
-    can help in debugging";
-
-Animal <| --Fish;
-Animal <| --Zebra;
-Animal: +int age;
-Animal: +String gender;
-Animal: +isMammal();
-Animal: +mate();
+    can help in debugging"
+Animal <| --Fish
+Animal <| --Zebra
+Animal: +int age
+Animal: +String gender
+Animal: +isMammal()
+Animal: +mate()
 class Duck {
     +String beakColor
     + swim()
@@ -286,7 +288,7 @@ class Zebra {
     + run()
 }
 \`\`\`
-    `
+    `;
 
     pageFlickerIndex = 0;
     projectFlickerIndex = 0;
@@ -297,6 +299,8 @@ class Zebra {
         {},
         {}
     ];
+
+    width = window.innerWidth;
 
     constructor(
         private readonly viewContainer: ViewContainerRef,
@@ -363,5 +367,10 @@ class Zebra {
             this.projectFlicker.stopAnimation();
             this.projectFlicker.moveTo(this.projectFlickerIndex);
         }
+    }
+
+    @HostListener("window:resize")
+    onResize() {
+        this.width = window.innerWidth;
     }
 }
