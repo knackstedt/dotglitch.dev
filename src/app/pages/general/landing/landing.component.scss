@@ -76,10 +76,12 @@ app-logo {
         border-right: 1px solid #fff;
 
         cursor: default;
-        transition: opacity 800ms ease;
+        transition: opacity 800ms ease, border-color 800ms ease;
 
-        &.selected, &:hover {
+        &.selected,
+        &:hover {
             opacity: 1;
+            border-right-color: #69f0ae;
         }
     }
 }
@@ -105,11 +107,12 @@ app-logo {
         border-bottom: 1px solid #fff;
 
         cursor: default;
-        transition: opacity 800ms ease;
+        transition: opacity 800ms ease, border-color 800ms ease;
 
         &.selected,
         &:hover {
             opacity: 1;
+            border-bottom-color: #69f0ae;
         }
     }
 }
