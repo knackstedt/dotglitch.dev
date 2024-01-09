@@ -1,6 +1,5 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { environment } from 'src/environment';
-import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutComponent } from './dialogs/about/about.component';
 
@@ -16,9 +15,8 @@ import { UpdateService } from 'src/app/services/update.service';
     imports: [NavMenuComponent, LazyLoaderComponent]
 })
 export class RootComponent {
-    @ViewChild("drawer") drawer: MatDrawer;
+    @ViewChild(NavMenuComponent) menu: NavMenuComponent;
     environment = environment;
-
 
     theme = 'dark';
     isMobile = false;
@@ -85,5 +83,25 @@ export class RootComponent {
 
         this.isMobile && document.body.classList.add("mobile");
         !this.isMobile && document.body.classList.add("desktop");
+
+        if (this.isMobile && this.menu) {
+            this.menu.collapsed = true;
+        }
+    }
+
+    @HostListener("window:swiped-right", ['$event'])
+    onSwipeRight(evt?) {
+        if (this.menu.collapsed) {
+            this.menu.collapsed = false;
+            evt.stopPropagation();
+        }
+    }
+
+    @HostListener("window:swiped-left", ['$event'])
+    onSwipeLeft(evt?) {
+        if (this.menu.collapsed == false) {
+            this.menu.collapsed = true;
+            evt.stopPropagation();
+        }
     }
 }

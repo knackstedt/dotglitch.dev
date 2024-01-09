@@ -16,6 +16,8 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { LazyLoaderModule, MenuDirective } from '@dotglitch/ngx-common';
 
+import "swiped-events";
+
 if (environment.production) {
     enableProdMode();
 }
