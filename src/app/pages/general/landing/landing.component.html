@@ -73,13 +73,22 @@
     <div flicking-panel class="page nested-wide">
         <ngx-flicking
             #projectFlicker
-            [options]="{ bounce: 0, bound: true, horizontal: true }"
+            [options]="{
+                circular: false,
+                duration: 800,
+                autoInit: true,
+                interruptable: true,
+                moveType: 'snap',
+                bounce: 0,
+                bound: true,
+                horizontal: true
+            }"
             style="height: 100%"
         >
             @for (project of projects; track project) {
                 <div flicking-panel class="horizontal-panel columns">
                     <div class="panel">
-                        <h4>{{project.name}}</h4>
+                        <h1>{{project.name}}</h1>
                         <span>{{project.startDate}}-{{project.endDate}}</span>
                         <p>{{project.description}}</p>
 
@@ -117,7 +126,10 @@
                 <div
                     class="project-marker"
                     [class.selected]="projectFlickerIndex == i"
-                    (click)="projectFlickerIndex = i"
+                    (click)="projectFlickerIndex = i;
+                        projectFlicker.stopAnimation();
+                        projectFlicker.moveTo(projectFlickerIndex);
+                    "
                 >
                     {{i.toString().padStart(2, '0')}}
                 </div>
@@ -206,7 +218,7 @@
         <div
             class="page-marker"
             [class.selected]="pageFlickerIndex == i"
-            (click)="pageFlickerIndex = i"
+            (click)="pageFlickerIndex = i; moveFlicker()"
         >
             {{i.toString().padStart(2, '0')}}
         </div>
