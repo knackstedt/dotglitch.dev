@@ -297,7 +297,6 @@ class Zebra {
         {},
         {}
     ];
-    viewportHeight = window.innerHeight;
 
     constructor(
         private readonly viewContainer: ViewContainerRef,
@@ -328,7 +327,7 @@ class Zebra {
     @HostListener("window:keydown.pagedown")
     onArrowDown() {
         if ([document.body, this.viewContainer.element.nativeElement].includes(document.activeElement)) {
-            this.pageFlickerIndex = Math.min(this.pages.length, this.pageFlickerIndex + 1);
+            this.pageFlickerIndex = Math.min(this.pages.length-1, this.pageFlickerIndex + 1);
             this.moveFlicker();
         }
     }
@@ -360,16 +359,9 @@ class Zebra {
             [document.body, this.viewContainer.element.nativeElement].includes(document.activeElement) &&
             this.pageFlickerIndex == 2
         ) {
-            this.projectFlickerIndex = Math.min(this.projects.length, this.projectFlickerIndex + 1);
+            this.projectFlickerIndex = Math.min(this.projects.length-1, this.projectFlickerIndex + 1);
             this.projectFlicker.stopAnimation();
             this.projectFlicker.moveTo(this.projectFlickerIndex);
         }
-    }
-
-    @HostListener("window:resize")
-    @HostListener("window:focus")
-    @HostListener("window:pointerdown")
-    onResize() {
-        this.viewportHeight = window.innerHeight;
     }
 }
