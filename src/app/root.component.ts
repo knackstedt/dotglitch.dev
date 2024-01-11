@@ -77,7 +77,7 @@ export class RootComponent {
 
     @HostListener("window:resize", ["$event"])
     onResize() {
-        this.isMobile = (window.innerHeight / window.innerWidth > 1.5) || window.innerWidth < 900;
+        this.isMobile = window.innerWidth < 1000;
         document.body.classList.remove("mobile");
         document.body.classList.remove("desktop");
 

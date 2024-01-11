@@ -30,6 +30,32 @@ export class NavMenuComponent {
             icon: "https://github.com/fluidicon.png",
             linkTarget: "_blank"
         },
+        // {
+        //     label: "DotGlitch ngx-common",
+        //     icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
+        //     children: [
+        //         {
+        //             label: "Menus",
+        //             icon: "https://reactflow.dev/img/favicon.ico",
+        //             link: "#/Reactflow"
+        //         },
+        //         {
+        //             label: "Lazy Loader",
+        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
+        //             link: "#/Excalidraw"
+        //         },
+        //         {
+        //             label: "Lazy Loader",
+        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
+        //             link: "#/Excalidraw"
+        //         },
+        //         {
+        //             label: "Lazy Loader",
+        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
+        //             link: "#/Excalidraw"
+        //         }
+        //     ]
+        // },
         {
             label: "NG React Wrappers",
             icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
@@ -75,7 +101,7 @@ export class NavMenuComponent {
 
     @Input() isMobile = false;
 
-    collapsed = false;
+    collapsed = true;
     showAdvancedMenu = true;
 
     readonly profileLinks: MenuItem[] = [
