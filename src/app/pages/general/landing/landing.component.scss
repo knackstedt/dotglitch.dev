@@ -37,11 +37,16 @@ img {
         flex: 50%;
         height: 100%;
         justify-content: center;
+        overflow-y: auto;
 
         p {
             max-width: 480px;
         }
     }
+}
+
+.horizontal-panel.columns .panel {
+    flex: 100%
 }
 
 .center {
@@ -55,7 +60,7 @@ img {
     height: 100vh;
     width: 100%;
     padding: 80px 0;
-    padding-bottom: 200px;
+    // padding-bottom: 200px;
     position: relative;
 
     display: flex;
@@ -186,6 +191,14 @@ p {
         margin: 0 16px;
         margin-right: 86px;
     }
+    &.page-navbar {
+        top: 4px;
+        right: 4px;
+    }
+    .project-navbar {
+        bottom: 4px;
+        left: 4px;
+    }
 
     .skills {
         gap: 24px;
@@ -194,6 +207,10 @@ p {
             width: 72px;
             height: 72px;
         }
+    }
+
+    mat-grid-list {
+        width: 100%;
     }
 }
 
@@ -211,10 +228,6 @@ p {
         margin: 0 16px;
         margin-right: 64px;
     }
-    .page-navbar {
-        top: 4px;
-        right: 4px;
-    }
 
     .skills {
         gap: 12px;
@@ -222,6 +235,10 @@ p {
             width: 48px;
             height: 48px;
         }
+    }
+
+    .popup-image {
+        border-radius: 4px;
     }
 }
 app-logo.narrow {

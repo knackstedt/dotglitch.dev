@@ -4,16 +4,18 @@
 ></app-logo>
 
 <ngx-flicking
+    #rootFlicker
     class="root"
     [class.slim]="width < 1060"
     [class.narrow]="width < 720"
-    #rootFlicker
     [options]="{
         duration: 800,
         horizontal: false,
         interruptable: true,
         moveType: 'snap'
     }"
+    (changed)="pageFlickerIndex = rootFlicker.index"
+    (panelChange)="pageFlickerIndex = rootFlicker.index"
 >
     <div flicking-panel class="page">
         <div class="columns">
@@ -36,7 +38,7 @@
     </div>
     <div flicking-panel class="page">
         <div class="columns">
-            <div class="panel">
+            <div class="panel" [style.flex]="width > 1060 ? '50%' : '1%'">
                 <h1>Hi, I'm Andrew</h1>
                 <p>Frontend Developer / TypeScript Fan / Monitoring Expert</p>
 
@@ -84,11 +86,16 @@
                 bound: true,
                 horizontal: true
             }"
-            style="height: 100%"
+            [style.height]="width > 1060 ? '100%' : 'calc(100% - 48px)'"
+            (changed)="projectFlickerIndex = projectFlicker.index"
+            (panelChange)="projectFlickerIndex = projectFlicker.index"
         >
             @for (project of projects; track project) {
                 <div flicking-panel class="horizontal-panel columns">
-                    <div class="panel">
+                    <div
+                        class="panel"
+                        [style.flex]="(width > 1420 ? 40 : 100) + '%'"
+                    >
                         <h1>{{project.name}}</h1>
                         <span>{{project.startDate}}-{{project.endDate}}</span>
                         <p>{{project.description}}</p>
@@ -101,9 +108,11 @@
                     </div>
                     <mat-grid-list
                         cols="2"
-                        rowHeight="240px"
+                        [rowHeight]="width > 1420 ? 420: width > 1060 ? 240 : 64"
                         class="panel"
                         gutterSize="12"
+                        style="overflow: visible"
+                        [style.flex]="(width > 1060 ? 100 : 25) + '%'"
                     >
                         @for (img of project.images; track img; let i = $index) {
                             <mat-grid-tile
@@ -126,7 +135,7 @@
             @for (project of projects; track project; let i = $index) {
                 <div
                     class="project-marker"
-                    [class.selected]="projectFlicker.index == i"
+                    [class.selected]="projectFlickerIndex == i"
                     (click)="projectFlickerIndex = i;
                         projectFlicker.stopAnimation();
                         projectFlicker.moveTo(i);
@@ -145,7 +154,6 @@
         <div class="center">
             <span></span>
             <h1>Skills & Experience</h1>
-            <p>My expertise lies in my frontend and backend experience (Angular and NodeJS).</p>
             <p>
                 As an expert in Frontend, Node.js, and Angular development, I bring a blend of ingenuity and technical expertise to any
                 project. Crafting visually stunning and seamlessly functional user interfaces, I have a proven track record of
@@ -231,11 +239,15 @@
     </div>
 </ngx-flicking>
 
-<div class="page-navbar">
+<div
+    class="page-navbar"
+    [class.slim]="width < 1060"
+    [class.narrow]="width < 720"
+>
     @for (page of pages; track page; let i = $index) {
         <div
             class="page-marker"
-            [class.selected]="rootFlicker.index == i"
+            [class.selected]="pageFlickerIndex == i"
             (click)="pageFlickerIndex = i; moveFlicker()"
             (touch)="pageFlickerIndex = i; moveFlicker()"
         >
