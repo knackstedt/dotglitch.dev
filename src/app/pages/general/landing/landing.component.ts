@@ -1,5 +1,5 @@
 
-import { Component, HostListener, Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -8,7 +8,7 @@ import { NgxFlickingModule, NgxFlickingComponent } from '@egjs/ngx-flicking';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-
+import { MatrixRainComponent } from 'src/app/components/matrix-rain/matrix-rain.component';
 
 @Component({
     selector: 'app-img',
@@ -33,6 +33,7 @@ class ImageComponent {
         MatGridListModule,
         CubeGraphicComponent,
         LogoComponent,
+        MatrixRainComponent,
         StackEditorComponent,
         NgxFlickingModule
     ],
@@ -42,6 +43,7 @@ export class LandingComponent {
 
     @ViewChild('rootFlicker') rootFlicker: NgxFlickingComponent;
     @ViewChild('projectFlicker') projectFlicker: NgxFlickingComponent;
+    @ViewChild('particles') particlesEl: ElementRef;
 
     readonly projects = [
         {
@@ -292,6 +294,7 @@ class Zebra {
 
     pageFlickerIndex = 0;
     projectFlickerIndex = 0;
+    animationFlickerIndex = 0;
     pages = [
         {},
         {},
@@ -305,9 +308,7 @@ class Zebra {
     constructor(
         private readonly viewContainer: ViewContainerRef,
         private readonly dialog: MatDialog
-    ) {
-
-    }
+    ) { }
 
     ngOnInit() {
         this.viewContainer.element.nativeElement.focus();

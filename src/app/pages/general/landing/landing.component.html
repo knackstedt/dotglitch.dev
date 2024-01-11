@@ -1,4 +1,9 @@
 
+<app-matrix-rain
+    [style.top]="-(pageFlickerIndex*(70)) + '%'"
+/>
+
+
 <app-logo
     [class.narrow]="width < 1020"
 ></app-logo>
@@ -20,56 +25,68 @@
     <div flicking-panel class="page">
         <div class="columns">
             <div class="panel">
-                <h1>Sr. Enterprise Software Engineer</h1>
-                <p>
-                    I'm a <b>Sr. Software Engineer</b> who creates stunning interactive web components.
-                </p>
-                <span>
-                    <button mat-flat-button (click)="pageFlickerIndex = 1; moveFlicker()">
-                        About me
-                        <mat-icon>chevron_right</mat-icon>
-                    </button>
-                </span>
+                <div class="backdrop">
+                    <h1>Sr. Enterprise Software Engineer</h1>
+                    <p>
+                        I'm a <b>Sr. Software Engineer</b> who creates stunning interactive web components.
+                    </p>
+                    <span>
+                        <button mat-flat-button (click)="pageFlickerIndex = 1; moveFlicker()">
+                            About me
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div class="panel" style="overflow: hidden">
-                <app-cube-graphic style="width: 100%; height: 100%; display: block;"></app-cube-graphic>
+                <div style="position: relative; width: 100%; height: 100%;">
+                    <!-- <app-matrix-rain /> -->
+                    <app-cube-graphic
+                        flicking-panel
+                        style="width: 100%; height: 100%; display: block; position: absolute; top: 0"
+                    />
+                </div>
             </div>
         </div>
     </div>
     <div flicking-panel class="page">
         <div class="columns">
             <div class="panel" [style.flex]="width > 1060 ? '50%' : '1%'">
-                <h1>Hi, I'm Andrew</h1>
-                <p>Frontend Developer / TypeScript Fan / Monitoring Expert</p>
+                <div class="backdrop">
+                    <h1>Hi, I'm Andrew</h1>
+                    <p>Frontend Developer / TypeScript Fan / Monitoring Expert</p>
 
-                <span>
-                    <button mat-flat-button (click)="pageFlickerIndex = 2; moveFlicker()">
-                        My Skills
-                        <mat-icon>chevron_right</mat-icon>
-                    </button>
-                </span>
+                    <span>
+                        <button mat-flat-button (click)="pageFlickerIndex = 2; moveFlicker()">
+                            My Skills
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div class="panel">
-                <p>
-                    Hello there! I'm Andrew, a dynamic individual whose interests span the realms of creativity and technology. By day,
-                    I'm immersed in the world of tech, weaving intricate codes and solutions as a programmer. When the sun sets, my world
-                    transforms into a canvas of diverse passions.
-                </p>
+                <div class="backdrop">
+                    <p>
+                        Hello there! I'm Andrew, a dynamic individual whose interests span the realms of creativity and technology. By day,
+                        I'm immersed in the world of tech, weaving intricate codes and solutions as a programmer. When the sun sets, my world
+                        transforms into a canvas of diverse passions.
+                    </p>
 
-                <p>
-                    From the rhythmic twang of an arrow hitting the target to the whirr of my 3D printer bringing designs to life, archery
-                    and 3D printing are not just hobbies but expressions of my love for precision and craftsmanship. Embracing the
-                    do-it-yourself ethos, I find joy in hands-on projects, where every screw tightened and every line of code written is a
-                    step toward creation.
-                </p>
+                    <p>
+                        From the rhythmic twang of an arrow hitting the target to the whirr of my 3D printer bringing designs to life, archery
+                        and 3D printing are not just hobbies but expressions of my love for precision and craftsmanship. Embracing the
+                        do-it-yourself ethos, I find joy in hands-on projects, where every screw tightened and every line of code written is a
+                        step toward creation.
+                    </p>
 
-                <p>
-                    Tech is not just a career but a continuous exploration, and my evenings are often spent diving into the latest
-                    advancements and trends. Beyond the digital realm, my love for music provides the soundtrack to my life, creating
-                    harmony with my diverse interests. Whether I'm coding, crafting, or hitting bullseyes, the common thread in my pursuits
-                    is the fusion of technology, creativity, and the joy of bringing ideas to life. Join me on this eclectic journey where
-                    innovation and passion intertwine!
-                </p>
+                    <p>
+                        Tech is not just a career but a continuous exploration, and my evenings are often spent diving into the latest
+                        advancements and trends. Beyond the digital realm, my love for music provides the soundtrack to my life, creating
+                        harmony with my diverse interests. Whether I'm coding, crafting, or hitting bullseyes, the common thread in my pursuits
+                        is the fusion of technology, creativity, and the joy of bringing ideas to life. Join me on this eclectic journey where
+                        innovation and passion intertwine!
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -96,15 +113,17 @@
                         class="panel"
                         [style.flex]="(width > 1420 ? 40 : 100) + '%'"
                     >
-                        <h1>{{project.name}}</h1>
-                        <span>{{project.startDate}}-{{project.endDate}}</span>
-                        <p>{{project.description}}</p>
+                        <div class="backdrop">
+                            <h1>{{project.name}}</h1>
+                            <span>{{project.startDate}}-{{project.endDate}}</span>
+                            <p>{{project.description}}</p>
 
-                        <ul>
-                            @for (highlight of project.highlights; track highlight) {
-                                <li>{{highlight}}</li>
-                            }
-                        </ul>
+                            <ul>
+                                @for (highlight of project.highlights; track highlight) {
+                                    <li>{{highlight}}</li>
+                                }
+                            </ul>
+                        </div>
                     </div>
                     <mat-grid-list
                         cols="2"
@@ -152,57 +171,58 @@
     </div>
     <div flicking-panel class="page">
         <div class="center">
-            <span></span>
-            <h1>Skills & Experience</h1>
-            <p>
-                As an expert in Frontend, Node.js, and Angular development, I bring a blend of ingenuity and technical expertise to any
-                project. Crafting visually stunning and seamlessly functional user interfaces, I have a proven track record of
-                delivering scalable and efficient solutions.
-            </p>
-            <p>
-                Visit my <a href="https://www.linkedin.com/in/andrew-knackstedt/"><img src="/assets/technology-logos/linkedin.svg"></a> to see more.
-            </p>
+            <div class="backdrop">
+                <h1>Skills & Experience</h1>
+                <p>
+                    As an expert in Frontend, Node.js, and Angular development, I bring a blend of ingenuity and technical expertise to any
+                    project. Crafting visually stunning and seamlessly functional user interfaces, I have a proven track record of
+                    delivering scalable and efficient solutions.
+                </p>
+                <p>
+                    Visit my <a href="https://www.linkedin.com/in/andrew-knackstedt/"><img src="/assets/technology-logos/linkedin.svg"></a> to see more.
+                </p>
 
-            @if (width > 800) {
-                <div style="display: flex; flex-direction: column; gap: 48px;">
-                    <div class="skills">
-                        @for (technology of technologies_1; track technology) {
-                            <div class="skill">
-                                <img [src]="technology.icon">
-                                <span>{{technology.name}}</span>
-                            </div>
-                        }
-                    </div>
-
-                    <div class="skills">
-                        @for (technology of technologies_2; track technology) {
-                            <div class="skill">
-                                <img [src]="technology.icon">
-                                <span>{{technology.name}}</span>
-                            </div>
-                        }
-                    </div>
-
-                    <div class="skills">
-                        @for (technology of technologies_3; track technology) {
-                            <div class="skill">
-                                <img [src]="technology.icon">
-                                <span>{{technology.name}}</span>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-            @else {
-                <div class="skills">
-                    @for (technology of allTechnologies; track technology) {
-                        <div class="skill">
-                            <img [src]="technology.icon">
-                            <span>{{technology.name}}</span>
+                @if (width > 800) {
+                    <div style="display: flex; flex-direction: column; gap: 48px;">
+                        <div class="skills">
+                            @for (technology of technologies_1; track technology) {
+                                <div class="skill">
+                                    <img [src]="technology.icon">
+                                    <span>{{technology.name}}</span>
+                                </div>
+                            }
                         </div>
-                    }
-                </div>
-            }
+
+                        <div class="skills">
+                            @for (technology of technologies_2; track technology) {
+                                <div class="skill">
+                                    <img [src]="technology.icon">
+                                    <span>{{technology.name}}</span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="skills">
+                            @for (technology of technologies_3; track technology) {
+                                <div class="skill">
+                                    <img [src]="technology.icon">
+                                    <span>{{technology.name}}</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                @else {
+                    <div class="skills">
+                        @for (technology of allTechnologies; track technology) {
+                            <div class="skill">
+                                <img [src]="technology.icon">
+                                <span>{{technology.name}}</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
         </div>
     </div>
     <!-- <div flicking-panel class="page">
