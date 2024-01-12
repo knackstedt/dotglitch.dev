@@ -12,6 +12,9 @@ function randomFloat(min, max) {
 
 class Raindrop {
     public charArr: string[];
+    previousValue: string;
+    previousY: number;
+
     constructor(
         public x: number,
         public y: number,
@@ -24,20 +27,22 @@ class Raindrop {
         this.charArr = this.container.charArrs[~~(Math.random() * this.container.charArrs.length)];
     }
 
-    draw(ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D) {
+    clear(ctx: CanvasRenderingContext2D) {
+        ctx.fillStyle = "rgba(140,62,225,1)";
+        ctx.font = this.container.fontSize + "px " + this.container.fontFamily;
+        ctx.fillText(this.previousValue, this.x, this.previousY);
+    }
 
-        const value = this.charArr[randomInt(0, this.charArr.length - 1)];
+    draw(ctx: CanvasRenderingContext2D) {
+
+        const value = this.previousValue = this.charArr[randomInt(0, this.charArr.length - 1)];
         const speed = randomFloat(4, 12);
 
-        ctx2.fillStyle = "rgba(255,255,255,0.8)";
-        ctx2.font = this.container.fontSize + "px " + this.container.fontFamily;
-        ctx2.fillText(value, this.x, this.y);
-
-        // ctx.fillStyle = "#07fa87";
-        ctx.fillStyle = "rgba(140,62,225,1)";
+        ctx.fillStyle = "rgba(255,255,255,0.8)";
         ctx.font = this.container.fontSize + "px " + this.container.fontFamily;
         ctx.fillText(value, this.x, this.y);
 
+        this.previousY = this.y;
         this.y += speed;
         if (this.y > this.container.canvasHeight) {
             this.randomizeChars();
@@ -55,14 +60,10 @@ class Raindrop {
 })
 export class MatrixRainComponent  {
     @ViewChild("canvas") canvasRef: ElementRef<HTMLCanvasElement>;
-    @ViewChild("canvas2") canvas2Ref: ElementRef<HTMLCanvasElement>;
 
     private _ctx;
-    private _ctx2;
     get canvas () { return this .canvasRef.nativeElement }
-    get canvas2 () { return this .canvas2Ref.nativeElement }
     get ctx() { return this._ctx ?? (this._ctx = this.canvas.getContext('2d'))}
-    get ctx2() { return this._ctx2 ?? (this._ctx2 = this.canvas2.getContext('2d'))}
 
     _renderFrame = 0;
     // full screen dimensions
@@ -147,8 +148,6 @@ export class MatrixRainComponent  {
 
         this.canvas.width = this.canvasWidth;
         this.canvas.height = this.canvasHeight;
-        this.canvas2.width = this.canvasWidth;
-        this.canvas2.height = this.canvasHeight;
 
         this.maxColums = this.canvasWidth / (this.fontWidth);
     }
@@ -166,15 +165,22 @@ export class MatrixRainComponent  {
     }).bind(this);
 
     drawPositions() {
+        let i = this.raindrops.length;
+
+        // Call clear before we apply the fade fill
+        while (i--) {
+            this.raindrops[i].clear(this.ctx);
+        }
+
+        // Fade everything slightly
         this.ctx.fillStyle = "rgba(0,0,0,0.05)";
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-        this.ctx2.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-        var i = this.raindrops.length;
+        // Draw the new characters
+        i = this.raindrops.length;
 
         while (i--) {
-            this.raindrops[i].draw(this.ctx, this.ctx2);
+            this.raindrops[i].draw(this.ctx);
         }
     }
 }
