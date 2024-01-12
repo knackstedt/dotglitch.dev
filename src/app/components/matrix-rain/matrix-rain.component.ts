@@ -10,45 +10,102 @@ function randomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+type RaindropOptions = Partial<{
+    direction: "TD" | "LR" | "BU" | "RL"
+    headColor: string
+    trailColor: string
+    fontSize: number
+    fontFamily: string
+    // characterBank: string[]
+}>
+
 class Raindrop {
-    public charArr: string[];
-    previousValue: string;
+    private charList: string[];
+    previousChar: string;
+    previousX: number;
     previousY: number;
+
+    private shiftDirection: Function;
 
     constructor(
         public x: number,
         public y: number,
-        public container: MatrixRainComponent
+        public container: MatrixRainComponent,
+        private config: RaindropOptions
     ) {
         this.randomizeChars();
+
+        switch (config.direction) {
+            case "LR": {
+                this.shiftDirection = () => {
+                    this.x += randomFloat(4, 12);
+                    if (this.x > this.container.canvasWidth) {
+                        this.randomizeChars();
+
+                        this.x = randomFloat(-100, 0);
+                    }
+                }
+                break;
+            }
+            case "BU": {
+                this.shiftDirection = () => {
+                    this.y -= randomFloat(4, 12);
+                    if (this.y < 0) {
+                        this.randomizeChars();
+
+                        this.y = randomFloat(0, this.container.canvasHeight + 100);
+                    }
+                }
+                break;
+            }
+            case "RL": {
+                this.shiftDirection = () => {
+                    this.x -= randomFloat(4, 12);
+                    if (this.x < 0) {
+                        this.randomizeChars();
+
+                        this.x = randomFloat(0, this.container.canvasWidth + 100);
+                    }
+                }
+                break;
+            }
+
+            case "TD":
+            default: {
+                this.shiftDirection = () => {
+                    this.y += randomFloat(4, 12);
+                    if (this.y > this.container.canvasHeight) {
+                        this.randomizeChars();
+
+                        this.y = randomFloat(-100, 0);
+                    }
+                };
+                break;
+            }
+        }
     }
 
     randomizeChars() {
-        this.charArr = this.container.charArrs[~~(Math.random() * this.container.charArrs.length)];
+        this.charList = this.container.charArrs[~~(Math.random() * this.container.charArrs.length)];
     }
 
     clear(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = "rgba(140,62,225,1)";
-        ctx.font = this.container.fontSize + "px " + this.container.fontFamily;
-        ctx.fillText(this.previousValue, this.x, this.previousY);
+        ctx.fillStyle = this.config.trailColor ?? "rgba(140,62,225,1)";
+        ctx.font = (this.config.fontSize ?? 14) + "px " + (this.config.fontFamily ?? "Fira Sans");
+        ctx.fillText(this.previousChar, this.previousX, this.previousY);
     }
 
     draw(ctx: CanvasRenderingContext2D) {
+        const char = this.previousChar = this.charList[randomInt(0, this.charList.length - 1)];
 
-        const value = this.previousValue = this.charArr[randomInt(0, this.charArr.length - 1)];
-        const speed = randomFloat(4, 12);
+        ctx.fillStyle = this.config.headColor ?? "rgba(255,255,255,0.8)";
+        ctx.font = (this.config.fontSize ?? 14) + "px " + (this.config.fontFamily ?? "Fira Sans");
+        ctx.fillText(char, this.x, this.y);
 
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
-        ctx.font = this.container.fontSize + "px " + this.container.fontFamily;
-        ctx.fillText(value, this.x, this.y);
-
+        this.previousX = this.x;
         this.previousY = this.y;
-        this.y += speed;
-        if (this.y > this.container.canvasHeight) {
-            this.randomizeChars();
 
-            this.y = randomFloat(-100, 0);
-        }
+        this.shiftDirection();
     };
 }
 
@@ -70,7 +127,7 @@ export class MatrixRainComponent  {
     canvasWidth = 0;
     canvasHeight = 0;
     charLists = [
-        '⠀⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⡀⡁⡂⡃⡄⡅⡆⡇⡈⡉⡊⡋⡌⡍⡎⡏⡐⡑⡒⡓⡔⡕⡖⡗⡘⡙⡚⡛⡜⡝⡞⡟⡠⡡⡢⡣⡤⡥⡦⡧⡨⡩⡪⡫⡬⡭⡮⡯⡰⡱⡲⡳⡴⡵⡶⡷⡸⡹⡺⡻⡼⡽⡾⡿⢀⢁⢂⢃⢄⢅⢆⢇⢈⢉⢊⢋⢌⢍⢎⢏⢐⢑⢒⢓⢔⢕⢖⢗⢘⢙⢚⢛⢜⢝⢞⢟⢠⢡⢢⢣⢤⢥⢦⢧⢨⢩⢪⢫⢬⢭⢮⢯⢰⢱⢲⢳⢴⢵⢶⢷⢸⢹⢺⢻⢼⢽⢾⢿⣀⣁⣂⣃⣄⣅⣆⣇⣈⣉⣊⣋⣌⣍⣎⣏⣐⣑⣒⣓⣔⣕⣖⣗⣘⣙⣚⣛⣜⣝⣞⣟⣠⣡⣢⣣⣤⣥⣦⣧⣨⣩⣪⣫⣬⣭⣮⣯⣰⣱⣲⣳⣴⣵⣶⣷⣸⣹⣺⣻⣼⣽⣾⣿',
+        '⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⡀⡁⡂⡃⡄⡅⡆⡇⡈⡉⡊⡋⡌⡍⡎⡏⡐⡑⡒⡓⡔⡕⡖⡗⡘⡙⡚⡛⡜⡝⡞⡟⡠⡡⡢⡣⡤⡥⡦⡧⡨⡩⡪⡫⡬⡭⡮⡯⡰⡱⡲⡳⡴⡵⡶⡷⡸⡹⡺⡻⡼⡽⡾⡿⢀⢁⢂⢃⢄⢅⢆⢇⢈⢉⢊⢋⢌⢍⢎⢏⢐⢑⢒⢓⢔⢕⢖⢗⢘⢙⢚⢛⢜⢝⢞⢟⢠⢡⢢⢣⢤⢥⢦⢧⢨⢩⢪⢫⢬⢭⢮⢯⢰⢱⢲⢳⢴⢵⢶⢷⢸⢹⢺⢻⢼⢽⢾⢿⣀⣁⣂⣃⣄⣅⣆⣇⣈⣉⣊⣋⣌⣍⣎⣏⣐⣑⣒⣓⣔⣕⣖⣗⣘⣙⣚⣛⣜⣝⣞⣟⣠⣡⣢⣣⣤⣥⣦⣧⣨⣩⣪⣫⣬⣭⣮⣯⣰⣱⣲⣳⣴⣵⣶⣷⣸⣹⣺⣻⣼⣽⣾⣿',
         // 'ঀঅআইঈউঊঋঌএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহঽৎড়ঢ়য়ৠৡ০১২৩৪৫৬৭৮৯ৰৱ৲৳৴৵৶৷৸৹৺৻ৼ৽',
         // 'ꤰꤱꤲꤳꤴꤵꤶꤷꤸꤹꤺꤻꤼꤽꤾꤿꥀꥁꥂꥃꥄꥅꥆ',
         // 'ᚠᚡᚢᚣᚤᚥᚦᚧᚨᚩᚪᚫᚬᚭᚮᚯᚰᚱᚲᚳᚴᚵᚶᚷᚸᚹᚺᚻᚼᚽᚾᚿᛀᛁᛂᛃᛄᛅᛆᛇᛈᛉᛊᛋᛌᛍᛎᛏᛐᛑᛒᛓᛔᛕᛖᛗᛘᛙᛚᛛᛜᛝᛞᛟᛠᛡᛢᛣᛤᛥᛦᛧᛨᛩᛪ᛫᛬᛭ᛮᛯᛰᛱᛲᛳᛴᛵᛶᛷᛸ',
@@ -80,7 +137,7 @@ export class MatrixRainComponent  {
         // '𐄇𐄈𐄉𐄊𐄋𐄌𐄍𐄎𐄏𐄐𐄑𐄒𐄓𐄔𐄕𐄖𐄗𐄘𐄙𐄚𐄛𐄜𐄝𐄞𐄟𐄠𐄡𐄢𐄣𐄤𐄥𐄦𐄧𐄨𐄩𐄪𐄫𐄬𐄭𐄮𐄯𐄰𐄱𐄲𐄳',
         // '🞀🞁🞂🞃🞄🞅🞆🞇🞈🞉🞊🞋🞌🞍🞎🞏🞐🞑🞒🞓🞔🞕🞖🞗🞘🞙🞚🞛🞜🞝🞞🞟🞠🞡🞢🞣🞤🞥🞦🞧🞨🞩🞪🞫🞬🞭🞮🞯🞰🞱🞲🞳🞴🞵🞶🞷🞸🞹🞺🞻🞼🞽🞾🞿🟀🟁🟂🟃🟄🟅🟆🟇🟈🟉🟊🟋🟌🟍🟎🟏🟐🟑🟒🟓🟔🟕🟖🟗🟘',
         // '🁢🁣🁤🁥🁦🁧🁨🁩🁪🁫🁬🁭🁮🁯🁩🁪🁫🁬🁭🁮🁯🁰🁱🁲🁳🁴🁵🁶🁷🁸🁹🁺🁻🁼🁽🁾🁿🂀🂁🂂🂃🂄🂅🂆🂇🂈🂉🂊🂋🂌🂍🂎🂏🂐🂑🂒🂓',
-        // '🀀🀁🀂🀃🀄🀅🀆🀇🀈🀉🀊🀋🀌🀍🀎🀏🀐🀑🀒🀓🀔🀕🀖🀗🀘🀙🀚🀛🀜🀝🀞🀟🀠🀡🀢🀣🀤🀥🀦🀧🀨🀩🀪🀫',
+        // '🀀🀁🀂🀃🀅🀆🀇🀈🀉🀊🀋🀌🀍🀎🀏🀐🀑🀒🀓🀔🀕🀖🀗🀘🀙🀚🀛🀜🀝🀞🀟🀠🀡🀢🀣🀤🀥🀦🀧🀨🀩🀪🀫',
         // '🂠🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃜🃝🃞🃟',
         // '🀰🀱🀲🀳🀴🀵🀶🀷🀸🀹🀺🀻🀼🀽🀾🀿🁀🁁🁂🁃🁄🁅🁆🁇🁈🁉🁊🁋🁌🁍🁎🁏🁐🁑🁒🁓🁔🁕🁖🁗🁘🁙🁚🁛🁜🁝🁞🁟🁠🁡',
         // '𑫀𑫁𑫂𑫃𑫄𑫅𑫆𑫇𑫈𑫉𑫊𑫋𑫌𑫍𑫎𑫏𑫐𑫑𑫒𑫓𑫔𑫕𑫖𑫗𑫘𑫙𑫚𑫛𑫜𑫝𑫞𑫟𑫠𑫡𑫢𑫣𑫤𑫥𑫦𑫧𑫨𑫩𑫪𑫫𑫬𑫭𑫮𑫯𑫰𑫱𑫲𑫳𑫴𑫵𑫶𑫷𑫸',
@@ -94,6 +151,8 @@ export class MatrixRainComponent  {
     fontWidth = 8;
     fontFamily = "Fira Sans";
     maxColums = 0;
+    readonly warmupIterations = 100;
+    readonly minFrameTime = 50;
 
     private observer: ResizeObserver;
 
@@ -110,22 +169,26 @@ export class MatrixRainComponent  {
     ngAfterViewInit() {
         this.onResize();
 
-        for (var i = 0; i < this.maxColums; i++) {
-            this.raindrops.push(
-                new Raindrop(
-                    i * this.fontWidth,
-                    randomFloat(-this.canvasWidth, 0),
-                    this
-                )
-            );
+        const options: RaindropOptions = {
+            // headColor:  "rgba(255,0,0,1)",
+            // // trailColor: "rgba(7,250,135,.8)"
+            // trailColor: "rgba(244,67,54,.8)",
+            // direction: "BU"
         }
 
         for (var i = 0; i < this.maxColums; i++) {
             this.raindrops.push(
                 new Raindrop(
                     i * this.fontWidth,
+                    randomFloat(-this.canvasWidth, 0),
+                    this,
+                    options
+                ),
+                new Raindrop(
+                    i * this.fontWidth,
                     (this.canvasHeight / 2) + randomFloat(-this.canvasWidth, 0),
-                    this
+                    this,
+                    options
                 )
             );
         }
@@ -133,7 +196,7 @@ export class MatrixRainComponent  {
         this.render();
 
         // Preemptively draw the characters
-        for (let i = 0; i < 100; i++)
+        for (let i = 0; i < this.warmupIterations; i++)
             this.drawPositions();
     }
 
@@ -156,7 +219,7 @@ export class MatrixRainComponent  {
     render = (() => {
         const t = Date.now();
         const d = t - this.lastTime;
-        if (d > 50) {
+        if (d > this.minFrameTime) {
             this.lastTime = t;
             this.drawPositions();
         }
