@@ -304,6 +304,7 @@ class Zebra {
     ];
 
     width = window.innerWidth;
+    lastWheelTime = Date.now();
 
     constructor(
         private readonly viewContainer: ViewContainerRef,
@@ -325,7 +326,10 @@ class Zebra {
 
     @HostListener("wheel", ['$event'])
     onWheel(evt: WheelEvent) {
-        evt.deltaY > 0 ? this.onArrowDown() : this.onArrowUp();
+        if (Date.now() - this.lastWheelTime > 400) {
+            this.lastWheelTime = Date.now();
+            evt.deltaY > 0 ? this.onArrowDown() : this.onArrowUp();
+        }
     }
 
     @HostListener("window:keydown.arrowdown")
