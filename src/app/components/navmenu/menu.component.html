@@ -14,6 +14,7 @@
                 <a
                     class="item"
                     [matTooltip]="collapsed ? page.label : null"
+                    matTooltipPosition="right"
                     [href]="page.link ? page.link : null"
                     [target]="page.linkTarget || null"
                 >
@@ -37,6 +38,7 @@
                 <div
                     class="item"
                     [matTooltip]="collapsed ? page.label : null"
+                    matTooltipPosition="right"
                     [ngx-menu]="page['children']"
                     [ngx-menu-config]="{ position: 'right', alignment: 'start', customClass: ['dt-menu'] }"
                 >
@@ -62,6 +64,7 @@
 
     <div class="item"
         [matTooltip]="collapsed ? 'Expand Dock' : null"
+        matTooltipPosition="right"
         (click)="collapsed = !collapsed"
         >
         <!-- Overlay search functionality -->
