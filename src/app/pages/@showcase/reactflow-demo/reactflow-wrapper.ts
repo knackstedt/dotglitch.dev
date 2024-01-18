@@ -3,7 +3,7 @@ import * as React from 'react';
 import { OnInit as ROnInit, Node, Connection, NodeChange, EdgeChange, OnConnectStartParams, ReactFlowInstance, OnSelectionChangeParams } from 'reactflow';
 import { Edge, DefaultEdgeOptions, HandleType, NodeTypes, EdgeTypes, ConnectionLineType, ConnectionLineComponent, ConnectionMode, KeyCode, NodeOrigin, Viewport, CoordinateExtent, PanOnScrollMode, FitViewOptions, PanelPosition, ProOptions, OnError } from 'reactflow';
 import { ReactMagicWrapperComponent } from '@dotglitch/ngx-common';
-import ReactFlow from 'reactflow';
+import { ReactFlowWrappableComponent } from 'src/app/pages/@showcase/reactflow-demo/reactflow';
 
 
 @Component({
@@ -15,12 +15,12 @@ import ReactFlow from 'reactflow';
 })
 export class ReactFlowComponent extends ReactMagicWrapperComponent {
 
-    override ngReactComponent = ReactFlow;
+    override ngReactComponent = ReactFlowWrappableComponent;
 
     @Input() nodes?: Node<any, string | undefined>[] | undefined;
     @Input() edges?: Edge<any>[] | undefined;
-    @Input() initialNodes?: Node<any, string | undefined>[] | undefined;
-    @Input() initialEdges?: Edge<any>[] | undefined;
+    // @Input() initialNodes?: Node<any, string | undefined>[] | undefined;
+    // @Input() initialEdges?: Edge<any>[] | undefined;
     @Input() defaultEdgeOptions?: DefaultEdgeOptions | undefined;
 
     @Output() onNodeClick = new EventEmitter<[MouseEvent, Node]>();
@@ -91,7 +91,7 @@ export class ReactFlowComponent extends ReactMagicWrapperComponent {
     @Input() nodesFocusable?: boolean | undefined;
     @Input() nodeOrigin?: NodeOrigin | undefined;
     @Input() edgesFocusable?: boolean | undefined;
-    @Input() initNodeOrigin?: NodeOrigin | undefined;
+    // @Input() initNodeOrigin?: NodeOrigin | undefined;
     @Input() elementsSelectable?: boolean | undefined;
     @Input() selectNodesOnDrag?: boolean | undefined;
     @Input() panOnDrag?: boolean | number[] | undefined;
