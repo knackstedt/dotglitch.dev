@@ -9,6 +9,7 @@ import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graph
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatrixRainComponent } from 'src/app/components/matrix-rain/matrix-rain.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     selector: 'app-img',
@@ -35,7 +36,8 @@ class ImageComponent {
         LogoComponent,
         MatrixRainComponent,
         StackEditorComponent,
-        NgxFlickingModule
+        NgxFlickingModule,
+        NgOptimizedImage
     ],
     standalone: true
 })

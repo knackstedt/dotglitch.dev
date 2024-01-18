@@ -216,7 +216,7 @@
                     <div class="skills">
                         @for (technology of allTechnologies; track technology) {
                             <div class="skill">
-                                <img [src]="technology.icon">
+                                <img [ngSrc]="technology.icon" ngSrcset="96w,72w,48w">
                                 <span>{{technology.name}}</span>
                             </div>
                         }
