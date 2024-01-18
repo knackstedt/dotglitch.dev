@@ -1,12 +1,10 @@
-
 <app-matrix-rain
     [style.top]="-(pageFlickerIndex*(70)) + '%'"
 />
 
-
 <app-logo
     [class.narrow]="width < 1020"
-></app-logo>
+/>
 
 <ngx-flicking
     #rootFlicker
@@ -21,6 +19,7 @@
     }"
     (changed)="pageFlickerIndex = rootFlicker.index"
     (panelChange)="pageFlickerIndex = rootFlicker.index"
+    (move)="onRootMove($event)"
 >
     <div flicking-panel class="page">
         <div class="columns">
@@ -106,6 +105,7 @@
             [style.height]="width > 1060 ? '100%' : 'calc(100% - 48px)'"
             (changed)="projectFlickerIndex = projectFlicker.index"
             (panelChange)="projectFlickerIndex = projectFlicker.index"
+            (move)="onProjectMove($event)"
         >
             @for (project of projects; track project) {
                 <div flicking-panel class="horizontal-panel columns">

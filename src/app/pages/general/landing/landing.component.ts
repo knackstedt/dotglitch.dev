@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { StackEditorComponent } from 'ngx-stackedit';
-import { NgxFlickingModule, NgxFlickingComponent } from '@egjs/ngx-flicking';
+import { NgxFlickingModule, NgxFlickingComponent, Camera } from '@egjs/ngx-flicking';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -322,6 +322,15 @@ class Zebra {
     moveFlicker() {
         this.rootFlicker.stopAnimation();
         this.rootFlicker.moveTo(this.pageFlickerIndex);
+    }
+
+    onRootMove(e) {
+        const camera: Camera = e.currentTarget.camera;
+        this.pageFlickerIndex = Math.floor(camera.position / camera.size);
+    }
+    onProjectMove(e) {
+        const camera: Camera = e.currentTarget.camera;
+        this.projectFlickerIndex = Math.floor(camera.position / camera.size);
     }
 
     @HostListener("wheel", ['$event'])
