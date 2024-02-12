@@ -3,7 +3,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "sourceRoot": "./src",
     "outDir": "./dist/",
     "forceConsistentCasingInFileNames": true,
     "strict": false,
@@ -18,17 +17,19 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "preserveSymlinks": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2022",
-    "module": "es2020",
+    "module": "es2022",
     "jsx": "react",
     "lib": [
       "es2020",
       "dom"
     ],
     "paths": {
-      "path": [""]
+        "path": ["./node_modules/path-browserify"],
+        "@dotglitch/ngx-common": [ "./node_modules/@dotglitch/ngx-common" ]
     },
     "typeRoots": [
         "node_modules/@types",
