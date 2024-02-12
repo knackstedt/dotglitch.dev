@@ -3,18 +3,26 @@ import { Component, ElementRef, HostListener, Inject, ViewChild, ViewContainerRe
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { StackEditorComponent } from 'ngx-stackedit';
 import { NgxFlickingModule, NgxFlickingComponent, Camera } from '@egjs/ngx-flicking';
 import { CubeGraphicComponent } from 'src/app/components/cube-graphic/cube-graphic.component';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatrixRainComponent } from 'src/app/components/matrix-rain/matrix-rain.component';
 import { NgOptimizedImage } from '@angular/common';
+import { StackEditorComponent } from 'ngx-stackedit';
+import { NgxImageCacheDirective, ParallaxCardComponent } from '@dotglitch/ngx-common';
+
+import DigitalRain from './rain-presets/digital-rain';
+import MatrixRain from './rain-presets/matrix';
+import MeteorRain from './rain-presets/meteor-rain';
+import MahoukaRain from './rain-presets/mahouka-rain';
+import BlueRain from './rain-presets/rain';
 
 @Component({
     selector: 'app-img',
-    template: '<img [src]="url" (click)="dialog.close()">',
-    styles: `:host{max-width: min(90vh, 90vw); max-height: min(90vh, 90vw)}`,
+    template: '<img  (click)="dialog.close()">',
+    styles: `:host{max-width: min(90vh, 90vw); max-height: min(90vh, 90vw)} img { border-radius: 6px }`,
+    imports: [NgxImageCacheDirective],
     standalone: true
 })
 class ImageComponent {
@@ -32,6 +40,8 @@ class ImageComponent {
         MatIconModule,
         MatButtonModule,
         MatGridListModule,
+        NgxImageCacheDirective,
+        ParallaxCardComponent,
         CubeGraphicComponent,
         LogoComponent,
         MatrixRainComponent,
@@ -89,20 +99,21 @@ export class LandingComponent {
             "./assets/ngx-common/menu.png"
         ]
     },
-    {
-        name: "NodeJS Authentication Microservice (Oauth2.0)",
-        description: "A microservice that runs on k8s which serves the primary purpose of federating authorization and authentication",
-        startDate: "2021-04",
-        endDate: "Present",
-        highlights: [
-            "Express routes securely guarded via middleware",
-            "Compliant OdataV4 data endpoints for ingress/egress",
-            "Sql Server model-less integration",
-            "Redis and Azure endpoint integrations",
-            "Transactional logging and monitoring with Dynatrace",
-            "Stateless & scalable architecture enabling for elastic horizontal scaling"
-        ]
-    }];
+    // {
+    //     name: "NodeJS Authentication Microservice (Oauth2.0)",
+    //     description: "A microservice that runs on k8s which serves the primary purpose of federating authorization and authentication",
+    //     startDate: "2021-04",
+    //     endDate: "Present",
+    //     highlights: [
+    //         "Express routes securely guarded via middleware",
+    //         "Compliant OdataV4 data endpoints for ingress/egress",
+    //         "Sql Server model-less integration",
+    //         "Redis and Azure endpoint integrations",
+    //         "Transactional logging and monitoring with Dynatrace",
+    //         "Stateless & scalable architecture enabling for elastic horizontal scaling"
+    //     ]
+    // }
+    ];
 
     readonly technologies_1 = [
         { name: "HTML5", icon: "/assets/technology-logos/html5.svg"},
@@ -294,10 +305,17 @@ class Zebra {
 \`\`\`
     `;
 
+    readonly DigitalRain = DigitalRain;
+    readonly MatrixRain = MatrixRain;
+    readonly MeteorRain = MeteorRain;
+    readonly BlueRain = BlueRain;
+    readonly MahoukaRain = MahoukaRain;
+
     pageFlickerIndex = 0;
     projectFlickerIndex = 0;
     animationFlickerIndex = 0;
     pages = [
+        {},
         {},
         {},
         {},

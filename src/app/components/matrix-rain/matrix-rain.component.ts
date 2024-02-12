@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewContainerRef } from '@angular/core';
 import { MatrixAnimation } from 'matrix-animation';
 
 @Component({
@@ -9,6 +9,12 @@ import { MatrixAnimation } from 'matrix-animation';
 })
 export class MatrixRainComponent  {
 
+    @Input() config = {
+        rainDrop: {
+            headColor: "rgba(255,255,255,0.8)",
+            trailColor: "rgba(140,62,225,1)",
+        }
+    };
     animation: MatrixAnimation;
 
     constructor(private readonly viewcontainer: ViewContainerRef) {
@@ -18,12 +24,7 @@ export class MatrixRainComponent  {
     ngAfterViewInit() {
         this.animation = new MatrixAnimation(
             this.viewcontainer.element.nativeElement,
-            {
-                rainDrop: {
-                    headColor: "rgba(255,255,255,0.8)",
-                    trailColor: "rgba(140,62,225,1)",
-                }
-            }
+            structuredClone(this.config)
         )
     }
 
