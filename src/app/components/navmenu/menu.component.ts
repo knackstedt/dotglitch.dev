@@ -30,6 +30,19 @@ export class NavMenuComponent {
             icon: "https://github.com/fluidicon.png",
             linkTarget: "_blank"
         },
+        {
+            label: "Matrix Canvas Animation",
+            link: "https://matrix.dotglitch.dev",
+            icon: "/assets/menu/language_japanese_kana_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg",
+            linkTarget: "_blank"
+        },
+        {
+            label: "Show The Code",
+            link: "https://showthecode.dev",
+            icon: "https://showthecode.dev/assets/logo-C9oKWVGt.png",
+            linkTarget: "_blank"
+        },
+
         // {
         //     label: "DotGlitch ngx-common",
         //     icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
@@ -56,22 +69,22 @@ export class NavMenuComponent {
         //         }
         //     ]
         // },
-        {
-            label: "NG React Wrappers",
-            icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
-            children: [
-                {
-                    label: "ReactFlow",
-                    icon: "https://reactflow.dev/img/favicon.ico",
-                    link: "#/Reactflow"
-                },
-                {
-                    label: "Excalidraw",
-                    icon: "https://plus.excalidraw.com/favicon-32x32.png",
-                    link: "#/Excalidraw"
-                }
-            ]
-        },
+        // {
+        //     label: "NG React Wrappers",
+        //     icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
+        //     children: [
+        //         {
+        //             label: "ReactFlow",
+        //             icon: "https://reactflow.dev/img/favicon.ico",
+        //             link: "#/Reactflow"
+        //         },
+        //         {
+        //             label: "Excalidraw",
+        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
+        //             link: "#/Excalidraw"
+        //         }
+        //     ]
+        // },
         // {
         //     label: "My Libraries",
         //     icon: "",
@@ -89,7 +102,7 @@ export class NavMenuComponent {
         .map(i => {
 
             return {
-                label: i['name'] ?? i.id,
+                label: i['name'] ?? i['label'] ?? i.id,
                 link: '#/' + i.id,
                 linkTarget: "_self" as "_self",
                 ...i

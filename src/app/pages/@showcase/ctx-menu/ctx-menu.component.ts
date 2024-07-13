@@ -33,29 +33,4 @@ export class CtxMenuComponent {
     CustomTriggersExample = CustomTriggersExample;
     ChildTemplateExample = ChildTemplateExample;
     TooltipExample = TooltipExample;
-
-    readonly importCode = `
-import { NgModule } from '@angular/core';
-import { MenuDirective, MenuDirective } from '@dotglitch/ngx-common';
-import { AppComponent } from './app.component';
-
-@NgModule({
-    declarations: [
-        AppComponent,
-        ...
-    ],
-    imports: [
-        MenuDirective,
-        MenuDirective,
-        ...
-    ]
-    bootstrap: [AppComponent]
-})
-export class AppModule { }`
-
-    constructor() { }
-
-    ngOnInit() {
-    }
-
 }

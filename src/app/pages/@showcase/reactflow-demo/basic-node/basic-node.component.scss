@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    position: relative;
+}
+
+div {
+    width: 200px;
+    padding: 12px 24px;
+    border: 1px solid var(--node-border-color);
+    background-color: var(--background-color);
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) translateX(-50%);
+}

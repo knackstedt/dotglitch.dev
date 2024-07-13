@@ -12,9 +12,9 @@ import * as RegexLanguage from './regex-syntax';
     templateUrl: './regex-diagram.component.html',
     styleUrls: ['./regex-diagram.component.scss'],
     imports: [
-    MatSelectModule,
-    VscodeComponent
-],
+        MatSelectModule,
+        VscodeComponent
+    ],
     standalone: true
 })
 export class RegexDiagramComponent implements AfterViewInit {
@@ -23,6 +23,13 @@ export class RegexDiagramComponent implements AfterViewInit {
     readonly RegexLanguage = RegexLanguage;
 
     code = '^(?P<protocol>(?:ftp|https?)):\/\/(?P<subDomain>(?:[\-.0-9A-Za-z])+)\.(?P<tld>(?:[A-Za-z]){2,4})(?:(?P<port>:(?:6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{3}|[1-9][0-9]{2}|[1-9][0-9]|[1-9])))?(?:\/)?(?P<resource>(?:.)*)$'
+
+    @Input() view: string;
+    @Input() project: string;
+    @Input() goal: string;
+    @Input() objective: string;
+    @Input() task: string;
+    @Input() thing: string;
 
     readonly samples = [
         {
@@ -85,6 +92,10 @@ export class RegexDiagramComponent implements AfterViewInit {
 
     constructor() {
 
+    }
+
+    ngOnInit() {
+        console.log(this)
     }
 
     @Input() errorMessageOverride: CallableFunction = (ex) => {

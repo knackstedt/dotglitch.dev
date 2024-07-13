@@ -1,8 +1,6 @@
+import parse from './regexp.js';
 // var new Choice, new Comment, new Diagram, new Group, new NonTerminal, new OneOrMore, new Optional, new Sequence, new Terminal, new ZeroOrMore, doSpace, get_flag_name, makeLiteral, parse, parseRegex, quantifiedComment, rx2rr;
-const { Diagram, Sequence, Choice, Optional, OneOrMore, ZeroOrMore, Terminal, NonTerminal, Comment, Skip, Group } = require('./railroad-diagrams.js');
-
-const parse = require("./regexp.js");
-
+import { Diagram, Sequence, Choice, Optional, OneOrMore, ZeroOrMore, Terminal, NonTerminal, Comment, Skip, Group } from './railroad-diagrams.js';
 
 const SP_GROUP_NAME = '__GROUP';
 const SP_GROUP_LABEL = 'from zone name';

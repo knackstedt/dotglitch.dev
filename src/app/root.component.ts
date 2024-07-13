@@ -57,16 +57,45 @@ export class RootComponent {
         });
 
         this.commandPalette.attachElementCommands([
-            { label: "Silent scream", shortcutKey: "ctrl+h", action: () => {} },
-            { label: "Old news", shortcutKey: "ctrl+g", action: () => {} },
-            { label: "Civil war", shortcutKey: "ctrl+e", action: () => {} },
-            { label: "Plastic silverware", shortcutKey: "ctrl+l", action: () => {} },
-            { label: "Crash landing", shortcutKey: "ctrl+t", action: () => {} },
-            { label: "Even odds", shortcutKey: "ctrl+y", action: () => {} },
-            { label: "Freezer burn", shortcutKey: "ctrl+u", action: () => {} },
-            { label: "Honest politician", shortcutKey: "ctrl+i", action: () => {} },
-            { label: "Random order", shortcutKey: "ctrl+o", action: () => {} },
-            { label: "Dry lake", shortcutKey: "ctrl+j", action: () => {} },
+            { visibleInList: false, shortcutKey: "pause", action: () => {debugger} },
+            { icon: "info", label: "Explanation", hint: "These menu items are purely for sample purposes" },
+            {
+                label: "Oxymorons",
+                icon: "list",
+                hint: "View a list of Oxymorons",
+                subMenu: [
+                    { label: "Silent scream", shortcutKey: "ctrl+h" },
+                    { label: "Old news", shortcutKey: "ctrl+g" },
+                    { label: "Civil war", shortcutKey: "ctrl+e" },
+                    { label: "Plastic silverware", shortcutKey: "ctrl+l" },
+                    { label: "Crash landing", shortcutKey: "ctrl+t" },
+                    { label: "Even odds", shortcutKey: "ctrl+y" },
+                    { label: "Freezer burn", shortcutKey: "ctrl+u" },
+                    { label: "Honest politician", shortcutKey: "ctrl+i" },
+                    { label: "Random order", shortcutKey: "ctrl+o" },
+                    { label: "Dry lake", shortcutKey: "ctrl+j" }
+                ]
+            },
+            {
+                icon: "restaurant_menu",
+                label: "Foods",
+                hint: "View a list of Foods",
+                subMenu: [
+                    { label: "Cake", icon: "cake" },
+                    { label: "Pizza", icon: "local_pizza" },
+                    { label: "Soup", icon: "soup_kitchen" },
+                    { label: "Ramen", icon: "ramen_dining" },
+                    { label: "Hamburger", icon: "lunch_dining" },
+                    { label: "Coffee", icon: "local_cafe" },
+                    { label: "Martini", icon: "local_bar" },
+                    { label: "Croissant", icon: "bakery_dining" },
+                    { label: "Chinese", icon: "takeout_dining" },
+                    { label: "Ice Cream", icon: "icecream" },
+                    { label: "Tapas", icon: "tapas" },
+                ]
+            },
+            { icon: "open_with", label: "Do something cool", hint: "You can use mat-icons" },
+            { icon: "./assets/icon.png", label: "Turn off gravity", hint: "You can also use image URLs" },
         ])
     }
 

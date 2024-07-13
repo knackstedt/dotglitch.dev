@@ -1,0 +1,45 @@
+ngx-reactflow {
+    .react-flow__node {
+        transition: all 300ms ease;
+    }
+
+    .react-flow__edge {
+        transition: all 300ms ease;
+    }
+
+    .react-flow__background pattern circle {
+        fill: var(--text-subtle-color);
+    }
+
+    .react-flow__controls-button {
+        background-color: var(--panel-background-color);
+        fill: var(--text-color);
+        border-bottom-color: var(--splitter-background-color)
+    }
+
+    .react-flow__handle {
+        opacity: 0;
+        pointer-events: none;
+        height: 0;
+    }
+
+    .react-flow__handle-right {
+        right: 0;
+    }
+
+    .react-flow__handle-left {
+        left: 0;
+    }
+
+    .react-flow__attribution {
+        background: var(--background-color);
+    }
+
+    .react-flow__attribution a {
+        color: var(--text-color);
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}

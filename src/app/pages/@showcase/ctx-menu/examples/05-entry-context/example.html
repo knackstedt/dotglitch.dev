@@ -4,12 +4,12 @@ we can reference the entry in menu event hooks such as
 isVisible, isDisabled, action, childrenResolver
 -->
 @for (entry of entries; track entry) {
-  <button
-    mat-stroked-button
-    [ngx-contextmenu]="ctxMenu"
-    [ngx-menu-context]="entry"
+    <button
+        mat-stroked-button
+        [ngx-contextmenu]="ctxMenu"
+        [ngx-menu-context]="entry"
     >
-    Item {{entry.name}}
-  </button>
+            Item {{entry.name}}
+    </button>
 }
 

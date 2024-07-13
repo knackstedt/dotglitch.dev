@@ -2,10 +2,12 @@
 :root {
     --text-color: #efefef;
     --background-color: #121212;
+    --node-border-color: #5a5a5a;
 }
 
 .light {
     --text-color: #121212;
     --background-color: #efefef;
+    --node-border-color: #a9a9a9;
     --ngx-ctx-menu-text-color: #111;
 }

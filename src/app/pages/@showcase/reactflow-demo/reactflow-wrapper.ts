@@ -3,13 +3,16 @@ import * as React from 'react';
 import { OnInit as ROnInit, Node, Connection, NodeChange, EdgeChange, OnConnectStartParams, ReactFlowInstance, OnSelectionChangeParams } from 'reactflow';
 import { Edge, DefaultEdgeOptions, HandleType, NodeTypes, EdgeTypes, ConnectionLineType, ConnectionLineComponent, ConnectionMode, KeyCode, NodeOrigin, Viewport, CoordinateExtent, PanOnScrollMode, FitViewOptions, PanelPosition, ProOptions, OnError } from 'reactflow';
 import { ReactMagicWrapperComponent } from '@dotglitch/ngx-common';
-import { ReactFlowWrappableComponent } from 'src/app/pages/@showcase/reactflow-demo/reactflow';
+import { ReactFlowWrappableComponent } from './reactflow';
 
 
 @Component({
     selector: 'ngx-reactflow',
     template: ``,
-    styleUrls: ['../../../../../node_modules/reactflow/dist/style.css'],
+    styleUrls: [
+        '../../../../../node_modules/reactflow/dist/style.css',
+        './reactflow.scss'
+    ],
     standalone: true,
     encapsulation: ViewEncapsulation.None
 })
@@ -69,6 +72,7 @@ export class ReactFlowComponent extends ReactMagicWrapperComponent {
     @Output() onPaneMouseLeave = new EventEmitter<[MouseEvent]>();
     @Output() onError = new EventEmitter<OnError>();
 
+    @Input() id?: string | undefined;
     @Input() nodeTypes?: NodeTypes | undefined;
     @Input() edgeTypes?: EdgeTypes | undefined;
     @Input() connectionLineType?: ConnectionLineType | undefined;

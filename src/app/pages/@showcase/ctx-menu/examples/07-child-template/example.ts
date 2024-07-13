@@ -19,23 +19,25 @@ export class ExampleChildTemplateComponent {
     ctxMenu: MenuItem[];
 
     ngAfterViewInit() {
-        this.ctxMenu = [
-            {
-                label: "Google",
-                link: "www.google.com"
-            },
-            {
-                label: "Bing",
-                // We can directly reference child templates
-                // Note: We do not yet support @Input and @Output bindings.
-                childTemplate: ExampleChildComponent
-            },
-            {
-                label: "Yahoo",
-                // We can also directly reference templates
-                // in the current component
-                childTemplate: this.yahooTemplate
-            }
-        ]
+        setTimeout(() => {
+            this.ctxMenu = [
+                {
+                    label: "Google",
+                    link: "www.google.com"
+                },
+                {
+                    label: "Bing",
+                    // We can directly reference child templates
+                    // Note: We do not yet support @Input and @Output bindings.
+                    childTemplate: ExampleChildComponent
+                },
+                {
+                    label: "Yahoo",
+                    // We can also directly reference templates
+                    // in the current component
+                    childTemplate: this.yahooTemplate
+                }
+            ]
+        })
     }
 }

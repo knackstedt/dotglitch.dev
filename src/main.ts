@@ -1,6 +1,4 @@
-import { enableProdMode, isDevMode, importProvidersFrom } from '@angular/core';
-
-import { environment } from './environment';
+import { isDevMode, importProvidersFrom } from '@angular/core';
 import { RootComponent } from './app/root.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { RegisteredComponents } from 'src/app/component.registry';
@@ -13,19 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, IMAGE_CONFIG } from '@angular/common';
 import { LazyLoaderModule, MenuDirective } from '@dotglitch/ngx-common';
 
-// import "swiped-events";
-
-if (environment.production) {
-    enableProdMode();
-}
 // Stub the global `process` variable because React
 // uses a bad convention for developers.
 // @ts-ignore
 window.process = window.process ?? { env: { NODE_ENV: isDevMode() ? "development" : "production" } };
-
 
 bootstrapApplication(RootComponent, {
     providers: [
@@ -50,6 +42,13 @@ bootstrapApplication(RootComponent, {
                 registrationStrategy: 'registerWhenStable:30000'
             })
         ),
+        {
+            provide: IMAGE_CONFIG,
+            useValue: {
+                disableImageSizeWarning: true,
+                disableImageLazyLoadWarning: true
+            }
+        },
         provideAnimations(),
         provideHttpClient(withInterceptorsFromDi())
     ]

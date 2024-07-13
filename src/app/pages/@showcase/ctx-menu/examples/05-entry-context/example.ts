@@ -53,7 +53,7 @@ export class ExampleEntryContextComponent {
             // When the menu item is clicked,
             // action will be invoked with the context
             // entry
-            action: item => alert("Editing item\m" + JSON.stringify(item, null, 4))
+            action: item => alert("Editing item\n" + JSON.stringify(item, null, 4))
         },
         {
             label: "Delete",

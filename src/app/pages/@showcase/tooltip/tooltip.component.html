@@ -1,0 +1,33 @@
+<div>
+    <h1 align="center">Context Menu</h1>
+    <p align="center">
+        This tooltip directive provides a robust context menu and app menu for Angular applications.
+    </p>
+
+    <div>
+        <h3>Installation</h3>
+        <code>npm i &#64;dotglitch/ngx-common</code>
+        <br/>
+        <app-vscode
+            [code]="importCode"
+            language="ts"
+            [tabSize]="4"
+            [readOnly]="true"
+            style="height: 330px"
+        />
+        <h3>Attach a tooltip</h3>
+        <app-vscode
+            [code]="importCode"
+            language="ts"
+            [tabSize]="4"
+            [readOnly]="true"
+            style="height: 330px"
+        />
+    </div>
+</div>
+
+
+<h3>Examples</h3>
+
+<h5>Basic</h5>
+<app-example-viewer [example]="TooltipExample" />
