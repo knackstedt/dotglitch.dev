@@ -20,9 +20,11 @@ import BlueRain from './rain-presets/rain';
 
 @Component({
     selector: 'app-img',
-    template: '<img  (click)="dialog.close()">',
+    template: '<img (click)="dialog.close()" ngx-cache [source]="url">',
     styles: `:host{max-width: min(90vh, 90vw); max-height: min(90vh, 90vw)} img { border-radius: 6px }`,
-    imports: [NgxImageCacheDirective],
+    imports: [
+        NgxImageCacheDirective,
+    ],
     standalone: true
 })
 class ImageComponent {
