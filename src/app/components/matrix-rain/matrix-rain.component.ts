@@ -1,4 +1,4 @@
-import { Component, Input, ViewContainerRef } from '@angular/core';
+import { Component, Input, NgZone, ViewContainerRef } from '@angular/core';
 import { MatrixAnimation } from 'matrix-animation';
 
 @Component({
@@ -17,15 +17,20 @@ export class MatrixRainComponent  {
     };
     animation: MatrixAnimation;
 
-    constructor(private readonly viewcontainer: ViewContainerRef) {
+    constructor(
+        private readonly viewcontainer: ViewContainerRef,
+        private readonly ngZone: NgZone
+    ) {
 
     }
 
     ngAfterViewInit() {
-        this.animation = new MatrixAnimation(
-            this.viewcontainer.element.nativeElement,
-            structuredClone(this.config)
-        )
+        this.ngZone.runOutsideAngular(() => {
+            this.animation = new MatrixAnimation(
+                this.viewcontainer.element.nativeElement,
+                structuredClone(this.config)
+            )
+        })
     }
 
     ngOnDestroy() {
