@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, ViewChild, ViewContainerRef } from '@angular/core';
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -22,6 +22,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 export class CubeGraphicComponent {
 
     @ViewChild("canvas") canvasRef: ElementRef;
+
     get canvas() { return this.canvasRef.nativeElement as HTMLCanvasElement; }
     get el() { return this.viewContainer.element.nativeElement as HTMLElement; }
 
@@ -48,7 +49,37 @@ export class CubeGraphicComponent {
 
     placeholder: string = '';
 
-    constructor(private viewContainer: ViewContainerRef) { }
+    // colors = [
+    //     // Gray   red       yellow    green     gcyan     lblue     dblue     violet    puke      brown
+    //     0x000000, 0x4c4c4c, 0x666666, 0x808080, 0x999999, 0xb3b3b3, 0xcccccc, 0xe6e6e6, 0xf2f2f2, 0xffffff,
+    //     0xd4dae4, 0xffcdd2, 0xf9e6ad, 0xbce4ce, 0xbdf0e9, 0xb3e5fc, 0xaec1ff, 0xc5c0da, 0xd6bdcc, 0xd2c5c1,
+    //     0xb0b8cd, 0xfe9998, 0xf4d679, 0x90d2af, 0x92e7dc, 0x81d4fa, 0x88a3f9, 0x9f97c1, 0xc492ac, 0xb4a09a,
+    //     0x949db1, 0xf35c4e, 0xedb90f, 0x33b579, 0x02d7c5, 0x29b6f6, 0x5874cd, 0x7e6bad, 0xa9537c, 0x826358,
+    //     0x727a8c, 0xe94633, 0xeaa100, 0x36955f, 0x11b3a5, 0x039be5, 0x2349ae, 0x584a8f, 0x963a64, 0x624339,
+    //     0x5e6677, 0xd73c2d, 0xea8f00, 0x247346, 0x018b80, 0x0288d1, 0x163fa2, 0x4f4083, 0x81355a, 0x5d4037,
+    //     0x3f4757, 0xca3626, 0xea7e00, 0x1d5b38, 0x026b60, 0x0277bd, 0x083596, 0x473776, 0x6e3051, 0x4e342e,
+    //     0x1d2534, 0xbb2b1a, 0xea5d00, 0x17492d, 0x024f43, 0x01579b, 0x002381, 0x3a265f, 0x4c2640, 0x3e2723,
+    // ]
+
+    private observer: ResizeObserver;
+    constructor(
+        private viewContainer: ViewContainerRef,
+        private readonly ngZone: NgZone
+    ) {
+        this.observer = new ResizeObserver(() => {
+            this.camera.aspect = this.el.clientWidth / this.el.clientHeight;
+            this.camera.updateProjectionMatrix();
+            // this.renderer.setViewport(this.el.clientWidth, this.el.clientHeight);
+            // // this.comp.setViewport(this.el.clientWidth, this.el.clientHeight);
+            // // this.renderer.setPixelRatio(this.el.clientWidth / this.el.clientHeight);
+
+            // this.composer.setSize(this.el.clientWidth, this.el.clientHeight);
+            // this.renderer.setSize(this.el.clientWidth, this.el.clientHeight);
+
+            // this.scene.update
+        });
+        this.observer.observe(this.el);
+    }
 
     async ngAfterViewInit() {
         await this.init();
@@ -60,7 +91,7 @@ export class CubeGraphicComponent {
         });
         this.canvas.addEventListener("webglcontextrestored", () => {
             // console.log("canvas context has been restored!");
-            this.animate();
+            this.ngZone.runOutsideAngular(() => this.animate())
         });
 
         // this.canvas.oncontextlost
@@ -68,7 +99,7 @@ export class CubeGraphicComponent {
         this.initScene();
 
         this.onWindowResize();
-        this.animate();
+        this.ngZone.runOutsideAngular(() => this.animate())
 
         setTimeout(() => {
             // this.placeholder = this.canvas.toDataURL();
@@ -81,7 +112,9 @@ export class CubeGraphicComponent {
     }
 
     ngOnDestroy() {
-        cancelAnimationFrame(this.animationFrameRequest);
+        cancelAnimationFrame(this.animationFrameRequest)
+        this.renderer.dispose();
+        this.composer.dispose();
     }
 
     async init() {
@@ -105,7 +138,7 @@ export class CubeGraphicComponent {
         this.composer = new EffectComposer(this.renderer);
         // const renderPixelatedPass = new RenderPixelatedPass(6, this.scene, this.camera);
         // this.composer.addPass(renderPixelatedPass);
-        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(bounds.width, bounds.height), 1.5, 0.4, 0.85);
         bloomPass.threshold = 0;
         bloomPass.strength = .1;
         bloomPass.radius = .5;
@@ -195,14 +228,6 @@ export class CubeGraphicComponent {
         }
 
         if (true) {
-            const mat = new LineMaterial({
-                color: 0xffffff,
-                // color: 0x9999ff,
-                linewidth: .005, // in pixels
-                //resolution:  // to be set by renderer, eventually
-                dashed: false
-            });
-
             const group = new THREE.Group();
 
             const placeWireframeCube = (x, y, z) => {
@@ -210,10 +235,19 @@ export class CubeGraphicComponent {
                 const cube = this.box(size, size, size);
 
                 const geometry = new WireframeGeometry2(cube);
+
+                const mat = new LineMaterial({
+                    color: 0xffffff,
+                    // color: 0x9999ff,
+                    // color: this.colors[Math.round((Math.random() * 100) % this.colors.length)],
+                    linewidth: .005, // in pixels
+                    //resolution:  // to be set by renderer, eventually
+                    dashed: false
+                });
+
                 const mesh = new THREE.Mesh(geometry, mat);
                 mesh.position.addScaledVector(new THREE.Vector3(x, y, z), size);
                 group.add(mesh);
-                // console.log("mes")
             }
 
             for (let x = -1; x < 2; x++)
@@ -233,8 +267,6 @@ export class CubeGraphicComponent {
     }
 
     box(width, height, depth) {
-
-
         const geometry = new THREE.BufferGeometry();
         const position = [];
 
@@ -320,13 +352,12 @@ export class CubeGraphicComponent {
     }
 
     stopGoEased(x, downtime, period) {
-
         const cycle = (x / period) | 0;
         const tween = x - cycle * period;
         const linStep = this.easeInOutCubic(this.linearStep(tween, downtime, period));
         return cycle + linStep;
-
     }
+
     easeInOutCubic(x) {
         return x ** 2 * 3 - x ** 3 * 2;
     }
@@ -337,7 +368,6 @@ export class CubeGraphicComponent {
         const y0 = - m * edge0;
         return THREE.MathUtils.clamp(y0 + m * x, 0, 1);
     }
-
 
     @HostListener("window:resize")
     onWindowResize() {
