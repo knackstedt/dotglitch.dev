@@ -10,7 +10,6 @@ import DynamicChildrenExample from "./examples/04-dynamic-children";
 import EntryContextExample from "./examples/05-entry-context";
 import CustomTriggersExample from "./examples/06-custom-triggers";
 import ChildTemplateExample from "./examples/07-child-template";
-import TooltipExample from "./examples/08-tooltip";
 
 
 @Component({
@@ -32,5 +31,4 @@ export class CtxMenuComponent {
     EntryContextExample = EntryContextExample;
     CustomTriggersExample = CustomTriggersExample;
     ChildTemplateExample = ChildTemplateExample;
-    TooltipExample = TooltipExample;
 }

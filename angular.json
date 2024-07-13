@@ -50,6 +50,11 @@
                 "input": "src/app/pages/@showcase/markdown-editor/examples/",
                 "output": "./assets/@showcase/markdown"
             },
+            {
+                "glob": "**/*",
+                "input": "src/app/pages/@showcase/tooltip/examples/",
+                "output": "./assets/@showcase/markdown"
+            },
               "src/manifest.webmanifest"
             ],
             "styles": [
