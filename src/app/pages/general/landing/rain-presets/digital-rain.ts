@@ -3,7 +3,7 @@ export default Object.seal({
     rainHeight: 8,
     minFrameTime: 50,
     rainGenerator: Object.seal({
-        count: 75,
+        count: 45,
     }),
     rainDrop: Object.seal({
         direction: "TD",

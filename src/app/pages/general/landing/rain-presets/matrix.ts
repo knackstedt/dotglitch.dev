@@ -5,7 +5,7 @@ export default Object.seal({
     minFrameTime: 125,
     syncFrame: false,
     rainGenerator: {
-        density: .75
+        count: 25,
     },
     rainDrop: Object.seal({
         direction: "TD",
