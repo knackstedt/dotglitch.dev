@@ -19,9 +19,9 @@ export class LogoComponent implements OnInit {
 
     @Input() showText = true;
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }
