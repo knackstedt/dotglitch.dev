@@ -1,5 +1,4 @@
-
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SymbolComponent } from 'src/app/components/logo/symbol/symbol.component';
 import { TextComponent } from 'src/app/components/logo/text/text.component';
 import { WidetextComponent } from 'src/app/components/logo/widetext/widetext.component';
@@ -15,13 +14,8 @@ import { WidetextComponent } from 'src/app/components/logo/widetext/widetext.com
     ],
     standalone: true
 })
-export class LogoComponent implements OnInit {
+export class LogoComponent {
 
     @Input() showText = true;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
 
 }
