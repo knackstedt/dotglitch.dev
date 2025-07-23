@@ -36,67 +36,14 @@ export class NavMenuComponent {
             icon: "/assets/menu/language_japanese_kana_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg",
             linkTarget: "_blank"
         },
-        {
-            label: "Show The Code",
-            link: "https://showthecode.dev",
-            icon: "https://showthecode.dev/assets/logo-C9oKWVGt.png",
-            linkTarget: "_blank"
-        },
+        // {
+        //     label: "Show The Code",
+        //     link: "https://showthecode.dev",
+        //     icon: "https://showthecode.dev/assets/logo-C9oKWVGt.png",
+        //     linkTarget: "_blank"
+        // },
 
-        // {
-        //     label: "DotGlitch ngx-common",
-        //     icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
-        //     children: [
-        //         {
-        //             label: "Menus",
-        //             icon: "https://reactflow.dev/img/favicon.ico",
-        //             link: "#/Reactflow"
-        //         },
-        //         {
-        //             label: "Lazy Loader",
-        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
-        //             link: "#/Excalidraw"
-        //         },
-        //         {
-        //             label: "Lazy Loader",
-        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
-        //             link: "#/Excalidraw"
-        //         },
-        //         {
-        //             label: "Lazy Loader",
-        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
-        //             link: "#/Excalidraw"
-        //         }
-        //     ]
-        // },
-        // {
-        //     label: "NG React Wrappers",
-        //     icon: "https://avatars.githubusercontent.com/u/139426?s=200&v=4",
-        //     children: [
-        //         {
-        //             label: "ReactFlow",
-        //             icon: "https://reactflow.dev/img/favicon.ico",
-        //             link: "#/Reactflow"
-        //         },
-        //         {
-        //             label: "Excalidraw",
-        //             icon: "https://plus.excalidraw.com/favicon-32x32.png",
-        //             link: "#/Excalidraw"
-        //         }
-        //     ]
-        // },
-        // {
-        //     label: "My Libraries",
-        //     icon: "",
-        //     children: [
-        //         {
-        //             label: "@dotglitch/ngx-common",
-        //             icon: "",
-        //             link: ""
-        //         }
-        //     ]
-        // },
-        ...RegisteredComponents//.concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents).concat(RegisteredComponents))
+        ...RegisteredComponents
         .filter(c => !c['hidden'])
         .sort((a, b) => (a['order'] || 0) - (b['order'] || 0))
         .map(i => {

@@ -1,4 +1,4 @@
-<mat-tab-group [class.sidebyside]="!fullscreenMode">
+<mat-tab-group [class.sidebyside]="!fullscreenMode" [animationDuration]="200">
   @if (fullscreenMode) {
     <mat-tab label="Demo">
       <ng-template [cdkPortalOutlet]="componentPortal" ></ng-template>

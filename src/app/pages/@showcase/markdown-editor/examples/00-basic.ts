@@ -4,11 +4,11 @@ export default {
     files: [
         {
             label: "example.ts",
-            value: fetch('/assets/@showcase/markdown/00-basic/example.ts').then(e => e.text())
+            value: fetch('https://raw.githubusercontent.com/knackstedt/dotglitch.dev/refs/heads/main/src/app/pages/%40showcase/markdown-editor/examples/00-basic/example.ts').then(e => e.text())
         },
         {
             label: "example.html",
-            value: fetch('/assets/@showcase/markdown/00-basic/example.html').then(e => e.text())
+            value: fetch('https://raw.githubusercontent.com/knackstedt/dotglitch.dev/refs/heads/main/src/app/pages/%40showcase/markdown-editor/examples/00-basic/example.html').then(e => e.text())
         }
     ],
     component: ExampleBasicComponent

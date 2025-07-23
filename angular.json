@@ -40,27 +40,11 @@
                 "input": "src/app/pages/@showcase/ctx-menu/examples/",
                 "output": "./assets/@showcase/ctx-menu"
             },
-            {
-                "glob": "**/*",
-                "input": "src/app/pages/@showcase/lazy-loader/examples/",
-                "output": "./assets/@showcase/lazy-loader"
-            },
-            {
-                "glob": "**/*",
-                "input": "src/app/pages/@showcase/markdown-editor/examples/",
-                "output": "./assets/@showcase/markdown"
-            },
-            {
-                "glob": "**/*",
-                "input": "src/app/pages/@showcase/tooltip/examples/",
-                "output": "./assets/@showcase/markdown"
-            },
               "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles/main.scss"
-            ],
-            "serviceWorker": "ngsw-config.json"
+            ]
           },
           "configurations": {
             "production": {

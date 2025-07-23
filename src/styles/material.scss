@@ -65,7 +65,8 @@ mat-icon.material-icons {
 }
 
 .mat-tab-body-wrapper {
-  height: 100%;
+    height: 100%;
+    --mat-tab-animation-duration: 20ms;
 }
 
 .mat-mdc-tab-group {
