@@ -42,7 +42,6 @@ class ImageComponent {
         MatIconModule,
         MatButtonModule,
         MatGridListModule,
-        NgxImageCacheDirective,
         ParallaxCardComponent,
         CubeGraphicComponent,
         LogoComponent,

@@ -17,8 +17,7 @@ import ChildTemplateExample from "./examples/07-child-template";
     templateUrl: './ctx-menu.component.html',
     styleUrls: ['./ctx-menu.component.scss'],
     imports: [
-        ExampleViewerComponent,
-        VscodeComponent
+        ExampleViewerComponent
     ],
     standalone: true
 })

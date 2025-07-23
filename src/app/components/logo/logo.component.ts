@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { SymbolComponent } from 'src/app/components/logo/symbol/symbol.component';
-import { TextComponent } from 'src/app/components/logo/text/text.component';
 import { WidetextComponent } from 'src/app/components/logo/widetext/widetext.component';
 
 @Component({
@@ -9,7 +8,6 @@ import { WidetextComponent } from 'src/app/components/logo/widetext/widetext.com
     styleUrls: ['./logo.component.scss'],
     imports: [
         SymbolComponent,
-        TextComponent,
         WidetextComponent
     ],
     standalone: true

@@ -1,17 +1,16 @@
 // This file exports the rest of the stylesheets
-@import "material.scss";
-@import "@fontsource/material-symbols-outlined";
-// @import "@fontsource/fira-sans/100";
-// @import "@fontsource/fira-sans/200";
-// @import "@fontsource/fira-sans/300";
-@import "@fontsource/fira-sans/400";
-// @import "@fontsource/fira-sans/500";
-@import "@fontsource/fira-sans/600";
-@import "@fontsource/fira-mono/400";
-// @import "@fontsource/fira-mono/600";
-@import "@egjs/flicking/dist/flicking.css";
+// @forward "@fontsource/fira-sans/100";
+// @forward "@fontsource/fira-sans/200";
+// @forward "@fontsource/fira-sans/300";
+@forward "@fontsource/fira-sans/400";
+// @forward "@fontsource/fira-sans/500";
+@forward "@fontsource/fira-sans/600";
+@forward "@fontsource/fira-mono/400";
+// @forward "@fontsource/fira-mono/600";
+@forward "@egjs/flicking/dist/flicking.css";
+@forward "@fontsource/material-symbols-outlined";
 
-@import "./global.scss";
-@import "./material.scss";
-@import "./themes.scss";
-@import "./webkit-scrollbar.scss";
+@use "./global.scss";
+@use "./material.scss";
+@use "./themes.scss";
+@use "./webkit-scrollbar.scss";
